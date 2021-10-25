@@ -1,13 +1,2 @@
-﻿  Main.cpp
-  App.cpp
-  Audio.cpp
-  Input.cpp
-  Map.cpp
-  Scene.cpp
-  Render.cpp
-  Textures.cpp
-  Window.cpp
-  Log.cpp
-  pugixml.cpp
-  Generating Code...
+﻿  Scene.cpp
   Game.vcxproj -> C:\Users\davidbo5\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe

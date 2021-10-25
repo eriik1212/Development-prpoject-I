@@ -33,7 +33,7 @@ bool Scene::Start()
 {
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
-	app->map->Load("iso_walk.tmx");
+	app->map->Load("MapLVL1.tmx");
 	
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -64,10 +64,16 @@ bool Scene::Update(float dt)
 		app->render->camera.y += 1;
 
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
+		app->render->camera.x += 1;
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
+		app->render->camera.x -= 1;
+
+	if (app->render->camera.x >= 0)
+		app->render->camera.x = 0;
+
+	if (app->render->camera.x <= -2800)
+		app->render->camera.x = -2800;
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
