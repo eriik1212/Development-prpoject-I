@@ -34,7 +34,7 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	//app->map->Load("hello.tmx");
 	app->map->Load("MapLVL1.tmx");
-	texture = app->tex->Load("Assets/player/adventurer.png");
+	playerTex = app->tex->Load("Assets/player/adventurer.png");
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -63,8 +63,13 @@ bool Scene::Update(float dt)
 			debug = false;
 		else if (!debug)
 			debug = true;
-
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		player.x += 5;
+
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		player.x -= 5;
 
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -106,8 +111,8 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
+	app->render->DrawTexture(playerTex, player.x, player.y, &player);
 	
-
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 

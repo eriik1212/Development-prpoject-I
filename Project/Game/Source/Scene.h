@@ -2,6 +2,7 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -36,10 +37,14 @@ public:
 
 	SDL_Rect player;
 
+	// The pointer to the current player animation
+	// It will be switched depending on the player's movement direction
+	Animation* currentAnimation = nullptr;
+
 private:
 	SDL_Texture* img;
 
 public:
-	SDL_Texture* texture = nullptr;
+	SDL_Texture* playerTex = nullptr;
 };
 #endif // __SCENE_H__
