@@ -1,3 +1,11 @@
-﻿  Scene.cpp
-  LINK : C:\Users\davidbo5\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe not found or not built by the last incremental link; performing full link
-  Game.vcxproj -> C:\Users\davidbo5\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
+﻿  App.cpp
+  Audio.cpp
+  Input.cpp
+  Main.cpp
+  Map.cpp
+  Render.cpp
+  Scene.cpp
+  Textures.cpp
+  Window.cpp
+  Generating Code...
+  Game.vcxproj -> C:\Users\erikmg\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe

@@ -88,7 +88,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
-
+	
 private:
 
 	int argc;

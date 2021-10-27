@@ -38,5 +38,8 @@ public:
 
 private:
 	SDL_Texture* img;
+
+public:
+	SDL_Texture* texture = nullptr;
 };
 #endif // __SCENE_H__
