@@ -38,6 +38,11 @@ bool Scene::Start()
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
+	player.w = 37;
+	player.h = 50;
+	player.x = 50;
+	player.y = 50;
+
 	debug = false;
 
 	return true;
@@ -100,6 +105,8 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
+	
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

@@ -34,8 +34,9 @@ public:
 
 	bool debug = false;
 
+	SDL_Rect player;
+
 private:
 	SDL_Texture* img;
 };
-
 #endif // __SCENE_H__
