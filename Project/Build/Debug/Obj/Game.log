@@ -1,4 +1,4 @@
 ﻿  Scene.cpp
-C:\Users\davidbo5\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
-C:\Users\davidbo5\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(56,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Game.vcxproj -> C:\Users\davidbo5\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
+C:\Users\erikmg\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(54,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\erikmg\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(56,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Game.vcxproj -> C:\Users\erikmg\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe

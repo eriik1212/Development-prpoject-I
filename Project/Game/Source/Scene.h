@@ -48,5 +48,10 @@ private:
 
 public:
 	SDL_Texture* playerTex = nullptr;
+	Animation walkR,
+		walkL,
+		jump,
+		idleAnimL,
+		idleAnimR;
 };
 #endif // __SCENE_H__
