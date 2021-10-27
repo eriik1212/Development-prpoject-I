@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "Render.h"
 
 struct SDL_Texture;
 
@@ -36,6 +37,7 @@ public:
 	bool debug = false;
 
 	SDL_Rect player;
+
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction

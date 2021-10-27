@@ -10,6 +10,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+#define PLAYER_SPEED 1
+
 Scene::Scene() : Module()
 {
 	name.Create("scene");
@@ -38,8 +40,8 @@ bool Scene::Start()
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
-	player.w = 37;
-	player.h = 50;
+	player.w = 50;
+	player.h = 37;
 	player.x = 50;
 	player.y = 50;
 
@@ -66,22 +68,38 @@ bool Scene::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		player.x += 5;
+		player.x += 1;
 
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		player.x -= 5;
+		player.x -= 1;
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadGameRequest();
+	//Player POSITION LIMITS
+	if (player.x <= app->render->playerLimitL)
+	{
+		player.x = app->render->playerLimitL;
 
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		app->SaveGameRequest();
+	}
 
-	if(app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT && debug)
+	//Camera LIMITS & MOVEMENT
+	if (player.x >= app->render->playerLimitR)
+	{
+		app->render->camera.x -= PLAYER_SPEED;
+		app->render->playerLimitR += PLAYER_SPEED;
+		app->render->playerLimitL += PLAYER_SPEED;
+
+	}
+
+	if (player.x <= app->render->playerLimitL && player.x > 5)
+	{
+		app->render->camera.x += PLAYER_SPEED;
+		app->render->playerLimitL -= PLAYER_SPEED;
+		app->render->playerLimitR -= PLAYER_SPEED;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT && debug)
 		app->render->camera.x += 1;
 
-	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT && debug)
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT && debug)
 		app->render->camera.x -= 1;
 
 	if (app->render->camera.x >= 0)
@@ -89,6 +107,13 @@ bool Scene::Update(float dt)
 
 	if (app->render->camera.x <= -2800)
 		app->render->camera.x = -2800;
+
+    // L02: DONE 3: Request Load / Save when pressing L/S
+	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		app->LoadGameRequest();
+
+	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		app->SaveGameRequest();
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
@@ -111,7 +136,8 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawTexture(playerTex, player.x, player.y, &player);
+	app->render->DrawRectangle(player, 0, 0, 0);
+	//app->render->DrawTexture(playerTex, player.x, player.y, &player);
 	
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

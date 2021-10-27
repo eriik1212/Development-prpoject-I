@@ -25,7 +25,8 @@ public:
 	void SetTitle(const char* title);
 
 	// Retrive window size
-	void GetWindowSize(uint& width, uint& height) const;
+	void GetWindowSize(uint& 
+		, uint& height) const;
 
 	// Retrieve window scale
 	uint GetScale() const;
@@ -37,11 +38,13 @@ public:
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
 
-private:
-	SString title;
 	uint width;
 	uint height;
 	uint scale;
+
+private:
+	SString title;
+
 };
 
 #endif // __WINDOW_H__
