@@ -32,6 +32,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool debug = false;
+
 private:
 	SDL_Texture* img;
 };
