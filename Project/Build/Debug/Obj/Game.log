@@ -1,2 +1,11 @@
-﻿  Main.cpp
+﻿  App.cpp
+  Audio.cpp
+  Input.cpp
+  Main.cpp
+  Map.cpp
+  Render.cpp
+  Scene.cpp
+  Textures.cpp
+  Window.cpp
+  Generating Code...
   Game.vcxproj -> C:\Users\erikmg\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
