@@ -37,6 +37,9 @@ public:
 	bool debug = false;
 
 	SDL_Rect player;
+	bool jumping = false;
+	bool canJumpAgain = false;
+	int playerYVel;
 
 
 	// The pointer to the current player animation

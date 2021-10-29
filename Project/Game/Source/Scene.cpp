@@ -11,6 +11,7 @@
 #include "Log.h"
 
 #define PLAYER_SPEED 4
+#define GRAVITY 1
 
 Scene::Scene() : Module()
 {
@@ -68,7 +69,7 @@ bool Scene::Start()
 	player.w = 37;
 	player.h = 50;
 	player.x = 150;
-	player.y = 50;
+	player.y = 300;
 
 	debug = false;
 
@@ -85,6 +86,29 @@ int lastPosition;
 bool Scene::Update(float dt)
 {
 	currentAnimation->Update();
+
+	player.y -= playerYVel;
+
+	// If the player is above ground, apply gravity.
+	if (player.y < 300) {
+		// Apply gravity by reducing upward velocity.
+		playerYVel -= GRAVITY;
+	}
+	else {
+		// Player is on the ground, so stop jumping.
+		playerYVel = 0;
+		jumping = false;
+		// Force player to be exactly at ground level.
+		player.y = 300;
+	}
+
+	// Handle the player jump.
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && !jumping) {
+		playerYVel = 10;
+		jumping = true;
+		canJumpAgain = true;
+
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
