@@ -68,8 +68,8 @@ Scene::Scene() : Module()
 	jumpR.PushBack({ 50, 111, 50, 37 });
 	jumpR.PushBack({ 100, 111, 50, 37 });
 	jumpR.PushBack({ 0, 0, 50, 37 });
-	jumpR.loop = false;
-	jumpR.speed = 0.4f;
+	jumpR.loop = true;
+	jumpR.speed = 0.45f;
 
 	//jump Left
 	jumpL.PushBack({ 300, 666, 50, 37 });
@@ -82,8 +82,9 @@ Scene::Scene() : Module()
 	jumpL.PushBack({ 300, 703, 50, 37 });
 	jumpL.PushBack({ 250, 703, 50, 37 });
 	jumpL.PushBack({ 200, 703, 50, 37 });
-	jumpL.loop = false;
-	jumpL.speed = 0.37f;
+	jumpL.PushBack({ 300, 592, 50, 37 });
+	jumpL.loop = true;
+	jumpL.speed = 0.45f;
 	
 
 
@@ -175,6 +176,19 @@ bool Scene::Update(float dt)
 		playerYVel = 8;
 		jumping = true;
 		canJumpAgain = false;
+
+		jumpR.Reset();
+		jumpL.Reset();
+
+		if (direction == 1)
+		{
+			currentAnimation = &jumpR;
+		}
+
+		else if (direction == 0)
+		{
+			currentAnimation = &jumpL;
+		}
 	}
 	
 
@@ -200,8 +214,6 @@ bool Scene::Update(float dt)
 		currentAnimation = &idleAnimR;
 	}
 	
-		
-
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		player.x -= PLAYER_SPEED;
@@ -216,13 +228,15 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
+		&& app->input->GetKey(SDL_SCANCODE_UP) == KEY_IDLE
+		&& !jumping)
 	{
 		if (currentAnimation != &idleAnimR
 			&& currentAnimation != &idleAnimL
 			&& currentAnimation != &walkR
 			&& currentAnimation != &walkL
-			&& currentAnimation != &jumpR)
+			&& currentAnimation != &jumpR
+			&& currentAnimation != &jumpL)
 		{
 			switch (lastPosition) {
 
@@ -319,6 +333,21 @@ bool Scene::PostUpdate()
 	
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	// After JUMP Animations, go back to IDLE Anim
+	if (jumpL.loopCount > 0)
+	{
+		idleAnimL.Reset();
+		currentAnimation = &idleAnimL;
+	}
+	else if (jumpR.loopCount > 0)
+	{
+		idleAnimR.Reset();
+		currentAnimation = &idleAnimR;
+	}
+
+	jumpL.loopCount = 0;
+	jumpR.loopCount = 0;
 
 	return ret;
 }
