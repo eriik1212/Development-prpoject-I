@@ -65,10 +65,11 @@ Scene::Scene() : Module()
 	jumpR.PushBack({ 250, 74, 50, 37 });
 	jumpR.PushBack({ 300, 74, 50, 37 });
 	jumpR.PushBack({ 0, 111, 50, 37 });
-	jumpR.PushBack({ 50, 37, 50, 37 });
-	jumpR.PushBack({ 100, 37, 50, 37 });
+	jumpR.PushBack({ 50, 111, 50, 37 });
+	jumpR.PushBack({ 100, 111, 50, 37 });
+	jumpR.PushBack({ 0, 0, 50, 37 });
 	jumpR.loop = false;
-	jumpR.speed = 0.1f;
+	jumpR.speed = 0.4f;
 
 	//jump Left
 	jumpL.PushBack({ 300, 666, 50, 37 });
@@ -82,7 +83,7 @@ Scene::Scene() : Module()
 	jumpL.PushBack({ 250, 703, 50, 37 });
 	jumpL.PushBack({ 200, 703, 50, 37 });
 	jumpL.loop = false;
-	jumpL.speed = 0.1f;
+	jumpL.speed = 0.37f;
 	
 
 
@@ -155,6 +156,18 @@ bool Scene::Update(float dt)
 		playerYVel = 10;
 		jumping = true;
 		canJumpAgain = true;
+		jumpR.Reset();
+		jumpL.Reset();
+
+		if (direction == 1)
+		{
+			currentAnimation = &jumpR;
+		}
+
+		else if (direction == 0)
+		{
+			currentAnimation = &jumpL;
+		}
 
 	}
 	// Handle the player DOUBLE jump.
@@ -179,6 +192,7 @@ bool Scene::Update(float dt)
 		player.x += PLAYER_SPEED;
 		currentAnimation = &walkR;
 		direction = 1;
+
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
