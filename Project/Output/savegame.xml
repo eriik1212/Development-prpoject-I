@@ -7,7 +7,7 @@
 	<scene />
 	<map />
 	<renderer>
-		<camera x="-151" y="0" />
-		<player x="550" y="50" />
+		<camera x="-438" y="0" />
+		<player x="737" y="50" />
 	</renderer>
 </save_state>

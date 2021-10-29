@@ -10,7 +10,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-#define PLAYER_SPEED 1
+#define PLAYER_SPEED 4
 
 Scene::Scene() : Module()
 {
@@ -76,6 +76,8 @@ bool Scene::Start()
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
+	//app->LoadGameRequest();
+
 	currentAnimation = &idleAnimR;
 	player.w = 37;
 	player.h = 50;
@@ -109,15 +111,16 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 
 	{
-		player.x += 1;
+		player.x += PLAYER_SPEED;
 		currentAnimation = &walkR;
 		lastPosition = 1;
+
 	}
 		
 
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		player.x -= 1;
+		player.x -= PLAYER_SPEED;
 		lastPosition = 0;
 	}
 	
@@ -172,8 +175,8 @@ bool Scene::Update(float dt)
 			app->render->playerLimitR -= PLAYER_SPEED;
 		}
 
-		if (player.x >= 1080)
-			player.x = 1080;
+		if (player.x >= 2800)
+			player.x = 2800;
 	}
 	if (player.x <= 100)
 	{

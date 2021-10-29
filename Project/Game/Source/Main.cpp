@@ -3,6 +3,12 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include <Windows.h>
+#include <iostream>
+#include <chrono>
+using namespace std;
+
+
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
 
@@ -35,6 +41,11 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
+		float dt = 16.0; // Fixed 60fps = 16ms
+
+		//TIC
+		auto start = chrono::steady_clock::now();
+
 		switch(state)
 		{
 			// Allocate the engine --------------------------------------------
@@ -105,6 +116,14 @@ int main(int argc, char* args[])
 			state = EXIT;
 			break;
 		}
+		//TOC
+		auto end = chrono::steady_clock::now();
+		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+		LOG("Elapsed time in milliseconds: %d", telapsed, " ms");
+		LOG("%.f", dt);
+
+		if (dt - telapsed > 0.0f)
+			Sleep(dt - telapsed);
 	}
 
 	LOG("... Bye! :)\n");
