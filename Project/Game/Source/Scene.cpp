@@ -25,10 +25,17 @@ Scene::Scene() : Module()
 	idleAnimR.PushBack({ 100, 0, 50, 37 });
 	idleAnimR.PushBack({ 150, 0, 50, 37 });
 	idleAnimR.loop = true;
-	idleAnimR.speed = 0.02f;
+	idleAnimR.speed = 0.1f;
+
+	//idle anim Left
+	idleAnimL.PushBack({ 300, 592, 50, 37 });
+	idleAnimL.PushBack({ 250, 592, 50, 37 });
+	idleAnimL.PushBack({ 200, 592, 50, 37 });
+	idleAnimL.PushBack({ 150, 592, 50, 37 });
+	idleAnimL.loop = true;
+	idleAnimL.speed = 0.1f;
 
 	//walk Right
-	walkR.PushBack({ 0, 37, 50, 37 });
 	walkR.PushBack({ 50, 37, 50, 37 });
 	walkR.PushBack({ 100, 37, 50, 37 });
 	walkR.PushBack({ 150, 37, 50, 37 });
@@ -36,9 +43,19 @@ Scene::Scene() : Module()
 	walkR.PushBack({ 250, 37, 50, 37 });
 	walkR.PushBack({ 300, 37, 50, 37 });
 	walkR.loop = true;
-	walkR.speed = 0.02f;
+	walkR.speed = 0.1f;
 
-	//jumo Right
+	//walk left
+	walkL.PushBack({ 250, 629, 50, 37 });
+	walkL.PushBack({ 200, 629, 50, 37 });
+	walkL.PushBack({ 150, 629, 50, 37 });
+	walkL.PushBack({ 100, 629, 50, 37 });
+	walkL.PushBack({ 50, 629, 50, 37 });
+	walkL.PushBack({ 0, 629, 50, 37 });
+	walkL.loop = true;
+	walkL.speed = 0.1f;
+
+	//jump Right
 	jumpR.PushBack({ 0, 74, 50, 37 });
 	jumpR.PushBack({ 50, 74, 50, 37 });
 	jumpR.PushBack({ 100, 74, 50, 37 });
@@ -50,7 +67,24 @@ Scene::Scene() : Module()
 	jumpR.PushBack({ 50, 37, 50, 37 });
 	jumpR.PushBack({ 100, 37, 50, 37 });
 	jumpR.loop = false;
-	jumpR.speed = 0.02f;
+	jumpR.speed = 0.1f;
+
+	//jump Left
+	jumpL.PushBack({ 300, 666, 50, 37 });
+	jumpL.PushBack({ 250, 666, 50, 37 });
+	jumpL.PushBack({ 200, 666, 50, 37 });
+	jumpL.PushBack({ 150, 666, 50, 37 });
+	jumpL.PushBack({ 100, 666, 50, 37 });
+	jumpL.PushBack({ 50, 666, 50, 37 });
+	jumpL.PushBack({ 0, 666, 50, 37 });
+	jumpL.PushBack({ 300, 703, 50, 37 });
+	jumpL.PushBack({ 250, 703, 50, 37 });
+	jumpL.PushBack({ 200, 703, 50, 37 });
+	jumpL.loop = false;
+	jumpL.speed = 0.1f;
+	
+
+
 }
 
 // Destructor
