@@ -54,5 +54,6 @@ public:
 		jumpL,
 		idleAnimL,
 		idleAnimR;
+	int direction; //1 if player looks right, 0 if player looks left
 };
 #endif // __SCENE_H__

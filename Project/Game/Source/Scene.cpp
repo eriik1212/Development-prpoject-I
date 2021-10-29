@@ -147,17 +147,28 @@ bool Scene::Update(float dt)
 	{
 		player.x += PLAYER_SPEED;
 		currentAnimation = &walkR;
-		lastPosition = 1;
+		direction = 1;
 
 	}
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	{
+		currentAnimation = &idleAnimR;
+	}
+	
 		
 
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		player.x -= PLAYER_SPEED;
-		lastPosition = 0;
+		currentAnimation = &walkL;
+		direction=0;
 	}
 	
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	{
+		currentAnimation = &idleAnimL;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
