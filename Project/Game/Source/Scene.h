@@ -50,7 +50,8 @@ public:
 	SDL_Texture* playerTex = nullptr;
 	Animation walkR,
 		walkL,
-		jump,
+		jumpR,
+		jumpL,
 		idleAnimL,
 		idleAnimR;
 };

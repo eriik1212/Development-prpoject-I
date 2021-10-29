@@ -37,6 +37,20 @@ Scene::Scene() : Module()
 	walkR.PushBack({ 300, 37, 50, 37 });
 	walkR.loop = true;
 	walkR.speed = 0.02f;
+
+	//jumo Right
+	jumpR.PushBack({ 0, 74, 50, 37 });
+	jumpR.PushBack({ 50, 74, 50, 37 });
+	jumpR.PushBack({ 100, 74, 50, 37 });
+	jumpR.PushBack({ 150, 74, 50, 37 });
+	jumpR.PushBack({ 200, 74, 50, 37 });
+	jumpR.PushBack({ 250, 74, 50, 37 });
+	jumpR.PushBack({ 300, 74, 50, 37 });
+	jumpR.PushBack({ 0, 111, 50, 37 });
+	jumpR.PushBack({ 50, 37, 50, 37 });
+	jumpR.PushBack({ 100, 37, 50, 37 });
+	jumpR.loop = false;
+	jumpR.speed = 0.02f;
 }
 
 // Destructor
@@ -115,7 +129,7 @@ bool Scene::Update(float dt)
 			&& currentAnimation != &idleAnimL
 			&& currentAnimation != &walkR
 			&& currentAnimation != &walkL
-			&& currentAnimation != &jump)
+			&& currentAnimation != &jumpR)
 		{
 			switch (lastPosition) {
 
