@@ -65,7 +65,7 @@ bool Scene::Start()
 	currentAnimation = &idleAnimR;
 	player.w = 37;
 	player.h = 50;
-	player.x = 50;
+	player.x = 150;
 	player.y = 50;
 
 	debug = false;
@@ -133,27 +133,38 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	//Player POSITION LIMITS
-	if (player.x <= app->render->playerLimitL)
+	if(player.x > 100)
 	{
-		player.x = app->render->playerLimitL;
+		//Player POSITION LIMITS
+		if (player.x <= app->render->playerLimitL)
+		{
+			player.x = app->render->playerLimitL;
 
+		}
+
+		//Camera LIMITS & MOVEMENT
+		if (player.x >= app->render->playerLimitR)
+		{
+			app->render->camera.x -= PLAYER_SPEED;
+			app->render->playerLimitR += PLAYER_SPEED;
+			app->render->playerLimitL += PLAYER_SPEED;
+
+		}
+
+		if (player.x <= app->render->playerLimitL )
+		{
+			app->render->camera.x += PLAYER_SPEED;
+			app->render->playerLimitL -= PLAYER_SPEED;
+			app->render->playerLimitR -= PLAYER_SPEED;
+		}
+
+		if (player.x >= 1080)
+			player.x = 1080;
 	}
-
-	//Camera LIMITS & MOVEMENT
-	if (player.x >= app->render->playerLimitR)
+	if (player.x <= 100)
 	{
-		app->render->camera.x -= PLAYER_SPEED;
-		app->render->playerLimitR += PLAYER_SPEED;
-		app->render->playerLimitL += PLAYER_SPEED;
-
-	}
-
-	if (player.x <= app->render->playerLimitL && player.x > 5)
-	{
-		app->render->camera.x += PLAYER_SPEED;
-		app->render->playerLimitL -= PLAYER_SPEED;
-		app->render->playerLimitR -= PLAYER_SPEED;
+		if (player.x <= -10)
+			player.x = -10;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT && debug)
@@ -161,9 +172,6 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT && debug)
 		app->render->camera.x -= 1;
-
-	
-
 
 	if (app->render->camera.x >= 0)
 		app->render->camera.x = 0;

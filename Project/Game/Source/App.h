@@ -104,6 +104,7 @@ private:
 	//pugi::xml_node config;
 	//pugi::xml_node configApp;
 
+
 	uint frames;
 	float dt;
 

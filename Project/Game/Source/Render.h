@@ -54,8 +54,8 @@ public:
 	SDL_Color background;
 
 	// Limit of the player inside the camera
-	int playerLimitR = camera.x + 500;
-	int playerLimitL = camera.x + 5;
+	int playerLimitR = camera.x + 300;
+	int playerLimitL = camera.x + 100;
 
 };
 
