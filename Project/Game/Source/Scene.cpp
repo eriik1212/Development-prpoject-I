@@ -157,6 +157,13 @@ bool Scene::Update(float dt)
 		canJumpAgain = true;
 
 	}
+	// Handle the player DOUBLE jump.
+	else if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && jumping && canJumpAgain) {
+		playerYVel = 8;
+		jumping = true;
+		canJumpAgain = false;
+	}
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -244,8 +251,8 @@ bool Scene::Update(float dt)
 			app->render->playerLimitR -= PLAYER_SPEED;
 		}
 
-		if (player.x >= 2800)
-			player.x = 2800;
+		if (player.x >= 3000 + (app->render->camera.w/2))
+			player.x = 3000 + (app->render->camera.w/2);
 	}
 	if (player.x <= 100)
 	{
