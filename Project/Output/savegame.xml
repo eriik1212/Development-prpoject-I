@@ -7,8 +7,8 @@
 	<scene />
 	<map />
 	<renderer>
-		<camera x="-776" y="0" />
-		<player x="1074" y="300" />
-		<playerLimit Left="876" Right="1076" />
+		<camera x="0" y="0" />
+		<player x="14" y="300" />
+		<playerLimit Left="100" Right="300" />
 	</renderer>
 </save_state>

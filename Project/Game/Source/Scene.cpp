@@ -153,7 +153,7 @@ bool Scene::Update(float dt)
 	}
 
 	// Handle the player jump.
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && !jumping) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping) {
 		playerYVel = 10;
 		jumping = true;
 		canJumpAgain = true;
@@ -172,7 +172,7 @@ bool Scene::Update(float dt)
 
 	}
 	// Handle the player DOUBLE jump.
-	else if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && jumping && canJumpAgain) {
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping && canJumpAgain) {
 		playerYVel = 8;
 		jumping = true;
 		canJumpAgain = false;
@@ -200,7 +200,7 @@ bool Scene::Update(float dt)
 			debug = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 
 	{
 		player.x += PLAYER_SPEED;
@@ -209,26 +209,26 @@ bool Scene::Update(float dt)
 
 
 	}
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 		currentAnimation = &idleAnimR;
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		player.x -= PLAYER_SPEED;
 		currentAnimation = &walkL;
 		direction=0;
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
 		currentAnimation = &idleAnimL;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_UP) == KEY_IDLE
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE
 		&& !jumping)
 	{
 		if (currentAnimation != &idleAnimR
@@ -288,10 +288,10 @@ bool Scene::Update(float dt)
 			player.x = -10;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT && debug)
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
 		app->render->camera.x += 1;
 
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT && debug)
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && debug)
 		app->render->camera.x -= 1;
 
 	if (app->render->camera.x >= 0)
@@ -301,10 +301,10 @@ bool Scene::Update(float dt)
 		app->render->camera.x = -2800;
 
     // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
