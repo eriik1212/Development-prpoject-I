@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Scene.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -98,8 +99,8 @@ bool Render::LoadState(pugi::xml_node& data)
 	camera.y = data.child("camera").attribute("y").as_int();
 
 	//Load Player Pos
-	app->scene->player.x = data.child("player").attribute("x").as_int();
-	app->scene->player.y = data.child("player").attribute("y").as_int();
+	app->play->playerData.x = data.child("player").attribute("x").as_int();
+	app->play->playerData.y = data.child("player").attribute("y").as_int();
 
 	//Load Player/Camera Limits
 	playerLimitL = data.child("playerLimit").attribute("Left").as_int();
@@ -121,8 +122,8 @@ bool Render::SaveState(pugi::xml_node& data) const
 	//Save Player Pos
 	pugi::xml_node play = data.append_child("player");
 
-	play.append_attribute("x") = app->scene->player.x;
-	play.append_attribute("y") = app->scene->player.y;
+	play.append_attribute("x") = app->play->playerData.x;
+	play.append_attribute("y") = app->play->playerData.y;
 
 	//Save Player/Camera Limits
 	pugi::xml_node playLimit = data.append_child("playerLimit");

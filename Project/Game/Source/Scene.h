@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 
+
 class Scene : public Module
 {
 public:
@@ -17,7 +18,7 @@ public:
 	virtual ~Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();
@@ -34,29 +35,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool collidersOn = false;
 	bool debug = false;
-
-	SDL_Rect player;
-	bool jumping = false;
-	bool canJumpAgain = false;
-	int playerYVel;
-
-
-	// The pointer to the current player animation
-	// It will be switched depending on the player's movement direction
-	Animation* currentAnimation = nullptr;
 
 private:
 	SDL_Texture* img;
-
-public:
-	SDL_Texture* playerTex = nullptr;
-	Animation walkR,
-		walkL,
-		jumpR,
-		jumpL,
-		idleAnimL,
-		idleAnimR;
-	int direction; //1 if player looks right, 0 if player looks left
 };
 #endif // __SCENE_H__

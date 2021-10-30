@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="1">
  <tileset firstgid="1" name="TilesetMapLVL1" tilewidth="32" tileheight="32" tilecount="300" columns="30">
   <image source="Tileset.png" width="960" height="320"/>
  </tileset>
@@ -8028,7 +8028,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="31"/>
+   <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
@@ -8228,7 +8228,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="62"/>
    <tile/>
    <tile/>
    <tile/>
@@ -8428,7 +8428,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="92"/>
    <tile/>
    <tile/>
    <tile/>
@@ -8628,7 +8628,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="92"/>
    <tile/>
    <tile/>
    <tile/>
@@ -8828,7 +8828,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="92"/>
    <tile/>
    <tile/>
    <tile/>
@@ -15044,7 +15044,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="7" name="Navigation" width="200" height="15" visible="0">
+ <layer id="7" name="Navigation" width="200" height="15">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="Navigation" type="int" value="1"/>
