@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Map.h"
+#include "LogoScreen.h"
 #include "Player.h"
 
 #include "Defs.h"
@@ -24,6 +25,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	logo = new LogoScreen();
 	scene = new Scene();
 	map = new Map();
 	play = new Player();
@@ -34,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(logo);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(play);
@@ -346,6 +349,3 @@ bool App::SaveGame() const
 
 	return ret;
 }
-
-
-
