@@ -17,7 +17,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
-
+class LogoScreen;
 class App
 {
 public:
@@ -88,6 +88,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	LogoScreen* logo;
 	
 private:
 
