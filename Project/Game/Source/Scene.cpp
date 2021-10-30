@@ -11,7 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+Scene::Scene(bool enabled) : Module(enabled)
 {
 
 	name.Create("scene");
@@ -73,10 +73,10 @@ bool Scene::Update(float dt)
 	{
 		app->render->camera.x += app->play->playerData.xVel;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
+	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
 	{
 		app->render->camera.y -= app->play->playerData.xVel;
-	}
+	}*/
 
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)

@@ -10,7 +10,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-Player::Player() : Module()
+Player::Player(bool enabled) : Module(enabled)
 {
 
 	name.Create("player");

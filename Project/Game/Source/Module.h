@@ -11,12 +11,12 @@ class Module
 {
 public:
 
-	Module() : active(false)
+	Module(bool enabled) : active(enabled)
 	{}
 
-	void Init()
+	bool Init()
 	{
-		active = true;
+		return true;
 	}
 
 	// Called before render is available
@@ -65,6 +65,24 @@ public:
 	virtual bool SaveState(pugi::xml_node&) const
 	{
 		return true;
+	}
+
+	void Enable()
+	{
+		if (!active)
+		{
+			active = true;
+			Start();
+		}
+	}
+
+	void Disable()
+	{
+		if (active)
+		{
+			active = false;
+			CleanUp();
+		}
 	}
 
 public:

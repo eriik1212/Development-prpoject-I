@@ -13,7 +13,7 @@ class LogoScreen : public Module
 {
 public:
 	//Constructor
-	LogoScreen();
+	LogoScreen(bool enabled);
 
 	//Destructor
 	~LogoScreen();
@@ -33,6 +33,8 @@ public:
 public:
 	// Members Texture
 	SDL_Texture* screen;
+
+	SDL_Rect backgroundLogo;
 };
 
 #endif //__MODULE_MEMBERS_H__

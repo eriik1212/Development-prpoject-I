@@ -20,7 +20,7 @@ class Player : public Module
 {
 public:
 
-	Player();
+	Player(bool enabled);
 
 	// Destructor
 	virtual ~Player();

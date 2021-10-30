@@ -20,15 +20,15 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
-	win = new Window();
-	input = new Input();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	logo = new LogoScreen();
-	scene = new Scene();
-	map = new Map();
-	play = new Player();
+	win = new Window(true);
+	input = new Input(true);
+	render = new Render(true);
+	tex = new Textures(true);
+	audio = new Audio(true);
+	logo = new LogoScreen(true);
+	scene = new Scene(false);
+	map = new Map(false);
+	play = new Player(false);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -36,8 +36,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(logo);
 	AddModule(scene);
+	AddModule(logo);
 	AddModule(map);
 	AddModule(play);
 

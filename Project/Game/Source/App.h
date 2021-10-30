@@ -82,7 +82,7 @@ private:
 public:
 
 	// Modules
-	Window* win;
+	Window* win = nullptr;
 	Input* input;
 	Render* render;
 	Textures* tex;
