@@ -111,7 +111,7 @@ bool ModuleCollisions::PreUpdate()
 
 bool ModuleCollisions::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		if (showColl)
 			showColl = false;
 		else if (!showColl)

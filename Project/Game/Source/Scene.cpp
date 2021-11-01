@@ -47,6 +47,7 @@ bool Scene::Start()
 		app->map->Enable();
 
 	}
+	wallCollider = app->collisions->AddCollider({ 400, 300, 20, 100 }, Collider::Type::WALL, this);
 
 	//app->LoadGameRequest();
 

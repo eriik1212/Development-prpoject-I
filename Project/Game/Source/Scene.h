@@ -40,6 +40,9 @@ public:
 
 	int floor;
 
+	// The wall/floor's collider
+	Collider* wallCollider = nullptr;
+
 private:
 	SDL_Texture* img;
 };
