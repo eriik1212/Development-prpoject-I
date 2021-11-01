@@ -23,5 +23,11 @@
     <folder>Assets/maps/</folder>
   </map>
   
-  <player width="37" height="50" x="200" y="300" xVel="4" gravity="1"/>
+  <player 
+  width="37" height="50" 
+  x="200" y="200" 
+  xVel="4" yVel="0" direction="1"
+  gravity="1"
+  jumping="false" canJumpAgain="false"
+  isColliding="false" isCollidingUp="false" isCollidingDown="false" isCollidingL="false" isCollidingR="false"/>
 </config>

@@ -49,6 +49,7 @@ bool Scene::Start()
 
 	}
 	wallCollider = app->collisions->AddCollider({ 400, 300, 20, 100 }, Collider::Type::WALL, this);
+	wallCollider = app->collisions->AddCollider({ 300, 250, 20, 20 }, Collider::Type::WALL, this);
 
 	//app->LoadGameRequest();
 
@@ -88,6 +89,10 @@ bool Scene::Update(float dt)
 	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
 	{
 		app->render->camera.y -= app->play->playerData.xVel;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
+	{
+		app->render->camera.y += app->play->playerData.xVel;
 	}*/
 
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)

@@ -44,7 +44,7 @@ Player::Player(bool enabled) : Module(enabled)
 	walkR.PushBack({ 300, 37, 50, 37 });
 	walkR.loop = true;
 	walkR.speed = 0.1f;
-
+	
 	//walk left
 	walkL.PushBack({ 250, 629, 50, 37 });
 	walkL.PushBack({ 200, 629, 50, 37 });
@@ -126,8 +126,15 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.width = config.attribute("width").as_int();
 	playerData.x = config.attribute("x").as_int();
 	playerData.y = config.attribute("y").as_int();
-	playerData.xVel = config.attribute("xVel").as_int();
+	playerData.xVel = config.attribute("xVel").as_int();		
+	playerData.yVel = config.attribute("yVel").as_int();
 	playerData.gravity = config.attribute("gravity").as_int();
+	playerData.direction = config.attribute("direction").as_int();
+	playerData.jumping = config.attribute("jumping").as_bool();
+	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
+	playerData.isColliding = config.attribute("isColliding").as_bool();
+	playerData.isCollidingL = config.attribute("isCollidingL").as_bool();
+	playerData.isCollidingR = config.attribute("isCollidingR").as_bool();
 
 	playerCollider = app->collisions->AddCollider({ playerData.x, playerData.y, playerData.width, playerData.height }, Collider::Type::PLAYER, this);
 
@@ -157,67 +164,70 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 
-	playerData.y -= playerYVel;
+	playerData.y -= playerData.yVel;
 
-	// If the player is above ground, apply gravity.
-	if (playerData.y < app->scene->floor) {
-		// Apply gravity by reducing upward velocity.
-		playerYVel -= playerData.gravity;
+	if (playerData.y < 200) {
+		playerData.yVel -= playerData.gravity;
 	}
+
 	else {
 		// Player is on the ground, so stop jumping.
-		playerYVel = 0;
-		jumping = false;
+		playerData.yVel = 0;
+		playerData.jumping = false;
 		// Force player to be exactly at ground level.
-		playerData.y = app->scene->floor;
+		playerData.y = 200;
 	}
+	/*if (playerData.y < 500 && !playerData.isColliding) {
+		// Apply gravity by reducing upward velocity.
+		playerData.yVel -= playerData.gravity;
+	}*/
+
 
 	// Handle the player jump.
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !jumping) {
-		playerYVel = 10;
-		jumping = true;
-		canJumpAgain = true;
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping) {
+		playerData.yVel = 10;
+		playerData.jumping = true;
+		playerData.canJumpAgain = true;
 		jumpR.Reset();
 		jumpL.Reset();
 
-		if (direction == 1)
+		if (playerData.direction == 1)
 		{
 			currentAnimation = &jumpR;
 		}
 
-		else if (direction == 0)
+		else if (playerData.direction == 0)
 		{
 			currentAnimation = &jumpL;
 		}
 
 	}
 	// Handle the player DOUBLE jump.
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumping && canJumpAgain) {
-		playerYVel = 8;
-		jumping = true;
-		canJumpAgain = false;
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain) {
+		playerData.yVel = 8;
+		playerData.jumping = true;
+		playerData.canJumpAgain = false;
 
 		jumpR.Reset();
 		jumpL.Reset();
 
-		if (direction == 1)
+		if (playerData.direction == 1)
 		{
 			currentAnimation = &jumpR;
 		}
 
-		else if (direction == 0)
+		else if (playerData.direction == 0)
 		{
 			currentAnimation = &jumpL;
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !playerData.isCollidingL)
 
 	{
 		playerData.x += playerData.xVel;
 		currentAnimation = &walkR;
-		direction = 1;
-
+		playerData.direction = 1;
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
@@ -225,11 +235,11 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnimR;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !playerData.isCollidingR)
 	{
 		playerData.x -= playerData.xVel;
 		currentAnimation = &walkL;
-		direction = 0;
+		playerData.direction = 0;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
@@ -240,7 +250,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE
-		&& !jumping)
+		&& !playerData.jumping)
 	{
 		if (currentAnimation != &idleAnimR
 			&& currentAnimation != &idleAnimL
@@ -249,7 +259,7 @@ bool Player::Update(float dt)
 			&& currentAnimation != &jumpR
 			&& currentAnimation != &jumpL)
 		{
-			switch (direction) {
+			switch (playerData.direction) {
 
 			case 1:
 				idleAnimR.Reset();
@@ -357,6 +367,9 @@ bool Player::PostUpdate()
 	jumpL.loopCount = 0;
 	jumpR.loopCount = 0;
 
+	playerData.isCollidingR = false;
+	playerData.isCollidingL = false;
+
 	return ret;
 }
 
@@ -386,8 +399,74 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 		playerData.x = player.attribute("x").as_int();
 		playerData.y = player.attribute("y").as_int();
 		playerData.xVel = player.attribute("xVel").as_int();
+		playerData.yVel = player.attribute("yVel").as_int();
 		playerData.gravity = player.attribute("gravity").as_int();
+		playerData.direction = player.attribute("direction").as_int();
+		playerData.jumping = player.attribute("jumping").as_bool();
+		playerData.canJumpAgain = player.attribute("canJumpAgain").as_bool();
+		playerData.isColliding = player.attribute("isColliding").as_bool();
+		playerData.isCollidingL = player.attribute("isCollidingL").as_bool();
+		playerData.isCollidingR = player.attribute("isCollidingR").as_bool();
 	}
 
 	return ret;
+}
+
+void Player::OnCollision(Collider* c1, Collider* c2)
+{
+	/*int leftA, leftB;
+	int rightA, rightB;
+	int topA, topB;
+	int bottomA, bottomB;
+
+	bool isOn = false,
+		isUnder = false,
+		isLeft = false,
+		isRight = false;
+
+	leftA = c1->rect.x;
+	rightA = c1->rect.x + c1->rect.w;
+	topA = c1->rect.y;
+	bottomA = c1->rect.y + c1->rect.h;
+
+	leftB = c2->rect.x;
+	rightB = c2->rect.x + c2->rect.w;
+	topB = c2->rect.y;
+	bottomB = c2->rect.y + c2->rect.y;
+
+	if (rightA < (leftB + 10))
+		isLeft = true;
+
+	if (leftA > (rightB - 10))
+		isRight = true;
+
+	if (bottomA < (topB + 15))
+		isOn = true;
+
+	if (topA >= (bottomB - 5))
+		isUnder = true;
+
+	if (bottomA >= topB && isOn) 
+	{ 
+		// Player is on the ground, so stop jumping.
+		playerData.yVel = 0;
+		playerData.jumping = false;
+		// Force player to be exactly at ground level.
+		playerData.y = topB - playerData.height;
+	}
+	
+	else if (topA >= bottomB && isUnder) 
+	{ 
+		playerData.y = bottomB;
+	}
+
+	if (rightA >= leftB && isLeft)
+	{ 
+		playerData.isCollidingL = true;
+	}
+
+	if (leftA <= rightB && isRight)
+	{ 
+		playerData.isCollidingR = true;
+	}*/
 }

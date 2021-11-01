@@ -14,8 +14,16 @@ struct PlayerData
 	int width, height;
 	int	x, y;
 
-	int xVel;
+	int xVel, yVel;
 	int gravity;
+
+	bool jumping;
+	bool canJumpAgain;
+
+	bool isColliding, isCollidingUp, isCollidingDown, isCollidingL, isCollidingR;
+
+	int direction; //1 if player looks right, 0 if player looks left
+
 };
 
 class Player : public Module
@@ -45,9 +53,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool jumping = false;
-	bool canJumpAgain = false;
-	int playerYVel;
+	// Collision callback, called when the player intersects with another collider
+	void OnCollision(Collider* c1, Collider* c2) override;
 
 
 	// The pointer to the current player animation
@@ -75,7 +82,7 @@ public:
 
 	// The player's collider
 	Collider* playerCollider = nullptr;
+	int TopB;
 
-	int direction; //1 if player looks right, 0 if player looks left
 };
 #endif // __PLAYER_H__

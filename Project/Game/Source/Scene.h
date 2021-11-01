@@ -38,8 +38,6 @@ public:
 	bool collidersOn = false;
 	bool debug = false;
 
-	int floor;
-
 	// The wall/floor's collider
 	Collider* wallCollider = nullptr;
 

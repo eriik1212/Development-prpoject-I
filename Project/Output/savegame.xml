@@ -4,15 +4,15 @@
 	<input />
 	<textures />
 	<audio />
+	<map />
 	<scene />
 	<:anonymous />
-	<map />
 	<player />
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="0" />
-		<player x="132" y="312" />
-		<playerLimit Left="100" Right="300" />
+		<camera x="-316" y="0" />
+		<player x="536" y="200" />
+		<playerLimit Left="340" Right="540" />
 	</renderer>
 </save_state>

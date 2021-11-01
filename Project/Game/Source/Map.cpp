@@ -135,7 +135,8 @@ void Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 					
-						app->scene->floor = pos.y - r.h;
+						tilesColliders = app->collisions->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::Type::WALL, app->play);
+						
 					}
 
 				}

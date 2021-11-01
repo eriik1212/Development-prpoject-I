@@ -21,7 +21,6 @@ public:
 	}
 
 	// Called before render is available
-	// L01: DONE 5: Sending config file to all modules
 	virtual bool Awake(pugi::xml_node&)
 	{
 		return true;
@@ -88,9 +87,11 @@ public:
 	inline bool Enabled() const { return active; }
 	inline bool Disabled() const { return !active; }
 
-	void OnCollision(Collider* c1, Collider* c2)
+	//Called when two colliders are intersecting
+	//and the module is registered as the listener
+	virtual void OnCollision(Collider* c1, Collider* c2)
 	{
-		
+
 	}
 
 public:
