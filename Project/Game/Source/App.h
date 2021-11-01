@@ -19,6 +19,9 @@ class Scene;
 class Map;
 class LogoScreen;
 class Player;
+class ModuleCollisions;
+class ModuleFadeToBlack;
+
 class App
 {
 public:
@@ -82,7 +85,7 @@ private:
 public:
 
 	// Modules
-	Window* win = nullptr;
+	Window* win;
 	Input* input;
 	Render* render;
 	Textures* tex;
@@ -91,6 +94,8 @@ public:
 	Map* map;
 	LogoScreen* logo;
 	Player* play;
+	ModuleFadeToBlack* fade;
+	ModuleCollisions* collisions;
 
 private:
 
@@ -100,12 +105,6 @@ private:
 	SString organization;
 
 	List<Module *> modules;
-
-	// L01: DONE 2: Create new variables from pugui namespace
-	// NOTE: Redesigned LoadConfig() to avoid storing this variables
-	//pugi::xml_document configFile;
-	//pugi::xml_node config;
-	//pugi::xml_node configApp;
 
 
 	uint frames;

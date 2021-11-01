@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "Player.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"

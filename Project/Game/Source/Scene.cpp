@@ -25,6 +25,7 @@ Scene::~Scene()
 bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+
 	bool ret = true;
 
 	return ret;
@@ -33,11 +34,19 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-	// L03: DONE: Load map
-	//app->map->Load("hello.tmx");
+	//Load Map
 	app->map->Load("MapLVL1.tmx");
-	// Load music
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+
+	if (this->Enabled()) 
+	{
+		// Load music
+		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+
+		//Enable Player & map
+		app->play->Enable();
+		app->map->Enable();
+
+	}
 
 	//app->LoadGameRequest();
 
@@ -50,6 +59,7 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+
 	return true;
 }
 int lastPosition;
@@ -78,7 +88,6 @@ bool Scene::Update(float dt)
 		app->render->camera.y -= app->play->playerData.xVel;
 	}*/
 
-    // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 

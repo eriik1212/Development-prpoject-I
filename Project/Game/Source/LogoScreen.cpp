@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Map.h"
 #include "Player.h"
+#include "FadeToBlack.h"
 
 
 LogoScreen::LogoScreen(bool enabled) : Module(enabled)
@@ -36,6 +37,10 @@ bool LogoScreen::Start()
 
 	//Aqui podem posar algun so a veure amb la pantalla d'inici
 	//app->audio->PlayMusic("Assets/Audio/02_character_selection.ogg", 1.0f);
+
+	//Fade In
+	app->fade->FadeToBlack(this, app->logo, 30);
+
 	return true;
 }
 
@@ -45,12 +50,8 @@ bool LogoScreen::Update(float dt)
 	// ScanCodes
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) ==KEY_DOWN)
 	{
-		this->Disable();
-
-		app->scene->Enable();
-		app->play->Enable();
-		app->map->Enable();
-		//app->fade->FadeToBlack(this, (Module*)app->scene, 60);
+		//Fade Out
+		app->fade->FadeToBlack(this, app->scene, 30);
 	}
 
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

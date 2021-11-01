@@ -5,11 +5,14 @@
 	<textures />
 	<audio />
 	<scene />
+	<:anonymous />
 	<map />
 	<player />
+	<:anonymous />
+	<:anonymous />
 	<renderer>
-		<camera x="-564" y="0" />
-		<player x="860" y="300" />
-		<playerLimit Left="664" Right="864" />
+		<camera x="0" y="0" />
+		<player x="132" y="312" />
+		<playerLimit Left="100" Right="300" />
 	</renderer>
 </save_state>

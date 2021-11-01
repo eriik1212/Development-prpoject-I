@@ -38,6 +38,8 @@ public:
 	bool collidersOn = false;
 	bool debug = false;
 
+	int floor;
+
 private:
 	SDL_Texture* img;
 };

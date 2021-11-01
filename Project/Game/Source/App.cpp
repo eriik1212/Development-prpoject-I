@@ -8,6 +8,8 @@
 #include "Map.h"
 #include "LogoScreen.h"
 #include "Player.h"
+#include "FadeToBlack.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -22,13 +24,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	win = new Window(true);
 	input = new Input(true);
-	render = new Render(true);
 	tex = new Textures(true);
 	audio = new Audio(true);
-	logo = new LogoScreen(true);
+	logo = new LogoScreen(false);
 	scene = new Scene(false);
 	map = new Map(false);
 	play = new Player(false);
+	fade = new ModuleFadeToBlack(true);
+	collisions = new ModuleCollisions(true);
+
+	render = new Render(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +45,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(logo);
 	AddModule(map);
 	AddModule(play);
+	AddModule(fade);
+	AddModule(collisions);
 
 	// Render last to swap buffer
 	AddModule(render);

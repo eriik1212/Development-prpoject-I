@@ -53,10 +53,10 @@ public:
 	SDL_Rect viewport;
 	SDL_Color background;
 
+
 	// Limit of the player inside the camera
 	int playerLimitR = camera.x + 300;
 	int playerLimitL = camera.x + 100;
-
 };
 
 #endif // __RENDER_H__

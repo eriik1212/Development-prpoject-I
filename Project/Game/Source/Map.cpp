@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Scene.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -52,11 +53,9 @@ void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
-	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
 
-	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 	while (mapLayerItem != NULL) {
 		if (!app->scene->collidersOn)
 		{
@@ -97,12 +96,10 @@ void Map::Draw()
 				{
 					for (int y = 0; y < mapLayerItem->data->height; y++)
 					{
-						// L04: DONE 9: Complete the draw function
 						int gid = mapLayerItem->data->Get(x, y);
 
 						if (gid > 0) {
 
-							//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
 							//now we always use the firt tileset in the list
 							//TileSet* tileset = mapData.tilesets.start->data;
 							TileSet* tileset = GetTilesetFromTileId(gid);
@@ -121,16 +118,38 @@ void Map::Draw()
 			}
 		}
 
+		if (mapLayerItem->data->properties.GetProperty("Navigation") == 1) {
+
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+					
+						app->scene->floor = pos.y - r.h;
+					}
+
+				}
+			}
+		}
+
 		mapLayerItem = mapLayerItem->next;
 	}
 }
 
-// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	// L05: DONE 1: Add isometric map to world coordinates
 	if (mapData.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x * mapData.tileWidth;
@@ -150,12 +169,10 @@ iPoint Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
-// L05: DON 2: Add orthographic world to map coordinates
 iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
 
-	// L05: DONE 3: Add the case for isometric maps to WorldToMap
 	if (mapData.type == MAPTYPE_ORTHOGONAL)
 	{
 		ret.x = x / mapData.tileWidth;
@@ -178,7 +195,6 @@ iPoint Map::WorldToMap(int x, int y) const
 	return ret;
 }
 
-// L06: TODO 3: Pick the right Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
 	ListItem<TileSet*>* item = mapData.tilesets.start;
@@ -203,7 +219,6 @@ SDL_Rect TileSet::GetTileRect(int id) const
 {
 	SDL_Rect rect = { 0 };
 
-	// L04: DONE 7: Get relative Tile rectangle
 	int relativeId = id - firstgid;
 	rect.w = tileWidth;
 	rect.h = tileHeight;
@@ -218,7 +233,6 @@ bool Map::CleanUp()
 {
     LOG("Unloading map");
 
-    // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     // Remove all tilesets
 	ListItem<TileSet*>* item;
 	item = mapData.tilesets.start;
@@ -230,7 +244,6 @@ bool Map::CleanUp()
 	}
 	mapData.tilesets.clear();
 
-	// L04: DONE 2: clean up all layer data
 	// Remove all layers
 	ListItem<MapLayer*>* item2;
 	item2 = mapData.layers.start;
@@ -267,14 +280,11 @@ bool Map::Load(const char* filename)
 		ret = LoadMap(mapFile);
 	}
 
-    // L03: DONE 4: Create and call a private function to load a tileset
-    // remember to support more any number of tilesets!
 	if (ret == true)
 	{
 		ret = LoadTileSets(mapFile.child("map"));
 	}
 
-	// L04: DONE 4: Iterate all layers and load each of them
 	// Load layer info
 	if (ret == true)
 	{
@@ -283,9 +293,9 @@ bool Map::Load(const char* filename)
     
     if(ret == true)
     {
-        // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
+        //LOG all the data loaded iterate all tilesets and LOG everything
 
-		// L04: TODO 4: LOG the info for each loaded layer
+		// LOG the info for each loaded layer
     }
 
     mapLoaded = ret;
@@ -293,7 +303,6 @@ bool Map::Load(const char* filename)
     return ret;
 }
 
-// L03: TODO: Load map general properties
 bool Map::LoadMap(pugi::xml_node mapFile)
 {
 	bool ret = true;

@@ -5,6 +5,7 @@
 
 #include "PugiXml/src/pugixml.hpp"
 
+struct Collider;
 class App;
 
 class Module
@@ -56,7 +57,6 @@ public:
 		return true;
 	}
 
-    // L02: DONE 2: Create new virtual methods to Load / Save state
 	virtual bool LoadState(pugi::xml_node&)
 	{
 		return true;
@@ -85,10 +85,18 @@ public:
 		}
 	}
 
+	inline bool Enabled() const { return active; }
+	inline bool Disabled() const { return !active; }
+
+	void OnCollision(Collider* c1, Collider* c2)
+	{
+
+	}
+
 public:
 
 	SString name;
-	bool active;
+	bool active = true;
 
 };
 

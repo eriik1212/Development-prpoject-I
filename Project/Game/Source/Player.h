@@ -4,8 +4,10 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Render.h"
+#include "ModuleCollisions.h"
 
 struct SDL_Texture;
+struct Collider;
 
 struct PlayerData
 {
@@ -68,6 +70,9 @@ public:
 		jumpL,
 		idleAnimL,
 		idleAnimR;
+
+	// The player's collider
+	Collider* playerCollider = nullptr;
 
 	int direction; //1 if player looks right, 0 if player looks left
 };

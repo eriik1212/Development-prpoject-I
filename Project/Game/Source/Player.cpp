@@ -6,6 +6,8 @@
 #include "Window.h"
 #include "Player.h"
 #include "Map.h"
+#include "Scene.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -94,7 +96,7 @@ Player::~Player()
 // Called before render is available
 bool Player::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
+	LOG("Loading Player");
 	bool ret = true;
 
 	playerData.height = config.attribute("height").as_int();
@@ -104,6 +106,8 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.xVel = config.attribute("xVel").as_int();
 	playerData.gravity = config.attribute("gravity").as_int();
 
+	playerCollider = app->collisions->AddCollider({ playerData.x, playerData.y, playerData.width, playerData.height }, Collider::Type::PLAYER, this);
+
 	return ret;
 }
 
@@ -111,6 +115,7 @@ bool Player::Awake(pugi::xml_node& config)
 bool Player::Start()
 {
 	playerTex = app->tex->Load("Assets/player/adventurer.png");
+
 
 	//app->LoadGameRequest();
 
@@ -128,12 +133,11 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	currentAnimation->Update();
 
 	playerData.y -= playerYVel;
 
 	// If the player is above ground, apply gravity.
-	if (playerData.y < 300) {
+	if (playerData.y < app->scene->floor) {
 		// Apply gravity by reducing upward velocity.
 		playerYVel -= playerData.gravity;
 	}
@@ -142,7 +146,7 @@ bool Player::Update(float dt)
 		playerYVel = 0;
 		jumping = false;
 		// Force player to be exactly at ground level.
-		playerData.y = 300;
+		playerData.y = app->scene->floor;
 	}
 
 	// Handle the player jump.
@@ -290,13 +294,16 @@ bool Player::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	// L03: DONE 7: Set the window title with map/tileset info
+	playerCollider->SetPos(playerData.x, playerData.y);
+
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,
 		app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.count());
 
 	app->win->SetTitle(title.GetString());
+
+	currentAnimation->Update();
 
 	return true;
 }

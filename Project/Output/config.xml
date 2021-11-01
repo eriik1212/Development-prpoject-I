@@ -11,7 +11,7 @@
   </renderer>
 
   <window>
-    <resolution width="690" height="480" scale="1"/>
+    <resolution width="640" height="480" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -23,5 +23,5 @@
     <folder>Assets/maps/</folder>
   </map>
   
-  <player widht="37" height="50" x="200" y="300" xVel="4" gravity="1"/>
+  <player width="37" height="50" x="200" y="300" xVel="4" gravity="1"/>
 </config>
