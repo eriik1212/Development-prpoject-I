@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "GameOverScreen.h"
 
 
 LogoScreen::LogoScreen(bool enabled) : Module(enabled)

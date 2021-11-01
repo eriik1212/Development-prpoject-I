@@ -85,6 +85,29 @@ Player::Player(bool enabled) : Module(enabled)
 	jumpL.loop = true;
 	jumpL.speed = 0.45f;
 
+	//death looking right
+	deathAnimR.PushBack({ 200, 1332, 50, 37 });
+	deathAnimR.PushBack({ 250, 1332, 50, 37 });
+	deathAnimR.PushBack({ 300, 1332, 50, 37 });
+	deathAnimR.PushBack({ 0, 1369, 50, 37 });
+	deathAnimR.PushBack({ 50, 1369, 50, 37 });
+	deathAnimR.PushBack({ 100, 1369, 50, 37 });
+	deathAnimR.PushBack({ 150, 1369, 50, 37 });
+	deathAnimR.PushBack({ 200, 1369, 50, 37 });
+	deathAnimR.loop = true;
+	deathAnimR.speed = 0.1f;
+
+	//death looking left
+	deathAnimL.PushBack({ 100, 1702, 50, 37 });
+	deathAnimL.PushBack({ 50, 1702, 50, 37 });
+	deathAnimL.PushBack({ 0, 1702, 50, 37 });
+	deathAnimL.PushBack({ 300, 1739, 50, 37 });
+	deathAnimL.PushBack({ 250, 1739, 50, 37 });
+	deathAnimL.PushBack({ 200, 1739, 50, 37 });
+	deathAnimL.PushBack({ 150, 1739, 50, 37 });
+	deathAnimL.PushBack({ 100, 1739, 50, 37 });
+	deathAnimL.loop = true;
+	deathAnimL.speed = 0.1f;
 
 
 }
@@ -114,7 +137,7 @@ bool Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Player::Start()
 {
-	playerTex = app->tex->Load("Assets/player/adventurer.png");
+	playerTex = app->tex->Load("Assets/player/adventurer1.png");
 
 
 	//app->LoadGameRequest();

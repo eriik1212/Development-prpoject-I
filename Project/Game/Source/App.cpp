@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "FadeToBlack.h"
 #include "ModuleCollisions.h"
+#include "GameOverScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	play = new Player(false);
 	fade = new ModuleFadeToBlack(true);
 	collisions = new ModuleCollisions(true);
+	gameOver = new GameOverScreen(false);
 
 	render = new Render(true);
 
@@ -47,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(play);
 	AddModule(fade);
 	AddModule(collisions);
+	AddModule(gameOver);
 
 	// Render last to swap buffer
 	AddModule(render);

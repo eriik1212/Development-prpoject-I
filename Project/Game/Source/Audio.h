@@ -23,6 +23,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Stop playing the current music
+	bool StopMusic();
+
 	// Play a music file
 	bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
 

@@ -69,7 +69,9 @@ public:
 		jumpR,
 		jumpL,
 		idleAnimL,
-		idleAnimR;
+		idleAnimR,
+		deathAnimR,
+		deathAnimL;
 
 	// The player's collider
 	Collider* playerCollider = nullptr;

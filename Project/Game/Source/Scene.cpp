@@ -7,7 +7,8 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
-
+#include "GameOverScreen.h"
+#include "FadeToBlack.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -37,7 +38,7 @@ bool Scene::Start()
 	//Load Map
 	app->map->Load("MapLVL1.tmx");
 
-	if (this->Enabled()) 
+	if (this->Enabled()&& !this->Disabled()) 
 	{
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -101,6 +102,12 @@ bool Scene::Update(float dt)
 			collidersOn = false;
 		else if (!collidersOn)
 			collidersOn = true;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, app->gameOver, 30);
+		
 	}
 		
 

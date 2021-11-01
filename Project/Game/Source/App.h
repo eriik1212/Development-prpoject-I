@@ -21,7 +21,7 @@ class LogoScreen;
 class Player;
 class ModuleCollisions;
 class ModuleFadeToBlack;
-
+class GameOverScreen;
 class App
 {
 public:
@@ -96,7 +96,8 @@ public:
 	Player* play;
 	ModuleFadeToBlack* fade;
 	ModuleCollisions* collisions;
-
+	GameOverScreen* gameOver;
+	
 private:
 
 	int argc;
