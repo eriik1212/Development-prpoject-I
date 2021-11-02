@@ -5,14 +5,15 @@
 #include "Animation.h"
 #include "Render.h"
 #include "ModuleCollisions.h"
+#include "Collider.h"
 
 struct SDL_Texture;
 struct Collider;
 
 struct PlayerData
 {
-	int width, height;
-	int	x, y;
+	// The player's body
+	SDL_Rect playerBody;
 
 	int xVel, yVel;
 	int gravity;
@@ -23,6 +24,8 @@ struct PlayerData
 	bool isColliding, isCollidingUp, isCollidingDown, isCollidingL, isCollidingR;
 
 	int direction; //1 if player looks right, 0 if player looks left
+
+	Collider GetCollider() { return Collider(playerBody); }
 
 };
 
@@ -57,6 +60,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2) override;
 
 
+
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
@@ -80,8 +84,8 @@ public:
 		deathAnimR,
 		deathAnimL;
 
-	// The player's collider
-	Collider* playerCollider = nullptr;
+
+	//Collider* playerCollider = nullptr;
 	int TopB;
 
 };

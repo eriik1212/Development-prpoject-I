@@ -6,7 +6,33 @@
 #include "Module.h"
 #include "Collider.h"
 
-class ModuleCollisions : public Module
+enum Colliders
+{
+	PLAYER = 0, //0
+	WALL // 1
+};
+
+class ModuleCollisions
+{
+public:
+	ModuleCollisions();
+	~ModuleCollisions();
+
+	// Draws all existing colliders with some transparency
+	// PLAYER = 0, WALL = 1
+	void DebugDraw(SDL_Rect body, int type);
+
+	Collider AddCollider(int x, int y, int w, int h);
+	Collider GetCollider() { return Collider(colliderBody); }
+
+	iPoint origin;
+
+private:
+
+	SDL_Rect colliderBody;
+};
+
+/*class ModuleCollisions : public Module
 {
 public:
 	// Constructor
@@ -52,6 +78,6 @@ private:
 	// Simple debugging flag to draw all colliders
 	bool showColl = false;
 
-};
+};*/
 
 #endif // __MODULE_COLLISIONS_H__

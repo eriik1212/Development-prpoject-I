@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Scene.h"
 #include "Player.h"
+#include "ModuleCollisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -135,8 +136,18 @@ void Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 					
-						tilesColliders = app->collisions->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::Type::WALL, app->play);
-						
+
+						//tilesColliders = app->collisions->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::Type::WALL, app->play);
+					
+				
+						ModuleCollisions tilesColliders[MAX_COLLIDERS];
+
+						tilesColliders[x].AddCollider(pos.x, pos.y, r.w, r.h);
+
+						tilesColliders[x].DebugDraw({ pos.x, pos.y, r.w, r.h }, 1);
+
+						tilesColliders[x].GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f);
+
 					}
 
 				}

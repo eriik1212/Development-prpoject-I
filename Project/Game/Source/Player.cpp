@@ -109,7 +109,6 @@ Player::Player(bool enabled) : Module(enabled)
 	deathAnimL.loop = true;
 	deathAnimL.speed = 0.1f;
 
-
 }
 
 // Destructor
@@ -122,10 +121,10 @@ bool Player::Awake(pugi::xml_node& config)
 	LOG("Loading Player");
 	bool ret = true;
 
-	playerData.height = config.attribute("height").as_int();
-	playerData.width = config.attribute("width").as_int();
-	playerData.x = config.attribute("x").as_int();
-	playerData.y = config.attribute("y").as_int();
+	playerData.playerBody.h = config.attribute("height").as_int();
+	playerData.playerBody.w = config.attribute("width").as_int();
+	playerData.playerBody.x = config.attribute("x").as_int();
+	playerData.playerBody.y = config.attribute("y").as_int();
 	playerData.xVel = config.attribute("xVel").as_int();		
 	playerData.yVel = config.attribute("yVel").as_int();
 	playerData.gravity = config.attribute("gravity").as_int();
@@ -136,7 +135,7 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.isCollidingL = config.attribute("isCollidingL").as_bool();
 	playerData.isCollidingR = config.attribute("isCollidingR").as_bool();
 
-	playerCollider = app->collisions->AddCollider({ playerData.x, playerData.y, playerData.width, playerData.height }, Collider::Type::PLAYER, this);
+	//playerCollider = app->collisions->AddCollider({ playerData.x, playerData.y, playerData.width, playerData.height }, Collider::Type::PLAYER, this);
 
 	return ret;
 }
@@ -164,9 +163,9 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 
-	playerData.y -= playerData.yVel;
+	playerData.playerBody.y -= playerData.yVel;
 
-	if (playerData.y < 200) {
+	if (playerData.playerBody.y < 400) {
 		playerData.yVel -= playerData.gravity;
 	}
 
@@ -175,13 +174,12 @@ bool Player::Update(float dt)
 		playerData.yVel = 0;
 		playerData.jumping = false;
 		// Force player to be exactly at ground level.
-		playerData.y = 200;
+		playerData.playerBody.y = 400;
 	}
 	/*if (playerData.y < 500 && !playerData.isColliding) {
 		// Apply gravity by reducing upward velocity.
 		playerData.yVel -= playerData.gravity;
 	}*/
-
 
 	// Handle the player jump.
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping) {
@@ -225,7 +223,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !playerData.isCollidingL)
 
 	{
-		playerData.x += playerData.xVel;
+		playerData.playerBody.x += playerData.xVel;
 		currentAnimation = &walkR;
 		playerData.direction = 1;
 
@@ -235,9 +233,14 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnimR;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		playerData.yVel = 12;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !playerData.isCollidingR)
 	{
-		playerData.x -= playerData.xVel;
+		playerData.playerBody.x -= playerData.xVel;
 		currentAnimation = &walkL;
 		playerData.direction = 0;
 	}
@@ -275,17 +278,17 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (playerData.x > 100)
+	if (playerData.playerBody.x > 100)
 	{
 		//Player POSITION LIMITS
-		if (playerData.x <= app->render->playerLimitL)
+		if (playerData.playerBody.x <= app->render->playerLimitL)
 		{
-			playerData.x = app->render->playerLimitL;
+			playerData.playerBody.x = app->render->playerLimitL;
 
 		}
 
 		//Camera LIMITS & MOVEMENT
-		if (playerData.x >= app->render->playerLimitR)
+		if (playerData.playerBody.x >= app->render->playerLimitR)
 		{
 			app->render->camera.x -= playerData.xVel;
 			app->render->playerLimitR += playerData.xVel;
@@ -293,20 +296,20 @@ bool Player::Update(float dt)
 
 		}
 
-		if (playerData.x <= app->render->playerLimitL)
+		if (playerData.playerBody.x <= app->render->playerLimitL)
 		{
 			app->render->camera.x += playerData.xVel;
 			app->render->playerLimitL -= playerData.xVel;
 			app->render->playerLimitR -= playerData.xVel;
 		}
 
-		if (playerData.x >= 3000 + (app->render->camera.w / 2))
-			playerData.x = 3000 + (app->render->camera.w / 2);
+		if (playerData.playerBody.x >= 3000 + (app->render->camera.w / 2))
+			playerData.playerBody.x = 3000 + (app->render->camera.w / 2);
 	}
-	if (playerData.x <= 100)
+	if (playerData.playerBody.x <= 100)
 	{
-		if (playerData.x <= -10)
-			playerData.x = -10;
+		if (playerData.playerBody.x <= -10)
+			playerData.playerBody.x = -10;
 	}
 
 	if (app->render->camera.x >= 0)
@@ -327,7 +330,7 @@ bool Player::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	playerCollider->SetPos(playerData.x, playerData.y);
+	//playerCollider->SetPos(playerData.x, playerData.y);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,
@@ -338,6 +341,8 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 
+	LOG("playerX=%d", playerData.playerBody.x);
+
 	return true;
 }
 
@@ -347,7 +352,7 @@ bool Player::PostUpdate()
 	bool ret = true;
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(playerTex, playerData.x, playerData.y, &rect);
+	app->render->DrawTexture(playerTex, playerData.playerBody.x, playerData.playerBody.y, &rect);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -394,10 +399,10 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 	else
 	{
 		// Load player general properties
-		playerData.height = player.attribute("height").as_int();
-		playerData.width = player.attribute("width").as_int();
-		playerData.x = player.attribute("x").as_int();
-		playerData.y = player.attribute("y").as_int();
+		playerData.playerBody.h = player.attribute("height").as_int();
+		playerData.playerBody.w = player.attribute("width").as_int();
+		playerData.playerBody.x = player.attribute("x").as_int();
+		playerData.playerBody.y = player.attribute("y").as_int();
 		playerData.xVel = player.attribute("xVel").as_int();
 		playerData.yVel = player.attribute("yVel").as_int();
 		playerData.gravity = player.attribute("gravity").as_int();

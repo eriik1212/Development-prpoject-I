@@ -19,9 +19,9 @@
     <ClCompile Include="Source\LogoScreen.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
-    <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\ModuleCollisions.cpp" />
     <ClCompile Include="Source\GameOverScreen.cpp" />
+    <ClCompile Include="Source\Collider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -61,9 +61,9 @@
     <ClInclude Include="Source\LogoScreen.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
-    <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\ModuleCollisions.h" />
     <ClInclude Include="Source\GameOverScreen.h" />
+    <ClInclude Include="Source\Collider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

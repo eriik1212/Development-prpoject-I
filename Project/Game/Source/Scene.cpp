@@ -48,8 +48,8 @@ bool Scene::Start()
 		app->map->Enable();
 
 	}
-	wallCollider = app->collisions->AddCollider({ 400, 300, 20, 100 }, Collider::Type::WALL, this);
-	wallCollider = app->collisions->AddCollider({ 300, 250, 20, 20 }, Collider::Type::WALL, this);
+	//wallCollider = app->collisions->AddCollider({ 400, 300, 20, 100 }, Collider::Type::WALL, this);
+	//wallCollider = app->collisions->AddCollider({ 300, 250, 20, 20 }, Collider::Type::WALL, this);
 
 	//app->LoadGameRequest();
 
@@ -103,6 +103,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
+		
 		if (collidersOn)
 			collidersOn = false;
 		else if (!collidersOn)
@@ -129,6 +130,8 @@ bool Scene::Update(float dt)
 
 	app->win->SetTitle(title.GetString());
 
+
+
 	return true;
 }
 
@@ -136,7 +139,8 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-	
+
+
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 

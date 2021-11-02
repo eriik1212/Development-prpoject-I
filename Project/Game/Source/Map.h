@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "ModuleCollisions.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -151,7 +152,6 @@ public:
 
 	MapData mapData;
 
-	Collider* tilesColliders;
 
 private:
 

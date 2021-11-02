@@ -2,38 +2,30 @@
 #define __COLLIDER_H__
 
 #include "SDL/include/SDL_Rect.h"
+#include "Module.h"
+#include "Point.h"
 
-class Module;
+#include <math.h>
 
-struct Collider
+class Collider
 {
-	enum Type
-	{
-		NONE = -1,
-		WALL,
-		PLAYER,
-		/*ENEMY,
-		PLAYER_SHOT,
-		ENEMY_SHOT,
-		ENEMY_HIT,*/
+public:
+	Collider(SDL_Rect& body);
+	~Collider();
 
-		MAX
-	};
+	bool CheckCollision(Collider& other, float push);
 
-	//Methods
-	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr);
-
-	void SetPos(int x, int y);
-
-	bool Intersects(const SDL_Rect& r) const;
-
-	//Variables
-	SDL_Rect rect;
-	bool pendingToDelete = false;
-	Type type;
-	Module* listener = nullptr;
+	void Move(float dx, float dy) 
+	{ 
+		body.x += dx; 
+		body.y += dy;
+	}
+	
+	iPoint GetPosition() { return iPoint(body.x + body.w / 2, body.y + body.h / 2); }
+	iPoint GetHalfSize() { return iPoint(body.w / 2, body.h / 2); }
+private:
+	SDL_Rect& body;
 };
-
 
 #endif // !__COLLIDER_H__
 

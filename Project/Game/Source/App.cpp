@@ -32,7 +32,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(false);
 	play = new Player(false);
 	fade = new ModuleFadeToBlack(true);
-	collisions = new ModuleCollisions(true);
+	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);
 
 	render = new Render(true);
@@ -48,7 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(logo);
 	AddModule(play);
 	AddModule(fade);
-	AddModule(collisions);
+	//AddModule(collisions);
 	AddModule(gameOver);
 
 	// Render last to swap buffer
