@@ -84,9 +84,5 @@ public:
 		deathAnimR,
 		deathAnimL;
 
-
-	//Collider* playerCollider = nullptr;
-	int TopB;
-
 };
 #endif // __PLAYER_H__

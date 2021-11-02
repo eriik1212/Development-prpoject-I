@@ -152,6 +152,7 @@ public:
 
 	MapData mapData;
 
+	ModuleCollisions tilesColliders/*[MAX_COLLIDERS]*/;
 
 private:
 

@@ -18,10 +18,6 @@ public:
 	ModuleCollisions();
 	~ModuleCollisions();
 
-	// Draws all existing colliders with some transparency
-	// PLAYER = 0, WALL = 1
-	void DebugDraw(SDL_Rect body, int type);
-
 	Collider AddCollider(int x, int y, int w, int h);
 	Collider GetCollider() { return Collider(colliderBody); }
 

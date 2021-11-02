@@ -110,6 +110,15 @@ bool Scene::Update(float dt)
 			collidersOn = true;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+
+		if (godMode)
+			godMode = false;
+		else if (!godMode)
+			godMode = true;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
 		app->fade->FadeToBlack(this, app->gameOver, 30);

@@ -1,4 +1,5 @@
 #include "Collider.h"
+#include "Player.h"
 #include "Log.h"
 
 Collider::Collider(SDL_Rect& body) :
@@ -13,6 +14,7 @@ Collider::~Collider()
 
 bool Collider::CheckCollision(Collider& other, float push)
 {
+
 	iPoint otherPosition = other.GetPosition();
 	iPoint otherHalfSize = other.GetHalfSize();
 	iPoint thisPosition = GetPosition();
@@ -33,6 +35,7 @@ bool Collider::CheckCollision(Collider& other, float push)
 			{
 				Move(intersectX * (1.0f - push), 0.0f);
 				other.Move(-intersectX * push, 0.0f);
+
 			}
 			else
 			{
@@ -46,15 +49,36 @@ bool Collider::CheckCollision(Collider& other, float push)
 			{
 				Move(0.0f, intersectY * (1.0f - push));
 				other.Move(0.0f, -intersectY * push);
+
 			}
 			else
 			{
 				Move(0.0f, -intersectY * (1.0f - push));
 				other.Move( 0.0f, intersectY * push);
+
+				app->play->playerData.isCollidingUp = true;
+
 			}
 		}
+
 		return true;
 	}
 
+
 	return false;
+}
+
+void Collider::DebugDraw(SDL_Rect body, int type)
+{
+	Uint8 alpha = 80;
+	switch (type)
+	{
+	case Colliders::PLAYER:
+		app->render->DrawRectangle(body, 0, 255, 0, alpha);
+		break;
+	case Colliders::WALL:
+		app->render->DrawRectangle(body, 0, 0, 255, alpha);
+		break;
+	}
+
 }

@@ -4,6 +4,7 @@
 #include "SDL/include/SDL_Rect.h"
 #include "Module.h"
 #include "Point.h"
+#include "App.h"
 
 #include <math.h>
 
@@ -23,6 +24,10 @@ public:
 	
 	iPoint GetPosition() { return iPoint(body.x + body.w / 2, body.y + body.h / 2); }
 	iPoint GetHalfSize() { return iPoint(body.w / 2, body.h / 2); }
+
+	// Draws all existing colliders with some transparency
+	// PLAYER = 0, WALL = 1
+	void DebugDraw(SDL_Rect body, int type);
 private:
 	SDL_Rect& body;
 };

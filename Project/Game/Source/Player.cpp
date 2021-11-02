@@ -162,27 +162,48 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-
-	playerData.playerBody.y -= playerData.yVel;
-
-	if (playerData.playerBody.y < 400) {
-		playerData.yVel -= playerData.gravity;
-	}
-
-	else {
-		// Player is on the ground, so stop jumping.
+	
+	// GOD MODE (FLY)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
+	{
 		playerData.yVel = 0;
-		playerData.jumping = false;
-		// Force player to be exactly at ground level.
-		playerData.playerBody.y = 400;
+		playerData.playerBody.y -= 8;
 	}
-	/*if (playerData.y < 500 && !playerData.isColliding) {
-		// Apply gravity by reducing upward velocity.
-		playerData.yVel -= playerData.gravity;
-	}*/
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->scene->godMode)
+	{
+		playerData.yVel = 0;
+		playerData.playerBody.y -= -8;
+
+	}
+
+	if(playerData.isCollidingUp == false && !app->scene->godMode)
+	{
+		playerData.yVel += playerData.gravity;
+	}
+
+	else if (playerData.isCollidingUp == true && !app->scene->godMode && !playerData.jumping)
+	{
+		app->play->playerData.yVel = -4;
+		app->play->playerData.jumping = false;
+	}
+
+	// HANDLE GRAVITY & PLAYER.Y LIMITS
+	if (playerData.playerBody.y >= 350 && playerData.yVel <= playerData.gravity) {
+		playerData.playerBody.y = 350;
+	}
+	else if (playerData.playerBody.y <= 0 && playerData.yVel >= 8) {
+		playerData.playerBody.y = 0;
+	}
+	else
+	{
+		playerData.playerBody.y -= playerData.yVel;
+	}
 
 	// Handle the player jump.
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !app->scene->godMode) {
+		app->play->playerData.isCollidingUp == false;
+
 		playerData.yVel = 10;
 		playerData.jumping = true;
 		playerData.canJumpAgain = true;
@@ -201,7 +222,7 @@ bool Player::Update(float dt)
 
 	}
 	// Handle the player DOUBLE jump.
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain) {
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain && !app->scene->godMode) {
 		playerData.yVel = 8;
 		playerData.jumping = true;
 		playerData.canJumpAgain = false;
@@ -231,11 +252,6 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
 		currentAnimation = &idleAnimR;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		playerData.yVel = 12;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !playerData.isCollidingR)
@@ -342,6 +358,7 @@ bool Player::Update(float dt)
 	currentAnimation->Update();
 
 	LOG("playerX=%d", playerData.playerBody.x);
+	LOG("playerYVel=%d", playerData.yVel);
 
 	return true;
 }

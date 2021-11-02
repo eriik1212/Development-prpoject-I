@@ -58,63 +58,32 @@ void Map::Draw()
 	mapLayerItem = mapData.layers.start;
 
 	while (mapLayerItem != NULL) {
-		if (!app->scene->collidersOn)
-		{
-			if (mapLayerItem->data->properties.GetProperty("Draw") == 1) {
+		
+		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) {
 
-				for (int x = 0; x < mapLayerItem->data->width; x++)
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
-					for (int y = 0; y < mapLayerItem->data->height; y++)
-					{
-						// L04: DONE 9: Complete the draw function
-						int gid = mapLayerItem->data->Get(x, y);
+					// L04: DONE 9: Complete the draw function
+					int gid = mapLayerItem->data->Get(x, y);
 
-						if (gid > 0) {
+					if (gid > 0) {
 
-							//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
-							//now we always use the firt tileset in the list
-							//TileSet* tileset = mapData.tilesets.start->data;
-							TileSet* tileset = GetTilesetFromTileId(gid);
+						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
 
-							SDL_Rect r = tileset->GetTileRect(gid);
-							iPoint pos = MapToWorld(x, y);
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
 
-							app->render->DrawTexture(tileset->texture,
-								pos.x,
-								pos.y,
-								&r);
-						}
-
+						app->render->DrawTexture(tileset->texture,
+							pos.x,
+							pos.y,
+							&r);
 					}
-				}
-			}
-		}
-		if (app->scene->collidersOn)
-		{
-			if (mapLayerItem->data->properties.GetProperty("Draw") == 1 || mapLayerItem->data->properties.GetProperty("Draw") == 0) {
 
-				for (int x = 0; x < mapLayerItem->data->width; x++)
-				{
-					for (int y = 0; y < mapLayerItem->data->height; y++)
-					{
-						int gid = mapLayerItem->data->Get(x, y);
-
-						if (gid > 0) {
-
-							//now we always use the firt tileset in the list
-							//TileSet* tileset = mapData.tilesets.start->data;
-							TileSet* tileset = GetTilesetFromTileId(gid);
-
-							SDL_Rect r = tileset->GetTileRect(gid);
-							iPoint pos = MapToWorld(x, y);
-
-							app->render->DrawTexture(tileset->texture,
-								pos.x,
-								pos.y,
-								&r);
-						}
-
-					}
 				}
 			}
 		}
@@ -140,13 +109,15 @@ void Map::Draw()
 						//tilesColliders = app->collisions->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::Type::WALL, app->play);
 					
 				
-						ModuleCollisions tilesColliders[MAX_COLLIDERS];
+						tilesColliders.AddCollider(pos.x, pos.y, r.w, r.h);
 
-						tilesColliders[x].AddCollider(pos.x, pos.y, r.w, r.h);
+						tilesColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f);
 
-						tilesColliders[x].DebugDraw({ pos.x, pos.y, r.w, r.h }, 1);
-
-						tilesColliders[x].GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f);
+						if (app->scene->collidersOn)
+						{
+							tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y, r.w, r.h }, 1);
+							app->play->playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, 0);
+						}
 
 					}
 

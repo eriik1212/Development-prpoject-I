@@ -21,21 +21,6 @@ ModuleCollisions::~ModuleCollisions()
 
 }
 
-void ModuleCollisions::DebugDraw(SDL_Rect body, int type)
-{
-	Uint8 alpha = 80;
-	switch (type)
-	{
-	case Colliders::PLAYER:
-		app->render->DrawRectangle(body, 255, 255, 255, alpha);
-		break;
-	case Colliders::WALL:
-		app->render->DrawRectangle(body, 0, 0, 255, alpha);
-		break;
-	}
-	
-}
-
 Collider ModuleCollisions::AddCollider(int x, int y, int w, int h)
 {
 	colliderBody.x = x;
