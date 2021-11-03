@@ -177,15 +177,15 @@ bool Player::Update(float dt)
 
 	}
 
-	if(playerData.isCollidingUp == false && !app->scene->godMode)
+	
+	if (playerData.isCollidingUp == true && !app->scene->godMode)
+	{
+		playerData.yVel = -4;
+		playerData.jumping = false;
+	}
+	else
 	{
 		playerData.yVel += playerData.gravity;
-	}
-
-	else if (playerData.isCollidingUp == true && !app->scene->godMode && !playerData.jumping)
-	{
-		app->play->playerData.yVel = -4;
-		app->play->playerData.jumping = false;
 	}
 
 	// HANDLE GRAVITY & PLAYER.Y LIMITS
@@ -202,9 +202,9 @@ bool Player::Update(float dt)
 
 	// Handle the player jump.
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !app->scene->godMode) {
-		app->play->playerData.isCollidingUp == false;
-
+		app->play->playerData.isCollidingUp = false;
 		playerData.yVel = 10;
+		playerData.playerBody.y -= playerData.yVel;
 		playerData.jumping = true;
 		playerData.canJumpAgain = true;
 		jumpR.Reset();

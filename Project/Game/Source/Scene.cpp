@@ -86,14 +86,14 @@ bool Scene::Update(float dt)
 	{
 		app->render->camera.x += app->play->playerData.xVel;
 	}
-	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
 	{
 		app->render->camera.y -= app->play->playerData.xVel;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
 	{
 		app->render->camera.y += app->play->playerData.xVel;
-	}*/
+	}
 
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();

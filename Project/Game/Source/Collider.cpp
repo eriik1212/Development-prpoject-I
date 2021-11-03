@@ -64,7 +64,7 @@ bool Collider::CheckCollision(Collider& other, float push)
 		return true;
 	}
 
-
+	
 	return false;
 }
 
