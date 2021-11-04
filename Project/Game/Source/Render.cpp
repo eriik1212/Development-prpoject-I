@@ -91,7 +91,7 @@ bool Render::CleanUp()
 	return true;
 }
 
-// L02: DONE 6: Implement a method to load the state, for now load camera's x and y
+// Implement a method to load the state, for now load camera's x and y
 // Load Game State
 bool Render::LoadState(pugi::xml_node& data)
 {
@@ -110,7 +110,7 @@ bool Render::LoadState(pugi::xml_node& data)
 	return true;
 }
 
-// L02: DONE 8: Create a method to save the state of the renderer
+// Method to save the state of the renderer
 // Save Game State
 bool Render::SaveState(pugi::xml_node& data) const
 {

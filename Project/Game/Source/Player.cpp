@@ -121,21 +121,18 @@ bool Player::Awake(pugi::xml_node& config)
 	LOG("Loading Player");
 	bool ret = true;
 
+
 	playerData.playerBody.h = config.attribute("height").as_int();
 	playerData.playerBody.w = config.attribute("width").as_int();
 	playerData.playerBody.x = config.attribute("x").as_int();
 	playerData.playerBody.y = config.attribute("y").as_int();
-	playerData.xVel = config.attribute("xVel").as_int();		
+	playerData.xVel = config.attribute("xVel").as_int();
 	playerData.yVel = config.attribute("yVel").as_int();
 	playerData.gravity = config.attribute("gravity").as_int();
 	playerData.direction = config.attribute("direction").as_int();
 	playerData.jumping = config.attribute("jumping").as_bool();
 	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
 	playerData.isColliding = config.attribute("isColliding").as_bool();
-	playerData.isCollidingL = config.attribute("isCollidingL").as_bool();
-	playerData.isCollidingR = config.attribute("isCollidingR").as_bool();
-
-	//playerCollider = app->collisions->AddCollider({ playerData.x, playerData.y, playerData.width, playerData.height }, Collider::Type::PLAYER, this);
 
 	return ret;
 }
@@ -162,47 +159,48 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	
 	// GOD MODE (FLY)
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
+	if (app->scene->godMode)
 	{
 		playerData.yVel = 0;
-		playerData.playerBody.y -= 8;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->scene->godMode)
-	{
-		playerData.yVel = 0;
-		playerData.playerBody.y -= -8;
-
-	}
-
-	
-	if (playerData.isCollidingUp == true && !app->scene->godMode)
-	{
-		playerData.yVel = -4;
-		playerData.jumping = false;
 	}
 	else
 	{
 		playerData.yVel += playerData.gravity;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
+	{
+		playerData.playerBody.y -= 8;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->scene->godMode)
+	{
+		playerData.playerBody.y -= -8;
+
+	}
+
+	//Floor
+	if (playerData.isCollidingUp == true && !app->scene->godMode)
+	{
+		playerData.yVel = 0;
+		playerData.jumping = false;
+	}
 
 	// HANDLE GRAVITY & PLAYER.Y LIMITS
-	if (playerData.playerBody.y >= 350 && playerData.yVel <= playerData.gravity) {
+	if (playerData.playerBody.y >= 350 ) {
 		playerData.playerBody.y = 350;
 	}
-	else if (playerData.playerBody.y <= 0 && playerData.yVel >= 8) {
+	else if (playerData.playerBody.y <= 0 && app->scene->godMode) {
 		playerData.playerBody.y = 0;
 	}
 	else
 	{
+		app->play->playerData.isCollidingUp = false;
 		playerData.playerBody.y -= playerData.yVel;
 	}
 
 	// Handle the player jump.
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !app->scene->godMode) {
-		app->play->playerData.isCollidingUp = false;
 		playerData.yVel = 10;
 		playerData.playerBody.y -= playerData.yVel;
 		playerData.jumping = true;
@@ -241,7 +239,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !playerData.isCollidingL)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 
 	{
 		playerData.playerBody.x += playerData.xVel;
@@ -254,7 +252,7 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnimR;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !playerData.isCollidingR)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerData.playerBody.x -= playerData.xVel;
 		currentAnimation = &walkL;
@@ -334,7 +332,7 @@ bool Player::Update(float dt)
 	if (app->render->camera.x <= -2800)
 		app->render->camera.x = -2800;
 
-	// L02: DONE 3: Request Load / Save when pressing L/S
+	// Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
@@ -345,8 +343,6 @@ bool Player::Update(float dt)
 
 	// Draw map
 	app->map->Draw();
-
-	//playerCollider->SetPos(playerData.x, playerData.y);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,
@@ -389,9 +385,6 @@ bool Player::PostUpdate()
 	jumpL.loopCount = 0;
 	jumpR.loopCount = 0;
 
-	playerData.isCollidingR = false;
-	playerData.isCollidingL = false;
-
 	return ret;
 }
 
@@ -427,8 +420,6 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 		playerData.jumping = player.attribute("jumping").as_bool();
 		playerData.canJumpAgain = player.attribute("canJumpAgain").as_bool();
 		playerData.isColliding = player.attribute("isColliding").as_bool();
-		playerData.isCollidingL = player.attribute("isCollidingL").as_bool();
-		playerData.isCollidingR = player.attribute("isCollidingR").as_bool();
 	}
 
 	return ret;

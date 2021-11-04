@@ -11,8 +11,8 @@
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="-316" y="0" />
-		<player x="536" y="200" />
-		<playerLimit Left="340" Right="540" />
+		<camera x="-232" y="0" />
+		<player x="528" y="316" />
+		<playerLimit Left="332" Right="532" />
 	</renderer>
 </save_state>

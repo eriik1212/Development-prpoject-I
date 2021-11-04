@@ -29,5 +29,5 @@
   xVel="4" yVel="0" direction="1"
   gravity="-1"
   jumping="false" canJumpAgain="false"
-  isColliding="false" isCollidingUp="false" isCollidingDown="false" isCollidingL="false" isCollidingR="false"/>
+  isColliding="false" isCollidingUp="false"/>
 </config>
