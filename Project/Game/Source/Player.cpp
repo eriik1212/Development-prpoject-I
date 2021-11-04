@@ -132,7 +132,8 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.direction = config.attribute("direction").as_int();
 	playerData.jumping = config.attribute("jumping").as_bool();
 	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
-	playerData.isColliding = config.attribute("isColliding").as_bool();
+	playerData.isDead = config.attribute("isDead").as_bool();
+
 
 	return ret;
 }
@@ -142,7 +143,12 @@ bool Player::Start()
 {
 	playerTex = app->tex->Load("Assets/player/adventurer1.png");
 
+	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
+	playerData.isDead = false;
+	chekpoint = false;
+
+	//app->SaveGameRequest();
 	//app->LoadGameRequest();
 
 	currentAnimation = &idleAnimR;
@@ -159,6 +165,7 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+
 	// GOD MODE (FLY)
 	if (app->scene->godMode)
 	{
@@ -339,7 +346,14 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	// CHECKPOINT!
+	if (playerData.playerBody.x == 1480 && !chekpoint)
+	{
+		chekpoint = true;
+		app->SaveGameRequest();
+		app->audio->PlayFx(CheckPointFX);
+
+	}
 
 	// Draw map
 	app->map->Draw();
@@ -385,6 +399,12 @@ bool Player::PostUpdate()
 	jumpL.loopCount = 0;
 	jumpR.loopCount = 0;
 
+	// Draw Player Collider
+	if (app->scene->collidersOn)
+	{
+		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, 0);
+	}
+
 	return ret;
 }
 
@@ -419,67 +439,8 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 		playerData.direction = player.attribute("direction").as_int();
 		playerData.jumping = player.attribute("jumping").as_bool();
 		playerData.canJumpAgain = player.attribute("canJumpAgain").as_bool();
-		playerData.isColliding = player.attribute("isColliding").as_bool();
+		playerData.isDead = player.attribute("isDead").as_bool();
 	}
 
 	return ret;
-}
-
-void Player::OnCollision(Collider* c1, Collider* c2)
-{
-	/*int leftA, leftB;
-	int rightA, rightB;
-	int topA, topB;
-	int bottomA, bottomB;
-
-	bool isOn = false,
-		isUnder = false,
-		isLeft = false,
-		isRight = false;
-
-	leftA = c1->rect.x;
-	rightA = c1->rect.x + c1->rect.w;
-	topA = c1->rect.y;
-	bottomA = c1->rect.y + c1->rect.h;
-
-	leftB = c2->rect.x;
-	rightB = c2->rect.x + c2->rect.w;
-	topB = c2->rect.y;
-	bottomB = c2->rect.y + c2->rect.y;
-
-	if (rightA < (leftB + 10))
-		isLeft = true;
-
-	if (leftA > (rightB - 10))
-		isRight = true;
-
-	if (bottomA < (topB + 15))
-		isOn = true;
-
-	if (topA >= (bottomB - 5))
-		isUnder = true;
-
-	if (bottomA >= topB && isOn) 
-	{ 
-		// Player is on the ground, so stop jumping.
-		playerData.yVel = 0;
-		playerData.jumping = false;
-		// Force player to be exactly at ground level.
-		playerData.y = topB - playerData.height;
-	}
-	
-	else if (topA >= bottomB && isUnder) 
-	{ 
-		playerData.y = bottomB;
-	}
-
-	if (rightA >= leftB && isLeft)
-	{ 
-		playerData.isCollidingL = true;
-	}
-
-	if (leftA <= rightB && isRight)
-	{ 
-		playerData.isCollidingR = true;
-	}*/
 }

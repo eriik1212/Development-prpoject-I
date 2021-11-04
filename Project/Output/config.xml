@@ -24,10 +24,10 @@
   </map>
   
   <player 
-  width="37" height="37" 
-  x="200" y="200" 
+  width="30" height="37" 
+  x="196" y="308" 
   xVel="4" yVel="0" direction="1"
   gravity="-1"
   jumping="false" canJumpAgain="false"
-  isColliding="false" isCollidingUp="false"/>
+  isDead="false" isCollidingUp="false"/>
 </config>

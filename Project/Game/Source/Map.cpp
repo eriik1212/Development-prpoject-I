@@ -105,18 +105,45 @@ void Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 					
+						tilesColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
 
-						//tilesColliders = app->collisions->AddCollider({ pos.x, pos.y, r.w, r.h }, Collider::Type::WALL, app->play);
-					
-				
-						tilesColliders.AddCollider(pos.x, pos.y, r.w, r.h);
-
-						tilesColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f);
+						tilesColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f, WALL);
 
 						if (app->scene->collidersOn)
 						{
-							tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y, r.w, r.h }, 1);
-							app->play->playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, 0);
+							tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 1);
+						}
+
+					}
+
+				}
+			}
+		}
+
+		if (mapLayerItem->data->properties.GetProperty("DieSensors") == 1) {
+
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						dieColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+						dieColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, SENSOR);
+
+						if (app->scene->collidersOn)
+						{
+							dieColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 2);
 						}
 
 					}
@@ -420,7 +447,7 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 	return ret;
 }
 
-// L06: TODO 6: Load a group of properties from a node and fill a list with it
+// Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = false;

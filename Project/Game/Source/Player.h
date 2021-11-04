@@ -21,7 +21,7 @@ struct PlayerData
 	bool jumping;
 	bool canJumpAgain;
 
-	bool isColliding, isCollidingUp, isCollidingDown, isCollidingL, isCollidingR;
+	bool isDead, isCollidingUp;
 
 	int direction; //1 if player looks right, 0 if player looks left
 
@@ -56,17 +56,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Collision callback, called when the player intersects with another collider
-	void OnCollision(Collider* c1, Collider* c2) override;
-
-
-
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 
 private:
 	SDL_Texture* img;
+
+	bool chekpoint = false;
+	uint CheckPointFX;
 
 	// Load player general properties
 	bool LoadPlayer(pugi::xml_node player);
