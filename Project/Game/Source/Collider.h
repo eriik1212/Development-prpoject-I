@@ -8,13 +8,20 @@
 
 #include <math.h>
 
+enum CollidersType
+{
+	PLAYER = 0, //0
+	WALL, // 1
+	SENSOR // 2
+};
+
 class Collider
 {
 public:
 	Collider(SDL_Rect& body);
 	~Collider();
 
-	bool CheckCollision(Collider& other, float push);
+	bool CheckCollision(Collider& other, float push, CollidersType type);
 
 	void Move(float dx, float dy) 
 	{ 

@@ -24,6 +24,7 @@ GameOverScreen::~GameOverScreen()
 bool GameOverScreen::Start()
 {
 	LostGameFX = app->audio->LoadFx("Assets/audio/fx/game_over.wav");
+
 	if (this->Enabled())
 	{
 		// Load music
@@ -31,14 +32,12 @@ bool GameOverScreen::Start()
 		app->audio->PlayFx(LostGameFX);
 		
 		//Disable Player & map
-		app->play->Disabled();
-		app->map->Disabled();
-		app->scene->Disabled();
+		app->play->Disable();
+		app->map->Disable();
 	}
+
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
-
-	
 
 	// Members Texture
 	GameOverTex = app->tex->Load("Assets/textures/gameover.png");
@@ -55,10 +54,12 @@ bool GameOverScreen::Start()
 bool GameOverScreen::Update(float dt)
 {
 	// ScanCodes
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) ==KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		//Fade Out
 		app->fade->FadeToBlack(this, app->scene, 30);
+		app->play->revive = true;
+		app->play->playerData.isDead = false;
 	}
 
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

@@ -121,21 +121,18 @@ bool Player::Awake(pugi::xml_node& config)
 	LOG("Loading Player");
 	bool ret = true;
 
+
 	playerData.playerBody.h = config.attribute("height").as_int();
 	playerData.playerBody.w = config.attribute("width").as_int();
 	playerData.playerBody.x = config.attribute("x").as_int();
 	playerData.playerBody.y = config.attribute("y").as_int();
-	playerData.xVel = config.attribute("xVel").as_int();		
+	playerData.xVel = config.attribute("xVel").as_int();
 	playerData.yVel = config.attribute("yVel").as_int();
 	playerData.gravity = config.attribute("gravity").as_int();
 	playerData.direction = config.attribute("direction").as_int();
 	playerData.jumping = config.attribute("jumping").as_bool();
 	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
-	playerData.isColliding = config.attribute("isColliding").as_bool();
-	playerData.isCollidingL = config.attribute("isCollidingL").as_bool();
-	playerData.isCollidingR = config.attribute("isCollidingR").as_bool();
-
-	//playerCollider = app->collisions->AddCollider({ playerData.x, playerData.y, playerData.width, playerData.height }, Collider::Type::PLAYER, this);
+	playerData.isDead = config.attribute("isDead").as_bool();
 
 	return ret;
 }
@@ -145,8 +142,24 @@ bool Player::Start()
 {
 	playerTex = app->tex->Load("Assets/player/adventurer1.png");
 
+	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
-	//app->LoadGameRequest();
+	playerData.isDead = false;
+	chekpoint = false;
+
+	if (!revive)
+	{
+		app->SaveGameRequest();
+		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
+
+	}
+
+	if (revive)
+	{
+		app->LoadGameRequest();
+	}
+
+	revive = false;
 
 	currentAnimation = &idleAnimR;
 
@@ -162,47 +175,49 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
-	
+
 	// GOD MODE (FLY)
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
+	if (app->scene->godMode)
 	{
 		playerData.yVel = 0;
-		playerData.playerBody.y -= 8;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->scene->godMode)
-	{
-		playerData.yVel = 0;
-		playerData.playerBody.y -= -8;
-
-	}
-
-	
-	if (playerData.isCollidingUp == true && !app->scene->godMode)
-	{
-		playerData.yVel = -4;
-		playerData.jumping = false;
 	}
 	else
 	{
 		playerData.yVel += playerData.gravity;
 	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
+	{
+		playerData.playerBody.y -= 8;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->scene->godMode)
+	{
+		playerData.playerBody.y -= -8;
+
+	}
+
+	//Floor
+	if (playerData.isCollidingUp == true && !app->scene->godMode)
+	{
+		playerData.yVel = 0;
+		playerData.jumping = false;
+	}
 
 	// HANDLE GRAVITY & PLAYER.Y LIMITS
-	if (playerData.playerBody.y >= 350 && playerData.yVel <= playerData.gravity) {
-		playerData.playerBody.y = 350;
+	if (playerData.playerBody.y >= 400 ) {
+		playerData.yVel = 0;
 	}
-	else if (playerData.playerBody.y <= 0 && playerData.yVel >= 8) {
-		playerData.playerBody.y = 0;
+	else if (playerData.playerBody.y <= 0 && app->scene->godMode) {
+		playerData.yVel = 0;
 	}
 	else
 	{
+		app->play->playerData.isCollidingUp = false;
 		playerData.playerBody.y -= playerData.yVel;
 	}
 
 	// Handle the player jump.
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !app->scene->godMode) {
-		app->play->playerData.isCollidingUp = false;
 		playerData.yVel = 10;
 		playerData.playerBody.y -= playerData.yVel;
 		playerData.jumping = true;
@@ -241,7 +256,7 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !playerData.isCollidingL)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 
 	{
 		playerData.playerBody.x += playerData.xVel;
@@ -254,7 +269,7 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnimR;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !playerData.isCollidingR)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerData.playerBody.x -= playerData.xVel;
 		currentAnimation = &walkL;
@@ -334,19 +349,24 @@ bool Player::Update(float dt)
 	if (app->render->camera.x <= -2800)
 		app->render->camera.x = -2800;
 
-	// L02: DONE 3: Request Load / Save when pressing L/S
+	// Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	// CHECKPOINT!
+	if (playerData.playerBody.x == 1480 && !chekpoint)
+	{
+		chekpoint = true;
+		app->audio->PlayFx(CheckPointFX);
+		app->SaveGameRequest();
+
+	}
 
 	// Draw map
 	app->map->Draw();
-
-	//playerCollider->SetPos(playerData.x, playerData.y);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,
@@ -357,8 +377,9 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 
-	LOG("playerX=%d", playerData.playerBody.x);
-	LOG("playerYVel=%d", playerData.yVel);
+	//LOG("playerX=%d", playerData.playerBody.x);
+	//LOG("playerY=%d", playerData.playerBody.y);
+	//LOG("playerYVel=%d", playerData.yVel);
 
 	return true;
 }
@@ -389,8 +410,11 @@ bool Player::PostUpdate()
 	jumpL.loopCount = 0;
 	jumpR.loopCount = 0;
 
-	playerData.isCollidingR = false;
-	playerData.isCollidingL = false;
+	// Draw Player Collider
+	if (app->scene->collidersOn)
+	{
+		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, 0);
+	}
 
 	return ret;
 }
@@ -403,6 +427,36 @@ bool Player::CleanUp()
 	return true;
 }
 
+bool Player::LoadState(pugi::xml_node& data)
+{
+	//Load Player Pos
+	playerData.playerBody.x = data.child("player").attribute("x").as_int();
+	playerData.playerBody.y = data.child("player").attribute("y").as_int();
+
+	//Load Player/Camera Limits
+	app->render->playerLimitL = data.child("playerLimit").attribute("Left").as_int();
+	app->render->playerLimitR = data.child("playerLimit").attribute("Right").as_int();
+
+	return true;
+}
+
+bool Player::SaveState(pugi::xml_node& data) const
+{
+	//Save Player Pos
+	pugi::xml_node play = data.append_child("player");
+
+	play.append_attribute("x") =playerData.playerBody.x;
+	play.append_attribute("y") = playerData.playerBody.y;
+
+	//Save Player/Camera Limits
+	pugi::xml_node playLimit = data.append_child("playerLimit");
+
+	playLimit.append_attribute("Left") = app->render->playerLimitL;
+	playLimit.append_attribute("Right") = app->render->playerLimitR;
+
+	return true;
+}
+/*
 bool Player::LoadPlayer(pugi::xml_node playerInf)
 {
 	bool ret = true;
@@ -426,69 +480,8 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 		playerData.direction = player.attribute("direction").as_int();
 		playerData.jumping = player.attribute("jumping").as_bool();
 		playerData.canJumpAgain = player.attribute("canJumpAgain").as_bool();
-		playerData.isColliding = player.attribute("isColliding").as_bool();
-		playerData.isCollidingL = player.attribute("isCollidingL").as_bool();
-		playerData.isCollidingR = player.attribute("isCollidingR").as_bool();
+		playerData.isDead = player.attribute("isDead").as_bool();
 	}
 
 	return ret;
-}
-
-void Player::OnCollision(Collider* c1, Collider* c2)
-{
-	/*int leftA, leftB;
-	int rightA, rightB;
-	int topA, topB;
-	int bottomA, bottomB;
-
-	bool isOn = false,
-		isUnder = false,
-		isLeft = false,
-		isRight = false;
-
-	leftA = c1->rect.x;
-	rightA = c1->rect.x + c1->rect.w;
-	topA = c1->rect.y;
-	bottomA = c1->rect.y + c1->rect.h;
-
-	leftB = c2->rect.x;
-	rightB = c2->rect.x + c2->rect.w;
-	topB = c2->rect.y;
-	bottomB = c2->rect.y + c2->rect.y;
-
-	if (rightA < (leftB + 10))
-		isLeft = true;
-
-	if (leftA > (rightB - 10))
-		isRight = true;
-
-	if (bottomA < (topB + 15))
-		isOn = true;
-
-	if (topA >= (bottomB - 5))
-		isUnder = true;
-
-	if (bottomA >= topB && isOn) 
-	{ 
-		// Player is on the ground, so stop jumping.
-		playerData.yVel = 0;
-		playerData.jumping = false;
-		// Force player to be exactly at ground level.
-		playerData.y = topB - playerData.height;
-	}
-	
-	else if (topA >= bottomB && isUnder) 
-	{ 
-		playerData.y = bottomB;
-	}
-
-	if (rightA >= leftB && isLeft)
-	{ 
-		playerData.isCollidingL = true;
-	}
-
-	if (leftA <= rightB && isRight)
-	{ 
-		playerData.isCollidingR = true;
-	}*/
-}
+}*/
