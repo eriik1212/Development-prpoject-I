@@ -144,7 +144,6 @@ bool Player::Start()
 
 	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
-	playerData.isDead = false;
 	playerData.winner = false;
 	chekpoint = false;
 
@@ -366,9 +365,6 @@ bool Player::Update(float dt)
 		app->SaveGameRequest();
 
 	}*/
-
-	// Draw map
-	app->map->Draw();
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,

@@ -41,5 +41,17 @@ public:
 
 	// The wall/floor's collider
 	Collider* wallCollider = nullptr;
+
+private:
+	
+	SDL_Texture* background_sky;
+	SDL_Texture* background_middlemountain;
+	SDL_Texture* background_middlecloud;
+	SDL_Texture* background_grass;
+	SDL_Texture* background_frontmountain;
+	SDL_Texture* background_frontcloud;
+	SDL_Texture* background_backmountain;
+	SDL_Texture* background_backcloud;
+
 };
 #endif // __SCENE_H__

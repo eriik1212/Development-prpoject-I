@@ -357,7 +357,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
 	}
 	else
 	{
-		// L03: DONE 3: Load map general properties
+		// Load map general properties
 		mapData.height = map.attribute("height").as_int();
 		mapData.width = map.attribute("width").as_int();
 		mapData.tileHeight = map.attribute("tileheight").as_int();
@@ -395,7 +395,7 @@ bool Map::LoadTileSets(pugi::xml_node mapFile) {
 	return ret;
 }
 
-// L03: DONE 4: Load Tileset attributes
+// Load Tileset attributes
 bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -413,7 +413,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// L03: DONE 4: Load Tileset image
+// Load Tileset image
 bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
@@ -434,7 +434,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// L04: DONE 3: Implement a function that loads a single layer layer
+// Implement a function that loads a single layer layer
 bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
@@ -463,7 +463,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-// L04: DONE 4: Iterate all layers and load each of them
+// Iterate all layers and load each of them
 bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 	bool ret = true;
 	for (pugi::xml_node layerNode = mapNode.child("layer"); layerNode && ret; layerNode = layerNode.next_sibling("layer"))

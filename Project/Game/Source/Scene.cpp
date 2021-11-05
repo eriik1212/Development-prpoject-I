@@ -49,8 +49,19 @@ bool Scene::Start()
 
 	}
 
-	//app->LoadGameRequest();
+	background_grass = app->tex->Load("Assets/textures/background_grass.png");
 
+	background_frontmountain = app->tex->Load("Assets/textures/background_frontmountain.png");
+	background_middlemountain = app->tex->Load("Assets/textures/background_middlemountain.png");
+	background_backmountain = app->tex->Load("Assets/textures/background_backmountain.png");
+
+	background_frontcloud = app->tex->Load("Assets/textures/background_frontcloud.png");
+	background_middlecloud = app->tex->Load("Assets/textures/background_middlecloud.png");
+	background_backcloud = app->tex->Load("Assets/textures/background_backcloud.png");
+
+	background_sky = app->tex->Load("Assets/textures/background_sky.png");
+
+	app->play->playerData.isDead = false;
 	debug = false;
 	collidersOn = false;
 
@@ -144,9 +155,6 @@ bool Scene::Update(float dt)
 			godMode = true;
 	}
 
-	// Draw map
-	app->map->Draw();
-
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
@@ -154,7 +162,21 @@ bool Scene::Update(float dt)
 
 	app->win->SetTitle(title.GetString());
 
+	// SKY
+	app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 0, 0, NULL, 0);
+	app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 1, 0, NULL, 0);
+	app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 2, 0, NULL, 0);
+	app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 3, 0, NULL, 0);
 
+	// BACK CLOUD
+
+	app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 0, 0, NULL, 0.5f, true);
+	app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 1, 0, NULL, 0.5f, true);
+	app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 2, 0, NULL, 0.5f, true);
+	app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 3, 0, NULL, 0.5f, true);
+
+	// Draw map
+	app->map->Draw();
 
 	return true;
 }
@@ -163,6 +185,7 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
 
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
