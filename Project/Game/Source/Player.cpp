@@ -121,7 +121,6 @@ bool Player::Awake(pugi::xml_node& config)
 	LOG("Loading Player");
 	bool ret = true;
 
-
 	playerData.playerBody.h = config.attribute("height").as_int();
 	playerData.playerBody.w = config.attribute("width").as_int();
 	playerData.playerBody.x = config.attribute("x").as_int();
@@ -133,6 +132,7 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.jumping = config.attribute("jumping").as_bool();
 	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
 	playerData.isDead = config.attribute("isDead").as_bool();
+	playerData.winner = config.attribute("winner").as_bool();
 
 	return ret;
 }
@@ -145,6 +145,7 @@ bool Player::Start()
 	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
 	playerData.isDead = false;
+	playerData.winner = false;
 	chekpoint = false;
 
 	if (!revive)
@@ -153,12 +154,20 @@ bool Player::Start()
 		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
 
 	}
-
 	if (revive)
 	{
 		app->LoadGameRequest();
+
 	}
 
+	if (restart)
+	{
+		app->LoadGameRequest();
+		//app->LoadConfigRequest();
+	}
+
+
+	restart = false;
 	revive = false;
 
 	currentAnimation = &idleAnimR;
@@ -349,21 +358,14 @@ bool Player::Update(float dt)
 	if (app->render->camera.x <= -2800)
 		app->render->camera.x = -2800;
 
-	// Request Load / Save when pressing L/S
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->LoadGameRequest();
-
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->SaveGameRequest();
-
 	// CHECKPOINT!
-	if (playerData.playerBody.x == 1480 && !chekpoint)
+	/*if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
 	{
 		chekpoint = true;
 		app->audio->PlayFx(CheckPointFX);
 		app->SaveGameRequest();
 
-	}
+	}*/
 
 	// Draw map
 	app->map->Draw();
@@ -377,7 +379,7 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 
-	//LOG("playerX=%d", playerData.playerBody.x);
+	LOG("playerX=%d", playerData.playerBody.x);
 	//LOG("playerY=%d", playerData.playerBody.y);
 	//LOG("playerYVel=%d", playerData.yVel);
 
@@ -390,7 +392,7 @@ bool Player::PostUpdate()
 	bool ret = true;
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(playerTex, playerData.playerBody.x, playerData.playerBody.y, &rect);
+	app->render->DrawTexture(playerTex, playerData.playerBody.x - 7, playerData.playerBody.y, &rect);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -422,7 +424,9 @@ bool Player::PostUpdate()
 // Called before quitting
 bool Player::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Freeing Player");
+
+	app->tex->CleanUp();
 
 	return true;
 }

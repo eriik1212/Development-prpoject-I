@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "Log.h"
 
 
 GameOverScreen::GameOverScreen(bool enabled) : Module(enabled)
@@ -23,13 +24,13 @@ GameOverScreen::~GameOverScreen()
 // Load assets
 bool GameOverScreen::Start()
 {
-	LostGameFX = app->audio->LoadFx("Assets/audio/fx/game_over.wav");
+	//LostGameFX = app->audio->LoadFx("Assets/audio/fx/game_over.wav");
 
 	if (this->Enabled())
 	{
 		// Load music
 		app->audio->StopMusic();
-		app->audio->PlayFx(LostGameFX);
+		app->audio->PlayMusic("Assets/audio/fx/game_over.wav");
 		
 		//Disable Player & map
 		app->play->Disable();
@@ -58,6 +59,7 @@ bool GameOverScreen::Update(float dt)
 	{
 		//Fade Out
 		app->fade->FadeToBlack(this, app->scene, 30);
+		app->audio->StopMusic();
 		app->play->revive = true;
 		app->play->playerData.isDead = false;
 	}
@@ -73,8 +75,16 @@ bool GameOverScreen::Update(float dt)
 // Update: draw background
 bool GameOverScreen::PostUpdate()
 {
-
-	
 	app->render->DrawTexture(GameOverTex, 0, 0, NULL);
+	return true;
+}
+
+// Called before quitting
+bool GameOverScreen::CleanUp()
+{
+	LOG("Freeing GameOverScreen");
+
+	app->tex->CleanUp();
+
 	return true;
 }

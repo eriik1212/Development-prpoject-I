@@ -66,7 +66,7 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 			return true;
 		}
 	}
-	if (type == SENSOR)
+	if (type == DEAD)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
@@ -75,7 +75,16 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 			return true;
 		}
 	}
-	
+	if (type == WIN)
+	{
+		if (intersectX < 0.0f && intersectY < 0.0f)
+		{
+			app->play->playerData.winner = true;
+
+			return true;
+		}
+	}
+
 	return false;
 }
 
@@ -90,8 +99,11 @@ void Collider::DebugDraw(SDL_Rect body, int type)
 	case CollidersType::WALL:
 		app->render->DrawRectangle(body, 0, 0, 255, alpha);
 		break;
-	case CollidersType::SENSOR:
+	case CollidersType::DEAD:
 		app->render->DrawRectangle(body, 255, 0, 0, alpha);
+		break;
+	case CollidersType::WIN:
+		app->render->DrawRectangle(body, 255, 255, 0, alpha);
 		break;
 	}
 

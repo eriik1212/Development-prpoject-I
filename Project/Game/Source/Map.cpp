@@ -139,11 +139,43 @@ void Map::Draw()
 
 						dieColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
 
-						dieColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, SENSOR);
+						dieColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, DEAD);
 
 						if (app->scene->collidersOn)
 						{
 							dieColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 2);
+						}
+
+					}
+
+				}
+			}
+		}
+
+		if (mapLayerItem->data->properties.GetProperty("WinSensors") == 1) {
+
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						winColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+						winColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, WIN);
+
+						if (app->scene->collidersOn)
+						{
+							winColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 3);
 						}
 
 					}

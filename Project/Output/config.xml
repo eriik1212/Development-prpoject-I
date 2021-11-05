@@ -1,5 +1,5 @@
 <!-- Config file for the game -->
-<!-- L01: DONE 1: Create configuration file-->
+<!-- Create configuration file-->
 <config>
   <app>
     <title>Game Development Testbed</title>
@@ -18,7 +18,7 @@
     <fullscreen_window value="false"/>
   </window>
 
-  <!-- L03: Added maps folder as config option -->
+  <!-- Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>
   </map>
@@ -29,5 +29,6 @@
   xVel="4" yVel="0" direction="1"
   gravity="-1"
   jumping="false" canJumpAgain="false"
-  isDead="false" isCollidingUp="false"/>
+  isDead="false" isCollidingUp="false"
+  winner ="false"/>
 </config>

@@ -38,7 +38,7 @@ bool Scene::Start()
 	//Load Map
 	app->map->Load("MapLVL1.tmx");
 
-	if (this->Enabled()&& !this->Disabled()) 
+	if (this->Enabled() && !this->Disabled()) 
 	{
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -67,15 +67,6 @@ int lastPosition;
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		if (debug)
-			debug = false;
-		else if (!debug)
-			debug = true;
-	}
-
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
 	{
 		app->render->camera.x -= app->play->playerData.xVel;
@@ -84,20 +75,56 @@ bool Scene::Update(float dt)
 	{
 		app->render->camera.x += app->play->playerData.xVel;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
+	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
 	{
 		app->render->camera.y -= app->play->playerData.xVel;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
 	{
 		app->render->camera.y += app->play->playerData.xVel;
+	}*/
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, this, 30);
+
+		//Disable Player & map
+		app->play->Disable();
+		app->map->Disable();
+
+		app->play->restart = true;
+
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, this, 30);
+
+		//Disable Player & map
+		app->play->Disable();
+		app->map->Disable();
+
+		app->play->restart = true;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
+	{
+		app->fade->FadeToBlack(this, app->gameOver, 30);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		app->SaveGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->SaveGameRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		if (debug)
+			debug = false;
+		else if (!debug)
+			debug = true;
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
@@ -117,15 +144,9 @@ bool Scene::Update(float dt)
 			godMode = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
-	{
-		app->fade->FadeToBlack(this, app->gameOver, 30);
-	}
-
 	// Draw map
 	app->map->Draw();
 
-	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
@@ -154,6 +175,9 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	app->tex->CleanUp();
+	//app->audio->CleanUp();
 
 	return true;
 }
