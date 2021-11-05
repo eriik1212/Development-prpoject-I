@@ -154,6 +154,7 @@ public:
 
 	ModuleCollisions tilesColliders;
 	ModuleCollisions dieColliders;
+	ModuleCollisions winColliders;
 
 private:
 

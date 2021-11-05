@@ -93,7 +93,7 @@ bool App::Awake()
 		ret = true;
 		configApp = config.child("app");
 
-		// L01: DONE 4: Read the title from the config file
+		// Read the title from the config file
 		title.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
 	}
@@ -179,6 +179,7 @@ void App::FinishUpdate()
 {
 	// Call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
+	if (loadConfigRequested == true) LoadGameFromConfig();
 	if (saveGameRequested == true) SaveGame();
 }
 
@@ -297,6 +298,11 @@ void App::LoadGameRequest()
 	loadGameRequested = true;
 }
 
+void App::LoadConfigRequest()
+{
+	loadConfigRequested = true;
+}
+
 // ---------------------------------------
 void App::SaveGameRequest() const
 {
@@ -332,6 +338,35 @@ bool App::LoadGame()
 	}
 
 	loadGameRequested = false;
+
+	return ret;
+}
+
+bool App::LoadGameFromConfig()
+{
+	bool ret = true;
+
+	pugi::xml_document gameStateFile;
+	pugi::xml_parse_result result = gameStateFile.load_file(CONFIG_FILENAME);
+
+	if (result == NULL)
+	{
+		LOG("Could not load xml file: %s. pugi error: %s", CONFIG_FILENAME, result.description());
+		ret = false;
+	}
+	else
+	{
+		ListItem<Module*>* item;
+		item = modules.start;
+
+		while (item != NULL && ret == true)
+		{
+			ret = item->data->LoadState(gameStateFile.child("config").child(item->data->name.GetString()));
+			item = item->next;
+		}
+	}
+
+	loadConfigRequested = false;
 
 	return ret;
 }

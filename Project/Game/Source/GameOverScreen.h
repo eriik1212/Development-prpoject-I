@@ -30,11 +30,13 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	bool PostUpdate() override;
 
+	// Called before quitting
+	bool CleanUp();
 	
 public:
 	// Members Texture
 	SDL_Texture* GameOverTex;
-	uint LostGameFX;
+	//uint LostGameFX;
 	
 };
 

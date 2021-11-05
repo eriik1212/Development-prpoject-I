@@ -54,8 +54,9 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-    // L02: DONE 1: Create methods to request Load / Save
+    // Methods to request Load / Save
 	void LoadGameRequest();
+	void LoadConfigRequest();
 	void SaveGameRequest() const;
 
 private:
@@ -81,6 +82,7 @@ private:
 
 	// Load / Save
 	bool LoadGame();
+	bool LoadGameFromConfig();
 	bool SaveGame() const;
 
 public:
@@ -114,6 +116,7 @@ private:
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+	bool loadConfigRequested;
 };
 
 extern App* app;

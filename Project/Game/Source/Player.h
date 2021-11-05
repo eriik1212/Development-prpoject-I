@@ -21,7 +21,7 @@ struct PlayerData
 	bool jumping;
 	bool canJumpAgain;
 
-	bool isDead, isCollidingUp;
+	bool isDead, winner, isCollidingUp;
 
 	int direction; //1 if player looks right, 0 if player looks left
 
@@ -76,6 +76,7 @@ private:
 public:
 	PlayerData playerData;
 
+	bool restart = false;
 	bool revive = false;
 
 	SDL_Texture* playerTex = nullptr;
