@@ -26,7 +26,7 @@
   <player 
   width="30" height="37" 
   x="196" y="308" 
-  xVel="4" yVel="0" direction="1"
+  xVel="4" yVel="0" maxVel="20" direction="1"
   gravity="-1"
   jumping="false" canJumpAgain="false"
   isDead="false" isCollidingUp="false"

@@ -127,6 +127,7 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.playerBody.y = config.attribute("y").as_int();
 	playerData.xVel = config.attribute("xVel").as_int();
 	playerData.yVel = config.attribute("yVel").as_int();
+	playerData.maxVel = config.attribute("maxVel").as_int();
 	playerData.gravity = config.attribute("gravity").as_int();
 	playerData.direction = config.attribute("direction").as_int();
 	playerData.jumping = config.attribute("jumping").as_bool();
@@ -183,15 +184,15 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	if (playerData.yVel <= -playerData.maxVel)
+	{
+		playerData.yVel = -playerData.maxVel;
+	}
 
 	// GOD MODE (FLY)
 	if (app->scene->godMode)
 	{
 		playerData.yVel = 0;
-	}
-	else
-	{
-		playerData.yVel += playerData.gravity;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
 	{
@@ -213,14 +214,15 @@ bool Player::Update(float dt)
 
 	// HANDLE GRAVITY & PLAYER.Y LIMITS
 	if (playerData.playerBody.y >= 400 ) {
-		playerData.yVel = 0;
+		playerData.playerBody.y = 399;
 	}
 	else if (playerData.playerBody.y <= 0 && app->scene->godMode) {
-		playerData.yVel = 0;
+		playerData.playerBody.y = 1;
 	}
-	else
+	else if (!app->scene->godMode)
 	{
 		app->play->playerData.isCollidingUp = false;
+		playerData.yVel += playerData.gravity;
 		playerData.playerBody.y -= playerData.yVel;
 	}
 
@@ -375,9 +377,9 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 
-	LOG("playerX=%d", playerData.playerBody.x);
+	//LOG("playerX=%d", playerData.playerBody.x);
 	//LOG("playerY=%d", playerData.playerBody.y);
-	//LOG("playerYVel=%d", playerData.yVel);
+	LOG("playerYVel=%d", playerData.yVel);
 
 	return true;
 }

@@ -15,7 +15,7 @@ struct PlayerData
 	// The player's body
 	SDL_Rect playerBody;
 
-	int xVel, yVel;
+	int xVel, yVel, maxVel;
 	int gravity;
 
 	bool jumping;

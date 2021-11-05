@@ -42,6 +42,8 @@ public:
 	// The wall/floor's collider
 	Collider* wallCollider = nullptr;
 
+	// scrollingOffset for Parallax Effect
+	int scrollingOffset = 0;
 private:
 	
 	SDL_Texture* background_sky;
@@ -52,6 +54,7 @@ private:
 	SDL_Texture* background_frontcloud;
 	SDL_Texture* background_backmountain;
 	SDL_Texture* background_backcloud;
+
 
 };
 #endif // __SCENE_H__
