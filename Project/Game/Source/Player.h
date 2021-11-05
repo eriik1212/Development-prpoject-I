@@ -56,6 +56,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
@@ -67,10 +71,12 @@ private:
 	uint CheckPointFX;
 
 	// Load player general properties
-	bool LoadPlayer(pugi::xml_node player);
+	//bool LoadPlayer(pugi::xml_node player);
 
 public:
 	PlayerData playerData;
+
+	bool revive = false;
 
 	SDL_Texture* playerTex = nullptr;
 	Animation walkR,

@@ -34,12 +34,10 @@ bool GameOverScreen::Start()
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
-		app->scene->Disable();
 	}
+
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
-
-	
 
 	// Members Texture
 	GameOverTex = app->tex->Load("Assets/textures/gameover.png");
@@ -60,8 +58,8 @@ bool GameOverScreen::Update(float dt)
 	{
 		//Fade Out
 		app->fade->FadeToBlack(this, app->scene, 30);
+		app->play->revive = true;
 		app->play->playerData.isDead = false;
-		//app->LoadGameRequest();
 	}
 
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

@@ -99,14 +99,6 @@ bool Render::LoadState(pugi::xml_node& data)
 	camera.x = data.child("camera").attribute("x").as_int();
 	camera.y = data.child("camera").attribute("y").as_int();
 
-	//Load Player Pos
-	app->play->playerData.playerBody.x = data.child("player").attribute("x").as_int();
-	app->play->playerData.playerBody.y = data.child("player").attribute("y").as_int();
-
-	//Load Player/Camera Limits
-	playerLimitL = data.child("playerLimit").attribute("Left").as_int();
-	playerLimitR = data.child("playerLimit").attribute("Right").as_int();
-
 	return true;
 }
 
@@ -119,18 +111,6 @@ bool Render::SaveState(pugi::xml_node& data) const
 
 	cam.append_attribute("x") = camera.x;
 	cam.append_attribute("y") = camera.y;
-
-	//Save Player Pos
-	pugi::xml_node play = data.append_child("player");
-
-	play.append_attribute("x") = app->play->playerData.playerBody.x;
-	play.append_attribute("y") = app->play->playerData.playerBody.y;
-
-	//Save Player/Camera Limits
-	pugi::xml_node playLimit = data.append_child("playerLimit");
-
-	playLimit.append_attribute("Left") = playerLimitL;
-	playLimit.append_attribute("Right") = playerLimitR;
 
 	return true;
 }

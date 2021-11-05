@@ -1,4 +1,4 @@
-﻿  GameOverScreen.cpp
+﻿  Player.cpp
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(56,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(19,1): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'

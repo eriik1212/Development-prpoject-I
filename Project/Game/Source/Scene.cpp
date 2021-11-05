@@ -120,11 +120,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
 	{
 		app->fade->FadeToBlack(this, app->gameOver, 30);
-		
 	}
-		
-
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	// Draw map
 	app->map->Draw();

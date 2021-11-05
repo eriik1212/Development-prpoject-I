@@ -134,7 +134,6 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
 	playerData.isDead = config.attribute("isDead").as_bool();
 
-
 	return ret;
 }
 
@@ -148,8 +147,19 @@ bool Player::Start()
 	playerData.isDead = false;
 	chekpoint = false;
 
-	//app->SaveGameRequest();
-	//app->LoadGameRequest();
+	if (!revive)
+	{
+		app->SaveGameRequest();
+		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
+
+	}
+
+	if (revive)
+	{
+		app->LoadGameRequest();
+	}
+
+	revive = false;
 
 	currentAnimation = &idleAnimR;
 
@@ -194,11 +204,11 @@ bool Player::Update(float dt)
 	}
 
 	// HANDLE GRAVITY & PLAYER.Y LIMITS
-	if (playerData.playerBody.y >= 350 ) {
-		playerData.playerBody.y = 350;
+	if (playerData.playerBody.y >= 400 ) {
+		playerData.yVel = 0;
 	}
 	else if (playerData.playerBody.y <= 0 && app->scene->godMode) {
-		playerData.playerBody.y = 0;
+		playerData.yVel = 0;
 	}
 	else
 	{
@@ -350,8 +360,8 @@ bool Player::Update(float dt)
 	if (playerData.playerBody.x == 1480 && !chekpoint)
 	{
 		chekpoint = true;
-		app->SaveGameRequest();
 		app->audio->PlayFx(CheckPointFX);
+		app->SaveGameRequest();
 
 	}
 
@@ -367,8 +377,9 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 
-	LOG("playerX=%d", playerData.playerBody.x);
-	LOG("playerYVel=%d", playerData.yVel);
+	//LOG("playerX=%d", playerData.playerBody.x);
+	//LOG("playerY=%d", playerData.playerBody.y);
+	//LOG("playerYVel=%d", playerData.yVel);
 
 	return true;
 }
@@ -416,6 +427,36 @@ bool Player::CleanUp()
 	return true;
 }
 
+bool Player::LoadState(pugi::xml_node& data)
+{
+	//Load Player Pos
+	playerData.playerBody.x = data.child("player").attribute("x").as_int();
+	playerData.playerBody.y = data.child("player").attribute("y").as_int();
+
+	//Load Player/Camera Limits
+	app->render->playerLimitL = data.child("playerLimit").attribute("Left").as_int();
+	app->render->playerLimitR = data.child("playerLimit").attribute("Right").as_int();
+
+	return true;
+}
+
+bool Player::SaveState(pugi::xml_node& data) const
+{
+	//Save Player Pos
+	pugi::xml_node play = data.append_child("player");
+
+	play.append_attribute("x") =playerData.playerBody.x;
+	play.append_attribute("y") = playerData.playerBody.y;
+
+	//Save Player/Camera Limits
+	pugi::xml_node playLimit = data.append_child("playerLimit");
+
+	playLimit.append_attribute("Left") = app->render->playerLimitL;
+	playLimit.append_attribute("Right") = app->render->playerLimitR;
+
+	return true;
+}
+/*
 bool Player::LoadPlayer(pugi::xml_node playerInf)
 {
 	bool ret = true;
@@ -443,4 +484,4 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 	}
 
 	return ret;
-}
+}*/
