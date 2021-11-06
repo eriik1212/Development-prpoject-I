@@ -41,7 +41,7 @@ bool Scene::Start()
 	if (this->Enabled() && !this->Disabled()) 
 	{
 		// Load music
-		app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+		app->audio->PlayMusic("Assets/audio/music/Wanderers-City.ogg");
 
 		//Enable Player & map
 		app->play->Enable();

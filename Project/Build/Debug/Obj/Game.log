@@ -1,10 +1,10 @@
-﻿  Player.cpp
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(56,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(20,1): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(19): message : vea la declaración de 'Collider'
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(29,1): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(30,1): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Player.h(11,16): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(19): message : vea la declaración de 'Collider'
-  Game.vcxproj -> C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
+﻿  Scene.cpp
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(56,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(20,1): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(19): message : vea la declaración de 'Collider'
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(29,1): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(30,1): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Player.h(11,16): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(19): message : vea la declaración de 'Collider'
+  Game.vcxproj -> C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
