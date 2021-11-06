@@ -28,16 +28,18 @@ bool TitleScreen::Start()
 	if (this->Enabled())
 	{
 		// Load music
+		app->audio->PlayMusic("Assets/audio/music/title_music.ogg");
+
+
 		
 
-		//Disable Player & map
-		app->play->Disable();
-		app->map->Disable();
+		
+		
 	}
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
-
+	Title = app->tex->Load("Assets/textures/title.png");
 	// Members Texture
 	//GameOverTex = app->tex->Load("Assets/textures/gameover.png");
 

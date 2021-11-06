@@ -19,6 +19,7 @@ class Scene;
 class Map;
 class LogoScreen;
 class Player;
+class TitleScreen;
 //class ModuleCollisions;
 class ModuleFadeToBlack;
 class GameOverScreen;
@@ -96,6 +97,7 @@ public:
 	Scene* scene;
 	Map* map;
 	LogoScreen* logo;
+	TitleScreen* title;
 	Player* play;
 	ModuleFadeToBlack* fade;
 	//ModuleCollisions* collisions;

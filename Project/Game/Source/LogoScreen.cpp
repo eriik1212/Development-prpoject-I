@@ -34,15 +34,17 @@ bool LogoScreen::Start()
 	backgroundLogo.h = 480;
 
 	// Members Texture
+	
 	screen = app->tex->Load("Assets/textures/ginuh_logo.png");
 
-	//Aqui podem posar algun so a veure amb la pantalla d'inici
-	//app->audio->PlayMusic("Assets/Audio/02_character_selection.ogg", 1.0f);
+		//Aqui podem posar algun so a veure amb la pantalla d'inici
+		//app->audio->PlayMusic("Assets/Audio/02_character_selection.ogg", 1.0f);
 
-	//Fade In
+		//Fade In
 	app->fade->FadeToBlack(this, app->logo, 30);
 
-	return true;
+		return true;
+	
 }
 
 bool LogoScreen::Update(float dt)
@@ -52,7 +54,7 @@ bool LogoScreen::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) ==KEY_DOWN)
 	{
 		//Fade Out
-		app->fade->FadeToBlack(this, app->scene, 30);
+		app->fade->FadeToBlack(this, app->title, 30);
 	}
 
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
