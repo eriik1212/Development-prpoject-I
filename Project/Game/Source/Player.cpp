@@ -109,6 +109,12 @@ Player::Player(bool enabled) : Module(enabled)
 	deathAnimL.loop = true;
 	deathAnimL.speed = 0.1f;
 
+	//Victory anim
+
+
+
+
+
 }
 
 // Destructor

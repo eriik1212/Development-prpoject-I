@@ -30,16 +30,23 @@ bool TitleScreen::Start()
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/title_music.ogg");
 
-
+		//load textures
+		
 		
 
 		
 		
 	}
 
+	Title = app->tex->Load("Assets/textures/titleW.png");
+
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
-	Title = app->tex->Load("Assets/textures/title.png");
+
+	backgroundTitle.x = 0;
+	backgroundTitle.y = 0;
+	backgroundTitle.w = 690;
+	backgroundTitle.h = 480;
 	// Members Texture
 	//GameOverTex = app->tex->Load("Assets/textures/gameover.png");
 
@@ -75,7 +82,7 @@ bool TitleScreen::Update(float dt)
 bool TitleScreen::PostUpdate()
 {
 
-
-	//app->render->DrawTexture(GameOverTex, 0, 0, NULL);
+	app->render->DrawRectangle(backgroundTitle, 255, 255, 255, 255);
+	app->render->DrawTexture(Title, 0, 0, NULL);
 	return true;
 }

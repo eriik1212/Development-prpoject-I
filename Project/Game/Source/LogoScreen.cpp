@@ -1,4 +1,5 @@
 #include "LogoScreen.h"
+#include "TitleScreen.h"
 
 #include "App.h"
 #include "Textures.h"

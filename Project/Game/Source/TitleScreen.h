@@ -34,7 +34,13 @@ public:
 public:
 	// Members Texture
 	SDL_Texture* Title;
+	SDL_Texture* NewGamePressed;
+	SDL_Texture* NewGameUnpressed;
+	SDL_Texture* ContinuePressed;
+	SDL_Texture* ContinueUnpressed;
+
 	uint TitleMusic;
+	SDL_Rect backgroundTitle;
 
 };
 

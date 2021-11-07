@@ -107,7 +107,7 @@ private:
 
 	int argc;
 	char** args;
-	SString title;
+	SString title1;
 	SString organization;
 
 	List<Module *> modules;

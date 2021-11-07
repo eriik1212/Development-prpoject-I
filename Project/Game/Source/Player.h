@@ -87,7 +87,8 @@ public:
 		idleAnimL,
 		idleAnimR,
 		deathAnimR,
-		deathAnimL;
+		deathAnimL,
+		victory;
 
 };
 #endif // __PLAYER_H__

@@ -11,6 +11,7 @@
 #include "FadeToBlack.h"
 #include "ModuleCollisions.h"
 #include "GameOverScreen.h"
+#include "TitleScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -28,6 +29,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(true);
 	audio = new Audio(true);
 	logo = new LogoScreen(false);
+	title = new TitleScreen(false);
 	scene = new Scene(false);
 	map = new Map(false);
 	play = new Player(false);
@@ -46,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(logo);
+	AddModule(title);
 	AddModule(play);
 	AddModule(fade);
 	//AddModule(collisions);
@@ -94,7 +97,7 @@ bool App::Awake()
 		configApp = config.child("app");
 
 		// Read the title from the config file
-		title.Create(configApp.child("title").child_value());
+		title1.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
 	}
 
@@ -282,7 +285,7 @@ const char* App::GetArgv(int index) const
 // ---------------------------------------
 const char* App::GetTitle() const
 {
-	return title.GetString();
+	return title1.GetString();
 }
 
 // ---------------------------------------
