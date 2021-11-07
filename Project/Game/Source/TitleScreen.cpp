@@ -93,8 +93,8 @@ bool TitleScreen::Update(float dt)
 		}
 		else //continue option
 		{
-			cont = true;
-			app->fade->FadeToBlack(this, app->scene, 30);
+			/*cont = true;
+			app->fade->FadeToBlack(this, app->scene, 30);*/
 		}
 		
 		
