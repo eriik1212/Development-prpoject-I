@@ -381,6 +381,13 @@ bool Player::Update(float dt)
 	//LOG("playerY=%d", playerData.playerBody.y);
 	LOG("playerYVel=%d", playerData.yVel);
 
+
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(playerTex, playerData.playerBody.x - 7, playerData.playerBody.y, &rect);
+
+	// Draw map
+	app->map->Draw();
+
 	return true;
 }
 
@@ -389,8 +396,6 @@ bool Player::PostUpdate()
 {
 	bool ret = true;
 
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(playerTex, playerData.playerBody.x - 7, playerData.playerBody.y, &rect);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

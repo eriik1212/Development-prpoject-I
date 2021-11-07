@@ -253,8 +253,7 @@ bool Scene::Update(float dt)
 	}
 	
 
-	// Draw map
-	app->map->Draw();
+	
 
 	if (app->play->playerData.winner == true)
 	{
