@@ -30,12 +30,9 @@ bool TitleScreen::Start()
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/title_music.ogg");
 
-		//load textures
-		
-		
-
-		
-		
+		//Disable Player & map
+		app->play->Disable();
+		app->map->Disable();
 	}
 	changeFX = app->audio->LoadFx("Assets/audio/fx/switching.wav");
 	enterFX = app->audio->LoadFx("Assets/audio/fx/enter.wav");

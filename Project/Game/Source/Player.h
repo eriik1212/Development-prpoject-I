@@ -71,7 +71,7 @@ private:
 	uint CheckPointFX;
 
 	// Load player general properties
-	//bool LoadPlayer(pugi::xml_node player);
+	bool LoadPlayer(pugi::xml_node player);
 
 public:
 	PlayerData playerData;

@@ -458,7 +458,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 	return true;
 }
-/*
+
 bool Player::LoadPlayer(pugi::xml_node playerInf)
 {
 	bool ret = true;
@@ -486,4 +486,4 @@ bool Player::LoadPlayer(pugi::xml_node playerInf)
 	}
 
 	return ret;
-}*/
+}
