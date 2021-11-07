@@ -39,8 +39,12 @@ public:
 	SDL_Texture* ContinuePressed;
 	SDL_Texture* ContinueUnpressed;
 
+	uint changeFX;
+	uint enterFX;
+	int option=1;
 	uint TitleMusic;
-	SDL_Rect backgroundTitle;
+	SDL_Rect backgroundTitle, NewGameRect, ContinueRect;
+	bool cont=false;
 
 };
 

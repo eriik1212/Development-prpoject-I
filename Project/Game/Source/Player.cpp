@@ -8,6 +8,8 @@
 #include "Map.h"
 #include "Scene.h"
 #include "ModuleCollisions.h"
+#include "TitleScreen.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -153,25 +155,45 @@ bool Player::Start()
 
 	playerData.winner = false;
 	chekpoint = false;
-
-	if (!revive)
+	if (this->Enabled())
 	{
-		app->SaveGameRequest();
-		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
+		if (app->title->cont == false)
+		{
+			app->LoadConfigRequest();
+			LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
+		}
+		else
+		{
+			app->LoadGameRequest();
 
+		}
+
+		if (!revive)
+		{
+			if (app->title->cont == false)
+			{
+				app->SaveGameRequest();
+				LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
+			}
+			else
+			{
+				app->LoadGameRequest();
+
+			}
+
+		}
+		if (revive)
+		{
+			app->LoadGameRequest();
+
+		}
+
+		if (restart)
+		{
+			app->LoadGameRequest();
+			//app->LoadConfigRequest();
+		}
 	}
-	if (revive)
-	{
-		app->LoadGameRequest();
-
-	}
-
-	if (restart)
-	{
-		app->LoadGameRequest();
-		//app->LoadConfigRequest();
-	}
-
 
 	restart = false;
 	revive = false;
@@ -270,6 +292,12 @@ bool Player::Update(float dt)
 		{
 			currentAnimation = &jumpL;
 		}
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, app->title, 30);
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
