@@ -97,11 +97,11 @@ bool TitleScreen::Update(float dt)
 		
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
 		app->audio->PlayFx(changeFX);
 		option = 0;
-	}
+	}*/
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
@@ -127,13 +127,13 @@ bool TitleScreen::PostUpdate()
 	if (option == 1)
 	{
 		app->render->DrawTexture(NewGamePressed, 271, 280, &NewGameRect);
-		app->render->DrawTexture(ContinueUnpressed, 246, 307, &ContinueRect);
+		//app->render->DrawTexture(ContinueUnpressed, 246, 307, &ContinueRect);
 	}
-	else
+	/*else
 	{
 		app->render->DrawTexture(NewGameUnpressed, 271, 280, &NewGameRect);
 		app->render->DrawTexture(ContinuePressed, 246, 307, &ContinueRect);
-	}
+	}*/
 	
 	//app->render->DrawTexture(nom textura, rectangle.x, rectangle.y, &rectangle)
 	return true;
