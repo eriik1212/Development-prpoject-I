@@ -34,11 +34,27 @@ bool TitleScreen::Start()
 		app->play->Disable();
 		app->map->Disable();
 	}
+	changeFX = app->audio->LoadFx("Assets/audio/fx/switching.wav");
+	enterFX = app->audio->LoadFx("Assets/audio/fx/enter.wav");
 
 	Title = app->tex->Load("Assets/textures/titleW.png");
+	NewGamePressed= app->tex->Load("Assets/textures/PressedNG.png");
+	NewGameUnpressed= app->tex->Load("Assets/textures/UnpressedNG.png");
+	ContinuePressed= app->tex->Load("Assets/textures/PressedCont.png");
+	ContinueUnpressed= app->tex->Load("Assets/textures/UnpressedContP.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
+
+	NewGameRect.x = 0;
+	NewGameRect.y = 0;
+	NewGameRect.w = 99;
+	NewGameRect.h = 16;
+
+	ContinueRect.x = 0;
+	ContinueRect.y = 0;
+	ContinueRect.w = 152;
+	ContinueRect.h = 16;
 
 	backgroundTitle.x = 0;
 	backgroundTitle.y = 0;
@@ -62,10 +78,38 @@ bool TitleScreen::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		//Fade Out
-		app->fade->FadeToBlack(this, app->scene, 30);
-		app->play->revive = true;
-		app->play->playerData.isDead = false;
+		app->audio->PlayFx(enterFX);
+		if (option == 1)//New game option
+		{
+			cont = false;
+			app->fade->FadeToBlack(this, app->scene, 30);
+			
+			app->play->playerData.isDead = false;
+			
+
+		}
+		else //continue option
+		{
+			cont = true;
+			app->fade->FadeToBlack(this, app->scene, 30);
+		}
+		
+		
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		app->audio->PlayFx(changeFX);
+		option = 0;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		app->audio->PlayFx(changeFX);
+		option = 1;
+	}
+
+	
 
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
@@ -79,7 +123,18 @@ bool TitleScreen::Update(float dt)
 bool TitleScreen::PostUpdate()
 {
 
-	app->render->DrawRectangle(backgroundTitle, 255, 255, 255, 255);
 	app->render->DrawTexture(Title, 0, 0, NULL);
+	if (option == 1)
+	{
+		app->render->DrawTexture(NewGamePressed, 271, 280, &NewGameRect);
+		app->render->DrawTexture(ContinueUnpressed, 246, 307, &ContinueRect);
+	}
+	else
+	{
+		app->render->DrawTexture(NewGameUnpressed, 271, 280, &NewGameRect);
+		app->render->DrawTexture(ContinuePressed, 246, 307, &ContinueRect);
+	}
+	
+	//app->render->DrawTexture(nom textura, rectangle.x, rectangle.y, &rectangle)
 	return true;
 }
