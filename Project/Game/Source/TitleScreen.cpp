@@ -30,12 +30,9 @@ bool TitleScreen::Start()
 		// Load music
 		app->audio->PlayMusic("Assets/audio/music/title_music.ogg");
 
-		//load textures
-		
-		
-
-		
-		
+		//Disable Player & map
+		app->play->Disable();
+		app->map->Disable();
 	}
 
 	Title = app->tex->Load("Assets/textures/titleW.png");

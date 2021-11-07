@@ -4877,6 +4877,7 @@
    <tile gid="257"/>
    <tile gid="258"/>
    <tile/>
+   <tile gid="155"/>
    <tile/>
    <tile/>
    <tile/>
@@ -4900,8 +4901,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="248"/>
    <tile/>
    <tile/>
    <tile/>
@@ -5047,8 +5047,8 @@
    <tile gid="5"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="277"/>
+   <tile gid="277"/>
    <tile/>
    <tile/>
    <tile/>
@@ -14141,7 +14141,7 @@
    <tile gid="259"/>
    <tile gid="260"/>
    <tile gid="260"/>
-   <tile/>
+   <tile gid="215"/>
    <tile/>
    <tile/>
    <tile/>
@@ -15044,7 +15044,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="7" name="Navigation" width="200" height="15">
+ <layer id="7" name="Navigation" width="200" height="15" visible="0">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="Navigation" type="int" value="1"/>
@@ -18052,7 +18052,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="9" name="DieSensors" width="200" height="15">
+ <layer id="9" name="DieSensors" width="200" height="15" visible="0">
   <properties>
    <property name="DieSensors" type="int" value="1"/>
    <property name="Draw" type="int" value="0"/>
@@ -21060,7 +21060,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="10" name="WinSensors" width="200" height="15">
+ <layer id="10" name="WinSensors" width="200" height="15" visible="0">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="WinSensors" type="int" value="1"/>

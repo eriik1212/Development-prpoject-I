@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "GameOverScreen.h"
 #include "FadeToBlack.h"
+#include "TitleScreen.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -61,6 +62,8 @@ bool Scene::Start()
 	background_backcloud = app->tex->Load("Assets/textures/background_backcloud.png");
 
 	background_sky = app->tex->Load("Assets/textures/background_sky.png");
+
+	winTexture = app->tex->Load("Assets/textures/youwin.png");
 
 	app->play->playerData.isDead = false;
 	debug = false;
@@ -253,6 +256,16 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
+	if (app->play->playerData.winner == true)
+	{
+		
+		app->render->DrawTexture(winTexture, app->render->camera.w/4, app->render->camera.h / 4, NULL, 0);
+
+		if(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		app->fade->FadeToBlack(this, app->title, 30);
+	}
+
+
 	return true;
 }
 
@@ -260,7 +273,6 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-
 
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

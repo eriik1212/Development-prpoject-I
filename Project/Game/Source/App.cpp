@@ -88,7 +88,7 @@ bool App::Awake()
 
 	bool ret = false;
 
-	// L01: DONE 3: Load config from XML
+	//  Load config from XML
 	config = LoadConfig(configFile);
 
 	if (config.empty() == false)

@@ -55,6 +55,8 @@ private:
 	SDL_Texture* background_backmountain;
 	SDL_Texture* background_backcloud;
 
+	SDL_Texture* winTexture;
+
 
 };
 #endif // __SCENE_H__
