@@ -57,8 +57,9 @@ public:
 
     // Methods to request Load / Save
 	void LoadGameRequest();
-	void LoadConfigRequest();
+	void LoadInitialGameRequest();
 	void SaveGameRequest() const;
+	void SaveInitialGameRequest() const;
 
 
 	// Load config file
@@ -83,8 +84,9 @@ private:
 
 	// Load / Save
 	bool LoadGame();
-	bool LoadGameFromConfig();
+	bool LoadInitialGame();
 	bool SaveGame() const;
+	bool SaveInitialGame() const;
 
 public:
 
@@ -117,8 +119,9 @@ private:
 	float dt;
 
 	mutable bool saveGameRequested;
+	mutable bool saveInitialGameRequested;
 	bool loadGameRequested;
-	bool loadConfigRequested;
+	bool loadInitialGameRequested;
 };
 
 extern App* app;

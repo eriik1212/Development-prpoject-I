@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Scene.h"
 #include "ModuleCollisions.h"
+#include "TitleScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -148,22 +149,20 @@ bool Player::Start()
 	playerData.winner = false;
 	chekpoint = false;
 
-	if (!revive)
+	if (!revive && !app->title->cont && !restart)
 	{
-		app->SaveGameRequest();
+		app->SaveInitialGameRequest();
 		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
-
 	}
-	if (revive)
+
+	if (revive || app->title->cont)
 	{
 		app->LoadGameRequest();
 
 	}
-
 	if (restart)
 	{
-		app->LoadGameRequest();
-		//app->LoadConfigRequest();
+		app->LoadInitialGameRequest();
 	}
 
 
@@ -360,13 +359,13 @@ bool Player::Update(float dt)
 		app->render->camera.x = -2800;
 
 	// CHECKPOINT!
-	/*if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
+	if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
 	{
 		chekpoint = true;
 		app->audio->PlayFx(CheckPointFX);
 		app->SaveGameRequest();
 
-	}*/
+	}
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,

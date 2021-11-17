@@ -44,7 +44,7 @@ public:
 	int option=1;
 	uint TitleMusic;
 	SDL_Rect backgroundTitle, NewGameRect, ContinueRect;
-	bool cont=false;
+	bool cont;
 
 };
 

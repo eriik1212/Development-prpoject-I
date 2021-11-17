@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<save_state>
+	<window />
+	<input />
+	<textures />
+	<audio />
+	<map />
+	<scene />
+	<:anonymous />
+	<:anonymous />
+	<player>
+		<player x="196" y="308" />
+		<playerLimit Left="100" Right="300" />
+	</player>
+	<:anonymous />
+	<:anonymous />
+	<renderer>
+		<camera x="0" y="0" />
+	</renderer>
+</save_state>

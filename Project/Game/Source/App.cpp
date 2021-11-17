@@ -182,8 +182,9 @@ void App::FinishUpdate()
 {
 	// Call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
-	if (loadConfigRequested == true) LoadGameFromConfig();
+	if (loadInitialGameRequested == true) LoadInitialGame();
 	if (saveGameRequested == true) SaveGame();
+	if (saveInitialGameRequested == true) SaveInitialGame();
 }
 
 // Call modules before each loop iteration
@@ -301,9 +302,9 @@ void App::LoadGameRequest()
 	loadGameRequested = true;
 }
 
-void App::LoadConfigRequest()
+void App::LoadInitialGameRequest()
 {
-	loadConfigRequested = true;
+	loadInitialGameRequested = true;
 }
 
 // ---------------------------------------
@@ -311,6 +312,11 @@ void App::SaveGameRequest() const
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
 	saveGameRequested = true;
+}
+
+void App::SaveInitialGameRequest() const
+{
+	saveInitialGameRequested = true;
 }
 
 // ---------------------------------------
@@ -345,16 +351,16 @@ bool App::LoadGame()
 	return ret;
 }
 
-bool App::LoadGameFromConfig()
+bool App::LoadInitialGame()
 {
 	bool ret = true;
 
 	pugi::xml_document gameStateFile;
-	pugi::xml_parse_result result = gameStateFile.load_file(CONFIG_FILENAME);
+	pugi::xml_parse_result result = gameStateFile.load_file("save_initial_game.xml");
 
 	if (result == NULL)
 	{
-		LOG("Could not load xml file: %s. pugi error: %s", CONFIG_FILENAME, result.description());
+		LOG("Could not load xml file savegame.xml. pugi error: %s", result.description());
 		ret = false;
 	}
 	else
@@ -364,12 +370,12 @@ bool App::LoadGameFromConfig()
 
 		while (item != NULL && ret == true)
 		{
-			ret = item->data->LoadState(gameStateFile.child("config").child(item->data->name.GetString()));
+			ret = item->data->LoadState(gameStateFile.child("save_state").child(item->data->name.GetString()));
 			item = item->next;
 		}
 	}
 
-	loadConfigRequested = false;
+	loadInitialGameRequested = false;
 
 	return ret;
 }
@@ -394,6 +400,29 @@ bool App::SaveGame() const
 	ret = saveDoc->save_file("savegame.xml");
 
 	saveGameRequested = false;
+
+	return ret;
+}
+
+bool App::SaveInitialGame() const
+{
+	bool ret = false;
+
+	pugi::xml_document* saveDoc = new pugi::xml_document();
+	pugi::xml_node saveStateNode = saveDoc->append_child("save_state");
+
+	ListItem<Module*>* item;
+	item = modules.start;
+
+	while (item != NULL)
+	{
+		ret = item->data->SaveState(saveStateNode.append_child(item->data->name.GetString()));
+		item = item->next;
+	}
+
+	ret = saveDoc->save_file("save_initial_game.xml");
+
+	saveInitialGameRequested = false;
 
 	return ret;
 }
