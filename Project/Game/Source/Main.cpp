@@ -41,10 +41,10 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
-		float dt = 16.0; // Fixed 60fps = 16ms
+		//float dt = 16.0; // Fixed 60fps = 16ms
 
 		//TIC
-		auto start = chrono::steady_clock::now();
+		//auto start = chrono::steady_clock::now();
 
 		switch(state)
 		{
@@ -117,13 +117,13 @@ int main(int argc, char* args[])
 			break;
 		}
 		//TOC
-		auto end = chrono::steady_clock::now();
-		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+		//auto end = chrono::steady_clock::now();
+		//auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 		//LOG("Elapsed time in milliseconds: %d", telapsed, " ms");
 		//LOG("%.f", dt);
 
-		if (dt - telapsed > 0.0f)
-			Sleep(dt - telapsed);
+		//if (dt - telapsed > 0.0f)
+			//Sleep(dt - telapsed);
 	}
 
 	LOG("... Bye! :)\n");

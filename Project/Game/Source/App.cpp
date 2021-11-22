@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <string.h>
 
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
@@ -86,6 +87,7 @@ bool App::Awake()
 	pugi::xml_node config;
 	pugi::xml_node configApp;
 
+	frameDuration = new PerfTimer();
 	bool ret = false;
 
 	//  Load config from XML
@@ -99,6 +101,9 @@ bool App::Awake()
 		// Read the title from the config file
 		title1.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
+
+		//read the framerate from config file
+		maxFrameRate = configApp.child("frcap").attribute("value").as_int();
 	}
 
 	if (ret == true)
@@ -175,6 +180,11 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	frameCount++;
+	lastSecFrameCount++;
+
+	dt = frameDuration->ReadMs();
+	frameDuration->Start();
 }
 
 // ---------------------------------------------
@@ -185,6 +195,41 @@ void App::FinishUpdate()
 	if (loadInitialGameRequested == true) LoadInitialGame();
 	if (saveGameRequested == true) SaveGame();
 	if (saveInitialGameRequested == true) SaveInitialGame();
+
+	float secondsSinceStartup = startupTime.ReadSec();
+
+	if (lastSecFrameTime.Read() > 1000) {
+		lastSecFrameTime.Start();
+		framesPerSecond = lastSecFrameCount;
+		lastSecFrameCount = 0;
+		averageFps = (averageFps + framesPerSecond) / 2;
+	}
+
+	static char title[256];
+	if (app->render->vsync)
+	{
+		sprintf_s(title, 256, "FPS: %i / Av.FPS: %.2f / Last-Frame MS: %.3f / Vsync: ON  ",
+			framesPerSecond, averageFps, dt);
+	}
+	else 
+	{
+		sprintf_s(title, 256, "FPS: %i / Av.FPS: %.2f / Last-Frame MS: %.3f / Vsync: OFF ",
+			framesPerSecond, averageFps, dt);
+	}
+
+	
+	
+
+
+	//Code for getting the desired framerate
+	float delay = float(maxFrameRate) - frameDuration->ReadMs();
+
+	PerfTimer* delayt = new PerfTimer();
+	delayt->Start();
+	if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
+	LOG("Expected %f milliseconds and the real delay is %f", delay, delayt->ReadMs());
+	LOG("dt: %f", dt);
+	app->win->SetTitle(title);
 }
 
 // Call modules before each loop iteration

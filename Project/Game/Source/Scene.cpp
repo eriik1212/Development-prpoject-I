@@ -82,13 +82,14 @@ int lastPosition;
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	float speed = 1 * dt;
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
 	{
-		app->render->camera.x -= app->play->playerData.xVel;
+		app->render->camera.x -= app->play->playerData.xVel*dt;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && debug)
 	{
-		app->render->camera.x += app->play->playerData.xVel;
+		app->render->camera.x += app->play->playerData.xVel*dt;
 	}
 	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
 	{
@@ -164,7 +165,7 @@ bool Scene::Update(float dt)
 				   app->map->mapData.tileWidth, app->map->mapData.tileHeight,
 				   app->map->mapData.tilesets.count());
 
-	app->win->SetTitle(title.GetString());
+	//app->win->SetTitle(title.GetString());
 
 
 	// ----------------------------------------------------------------------------------------------------- PARALLAX EFFECT
@@ -174,7 +175,7 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 1, 0, NULL, 0);
 		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 2, 0, NULL, 0);
 		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 3, 0, NULL, 0);
-
+		
 		// BACK CLOUD
 		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 0, 0, NULL, 0.1f);
 		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 1, 0, NULL, 0.1f);

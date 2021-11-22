@@ -57,6 +57,9 @@ public:
 	// Limit of the player inside the camera
 	int playerLimitR = camera.x + 300;
 	int playerLimitL = camera.x + 100;
+
+	bool vsync;
+
 };
 
 #endif // __RENDER_H__

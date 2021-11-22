@@ -23,6 +23,8 @@
     <ClCompile Include="Source\GameOverScreen.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\TitleScreen.cpp" />
+    <ClCompile Include="Source\PerfTimer.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -66,6 +68,8 @@
     <ClInclude Include="Source\GameOverScreen.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\TitleScreen.h" />
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
