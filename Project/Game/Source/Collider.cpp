@@ -72,6 +72,8 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 		if (intersectX < 0.0f && intersectY < 0.0f && !app->scene->godMode)
 		{
 			app->play->playerData.isDead = true;
+			app->play->playerData.jumping = true;
+			app->play->playerData.canJumpAgain = false;
 
 			return true;
 		}

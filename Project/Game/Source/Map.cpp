@@ -21,7 +21,7 @@ Map::Map(bool enabled) : Module(enabled), mapLoaded(false)
 Map::~Map()
 {}
 
-// L06: TODO 7: Ask for the value of a custom property
+// Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
 	//...
@@ -70,7 +70,7 @@ void Map::Draw()
 
 					if (gid > 0) {
 
-						//L06: TODO 4: Obtain the tile set using GetTilesetFromTileId
+						//Obtain the tile set using GetTilesetFromTileId
 						//now we always use the firt tileset in the list
 						//TileSet* tileset = mapData.tilesets.start->data;
 						TileSet* tileset = GetTilesetFromTileId(gid);
@@ -104,14 +104,25 @@ void Map::Draw()
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
-					
-						tilesColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
-
-						tilesColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f, WALL);
 
 						if (app->scene->collidersOn)
 						{
-							tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 1);
+							app->render->DrawTexture(tileset->texture,
+								pos.x,
+								pos.y + (32 - r.h),
+								&r);
+						}
+
+						if (pos.x < (app->play->playerData.playerBody.x + 50) && pos.x >(app->play->playerData.playerBody.x - 50))
+						{
+							tilesColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+							tilesColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 1.0f, WALL);
+
+							if (app->scene->collidersOn)
+							{
+								tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 1);
+							}
 						}
 
 					}
@@ -137,15 +148,25 @@ void Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 
-						dieColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
-
-						dieColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, DEAD);
-
 						if (app->scene->collidersOn)
 						{
-							dieColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 2);
+							app->render->DrawTexture(tileset->texture,
+								pos.x,
+								pos.y + (32 - r.h),
+								&r);
 						}
 
+						if (pos.x < (app->play->playerData.playerBody.x + 50) && pos.x >(app->play->playerData.playerBody.x - 50))
+						{
+							dieColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+							dieColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, DEAD);
+
+							if (app->scene->collidersOn)
+							{
+								dieColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 2);
+							}
+						}
 					}
 
 				}
@@ -169,15 +190,25 @@ void Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
 
-						winColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
-
-						winColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, WIN);
-
 						if (app->scene->collidersOn)
 						{
-							winColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 3);
+							app->render->DrawTexture(tileset->texture,
+								pos.x,
+								pos.y + (32 - r.h),
+								&r);
 						}
 
+						if (pos.x < (app->play->playerData.playerBody.x + 50) && pos.x >(app->play->playerData.playerBody.x - 50))
+						{
+							winColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+							winColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, WIN);
+
+							if (app->scene->collidersOn)
+							{
+								winColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 3);
+							}
+						}
 					}
 
 				}
