@@ -29,7 +29,7 @@ public:
 		, uint& height) const;
 
 	// Retrieve window scale
-	uint GetScale() const;
+	float GetScale() const;
 
 public:
 	// The window we'll be rendering to
@@ -40,7 +40,7 @@ public:
 
 	int width;
 	int height;
-	int scale;
+	float scale;
 
 private:
 	SString title;

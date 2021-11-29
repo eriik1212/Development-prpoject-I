@@ -330,7 +330,7 @@ bool Player::Update(float dt)
 		//Camera LIMITS & MOVEMENT
 		if (playerData.playerBody.x >= app->render->playerLimitR)
 		{
-			app->render->camera.x -= playerData.xVel;
+			app->render->camera.x -= playerData.xVel*1.5;
 			app->render->playerLimitR += playerData.xVel;
 			app->render->playerLimitL += playerData.xVel;
 
@@ -338,7 +338,7 @@ bool Player::Update(float dt)
 
 		if (playerData.playerBody.x <= app->render->playerLimitL)
 		{
-			app->render->camera.x += playerData.xVel;
+			app->render->camera.x += playerData.xVel*1.5;
 			app->render->playerLimitL -= playerData.xVel;
 			app->render->playerLimitR -= playerData.xVel;
 		}
@@ -355,8 +355,8 @@ bool Player::Update(float dt)
 	if (app->render->camera.x >= 0)
 		app->render->camera.x = 0;
 
-	if (app->render->camera.x <= -2800)
-		app->render->camera.x = -2800;
+	if (app->render->camera.x <= -4200)
+		app->render->camera.x = -4200;
 
 	// CHECKPOINT!
 	if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
