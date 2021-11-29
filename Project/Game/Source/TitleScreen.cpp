@@ -124,19 +124,19 @@ bool TitleScreen::Update(float dt)
 bool TitleScreen::PostUpdate()
 {
 
-	app->render->DrawTexture(Title, 0, 0, NULL);
+	app->render->DrawTexture(Title, 0, 0, false, NULL);
 	if (option == 1)
 	{
-		app->render->DrawTexture(NewGamePressed, 271, 280, &NewGameRect);
-		app->render->DrawTexture(ContinueUnpressed, 246, 307, &ContinueRect);
+		app->render->DrawTexture(NewGamePressed, 271, 280, false, &NewGameRect);
+		app->render->DrawTexture(ContinueUnpressed, 246, 307, false, &ContinueRect);
 	}
 	else
 	{
-		app->render->DrawTexture(NewGameUnpressed, 271, 280, &NewGameRect);
-		app->render->DrawTexture(ContinuePressed, 246, 307, &ContinueRect);
+		app->render->DrawTexture(NewGameUnpressed, 271, 280, false, &NewGameRect);
+		app->render->DrawTexture(ContinuePressed, 246, 307, false, &ContinueRect);
 	}
 	
 	// DrawTexture TEMPLATE
-	//app->render->DrawTexture(nom textura, rectangle.x, rectangle.y, &rectangle)
+	//app->render->DrawTexture(nom textura, rectangle.x, rectangle.y, --necesita estar escalat?--, &rectangle)
 	return true;
 }

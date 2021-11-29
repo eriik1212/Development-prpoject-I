@@ -1,1 +1,3 @@
-﻿  Game.vcxproj -> C:\Users\shake\Desktop\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
+﻿  FadeToBlack.cpp
+C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\FadeToBlack.cpp(80,19): warning C4244: '=': conversión de 'float' a 'Uint32'; posible pérdida de datos
+  Game.vcxproj -> C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe

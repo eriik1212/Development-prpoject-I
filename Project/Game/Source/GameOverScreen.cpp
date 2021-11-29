@@ -75,7 +75,7 @@ bool GameOverScreen::Update(float dt)
 // Update: draw background
 bool GameOverScreen::PostUpdate()
 {
-	app->render->DrawTexture(GameOverTex, 0, 0, NULL);
+	app->render->DrawTexture(GameOverTex, 0, 0, true, NULL);
 	return true;
 }
 

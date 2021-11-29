@@ -71,6 +71,6 @@ bool LogoScreen::PostUpdate()
 {
 
 	app->render->DrawRectangle(backgroundLogo, 255, 255, 255, 255);
-	app->render->DrawTexture(screen, 0, 0, NULL);
+	app->render->DrawTexture(screen, 0, 0, false, NULL);
 	return true;
 }
