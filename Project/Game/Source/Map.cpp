@@ -80,7 +80,7 @@ void Map::Draw()
 
 						app->render->DrawTexture(tileset->texture,
 							pos.x,
-							pos.y,
+							pos.y, true,
 							&r);
 					}
 
@@ -109,7 +109,7 @@ void Map::Draw()
 						{
 							app->render->DrawTexture(tileset->texture,
 								pos.x,
-								pos.y + (32 - r.h),
+								pos.y + (32 - r.h), true,
 								&r);
 						}
 
@@ -152,7 +152,7 @@ void Map::Draw()
 						{
 							app->render->DrawTexture(tileset->texture,
 								pos.x,
-								pos.y + (32 - r.h),
+								pos.y + (32 - r.h), true,
 								&r);
 						}
 
@@ -194,7 +194,7 @@ void Map::Draw()
 						{
 							app->render->DrawTexture(tileset->texture,
 								pos.x,
-								pos.y + (32 - r.h),
+								pos.y + (32 - r.h), true,
 								&r);
 						}
 

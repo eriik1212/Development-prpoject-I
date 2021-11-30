@@ -382,7 +382,7 @@ bool Player::Update(float dt)
 
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(playerTex, playerData.playerBody.x - 7, playerData.playerBody.y, &rect);
+	app->render->DrawTexture(playerTex, playerData.playerBody.x - 7, playerData.playerBody.y, true, &rect);
 
 	// Draw map
 	app->map->Draw();

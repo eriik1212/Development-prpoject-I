@@ -9,7 +9,7 @@
 
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module(startEnabled)
 {
-	screenRect = { 0, 0, 640,  480};
+	screenRect = { 0, 0, 960,  720 };
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
