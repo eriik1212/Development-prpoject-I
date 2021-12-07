@@ -19,96 +19,98 @@ Player::Player(bool enabled) : Module(enabled)
 	name.Create("player");
 
 	//All animations here
+	{
+		//idle anim Right
+		idleAnimR.PushBack({ 0, 0, 50, 37 });
+		idleAnimR.PushBack({ 50, 0, 50, 37 });
+		idleAnimR.PushBack({ 100, 0, 50, 37 });
+		idleAnimR.PushBack({ 150, 0, 50, 37 });
+		idleAnimR.loop = true;
+		idleAnimR.speed = 0.1f;
 
-	//idle anim Right
-	idleAnimR.PushBack({ 0, 0, 50, 37 });
-	idleAnimR.PushBack({ 50, 0, 50, 37 });
-	idleAnimR.PushBack({ 100, 0, 50, 37 });
-	idleAnimR.PushBack({ 150, 0, 50, 37 });
-	idleAnimR.loop = true;
-	idleAnimR.speed = 0.1f;
+		//idle anim Left
+		idleAnimL.PushBack({ 300, 592, 50, 37 });
+		idleAnimL.PushBack({ 250, 592, 50, 37 });
+		idleAnimL.PushBack({ 200, 592, 50, 37 });
+		idleAnimL.PushBack({ 150, 592, 50, 37 });
+		idleAnimL.loop = true;
+		idleAnimL.speed = 0.1f;
 
-	//idle anim Left
-	idleAnimL.PushBack({ 300, 592, 50, 37 });
-	idleAnimL.PushBack({ 250, 592, 50, 37 });
-	idleAnimL.PushBack({ 200, 592, 50, 37 });
-	idleAnimL.PushBack({ 150, 592, 50, 37 });
-	idleAnimL.loop = true;
-	idleAnimL.speed = 0.1f;
+		//walk Right
+		walkR.PushBack({ 50, 37, 50, 37 });
+		walkR.PushBack({ 100, 37, 50, 37 });
+		walkR.PushBack({ 150, 37, 50, 37 });
+		walkR.PushBack({ 200, 37, 50, 37 });
+		walkR.PushBack({ 250, 37, 50, 37 });
+		walkR.PushBack({ 300, 37, 50, 37 });
+		walkR.loop = true;
+		walkR.speed = 0.1f;
 
-	//walk Right
-	walkR.PushBack({ 50, 37, 50, 37 });
-	walkR.PushBack({ 100, 37, 50, 37 });
-	walkR.PushBack({ 150, 37, 50, 37 });
-	walkR.PushBack({ 200, 37, 50, 37 });
-	walkR.PushBack({ 250, 37, 50, 37 });
-	walkR.PushBack({ 300, 37, 50, 37 });
-	walkR.loop = true;
-	walkR.speed = 0.1f;
-	
-	//walk left
-	walkL.PushBack({ 250, 629, 50, 37 });
-	walkL.PushBack({ 200, 629, 50, 37 });
-	walkL.PushBack({ 150, 629, 50, 37 });
-	walkL.PushBack({ 100, 629, 50, 37 });
-	walkL.PushBack({ 50, 629, 50, 37 });
-	walkL.PushBack({ 0, 629, 50, 37 });
-	walkL.loop = true;
-	walkL.speed = 0.1f;
+		//walk left
+		walkL.PushBack({ 250, 629, 50, 37 });
+		walkL.PushBack({ 200, 629, 50, 37 });
+		walkL.PushBack({ 150, 629, 50, 37 });
+		walkL.PushBack({ 100, 629, 50, 37 });
+		walkL.PushBack({ 50, 629, 50, 37 });
+		walkL.PushBack({ 0, 629, 50, 37 });
+		walkL.loop = true;
+		walkL.speed = 0.1f;
 
-	//jump Right
-	jumpR.PushBack({ 0, 74, 50, 37 });
-	jumpR.PushBack({ 50, 74, 50, 37 });
-	jumpR.PushBack({ 100, 74, 50, 37 });
-	jumpR.PushBack({ 150, 74, 50, 37 });
-	jumpR.PushBack({ 200, 74, 50, 37 });
-	jumpR.PushBack({ 250, 74, 50, 37 });
-	jumpR.PushBack({ 300, 74, 50, 37 });
-	jumpR.PushBack({ 0, 111, 50, 37 });
-	jumpR.PushBack({ 50, 111, 50, 37 });
-	jumpR.PushBack({ 100, 111, 50, 37 });
-	jumpR.PushBack({ 0, 0, 50, 37 });
-	jumpR.loop = true;
-	jumpR.speed = 0.45f;
+		//jump Right
+		jumpR.PushBack({ 0, 74, 50, 37 });
+		jumpR.PushBack({ 50, 74, 50, 37 });
+		jumpR.PushBack({ 100, 74, 50, 37 });
+		jumpR.PushBack({ 150, 74, 50, 37 });
+		jumpR.PushBack({ 200, 74, 50, 37 });
+		jumpR.PushBack({ 250, 74, 50, 37 });
+		jumpR.PushBack({ 300, 74, 50, 37 });
+		jumpR.PushBack({ 0, 111, 50, 37 });
+		jumpR.PushBack({ 50, 111, 50, 37 });
+		jumpR.PushBack({ 100, 111, 50, 37 });
+		jumpR.PushBack({ 0, 0, 50, 37 });
+		jumpR.loop = true;
+		jumpR.speed = 0.45f;
 
-	//jump Left
-	jumpL.PushBack({ 300, 666, 50, 37 });
-	jumpL.PushBack({ 250, 666, 50, 37 });
-	jumpL.PushBack({ 200, 666, 50, 37 });
-	jumpL.PushBack({ 150, 666, 50, 37 });
-	jumpL.PushBack({ 100, 666, 50, 37 });
-	jumpL.PushBack({ 50, 666, 50, 37 });
-	jumpL.PushBack({ 0, 666, 50, 37 });
-	jumpL.PushBack({ 300, 703, 50, 37 });
-	jumpL.PushBack({ 250, 703, 50, 37 });
-	jumpL.PushBack({ 200, 703, 50, 37 });
-	jumpL.PushBack({ 300, 592, 50, 37 });
-	jumpL.loop = true;
-	jumpL.speed = 0.45f;
+		//jump Left
+		jumpL.PushBack({ 300, 666, 50, 37 });
+		jumpL.PushBack({ 250, 666, 50, 37 });
+		jumpL.PushBack({ 200, 666, 50, 37 });
+		jumpL.PushBack({ 150, 666, 50, 37 });
+		jumpL.PushBack({ 100, 666, 50, 37 });
+		jumpL.PushBack({ 50, 666, 50, 37 });
+		jumpL.PushBack({ 0, 666, 50, 37 });
+		jumpL.PushBack({ 300, 703, 50, 37 });
+		jumpL.PushBack({ 250, 703, 50, 37 });
+		jumpL.PushBack({ 200, 703, 50, 37 });
+		jumpL.PushBack({ 300, 592, 50, 37 });
+		jumpL.loop = true;
+		jumpL.speed = 0.45f;
 
-	//death looking right
-	deathAnimR.PushBack({ 200, 1332, 50, 37 });
-	deathAnimR.PushBack({ 250, 1332, 50, 37 });
-	deathAnimR.PushBack({ 300, 1332, 50, 37 });
-	deathAnimR.PushBack({ 0, 1369, 50, 37 });
-	deathAnimR.PushBack({ 50, 1369, 50, 37 });
-	deathAnimR.PushBack({ 100, 1369, 50, 37 });
-	deathAnimR.PushBack({ 150, 1369, 50, 37 });
-	deathAnimR.PushBack({ 200, 1369, 50, 37 });
-	deathAnimR.loop = true;
-	deathAnimR.speed = 0.1f;
+		//death looking right
+		deathAnimR.PushBack({ 200, 1332, 50, 37 });
+		deathAnimR.PushBack({ 250, 1332, 50, 37 });
+		deathAnimR.PushBack({ 300, 1332, 50, 37 });
+		deathAnimR.PushBack({ 0, 1369, 50, 37 });
+		deathAnimR.PushBack({ 50, 1369, 50, 37 });
+		deathAnimR.PushBack({ 100, 1369, 50, 37 });
+		deathAnimR.PushBack({ 150, 1369, 50, 37 });
+		deathAnimR.PushBack({ 200, 1369, 50, 37 });
+		deathAnimR.loop = true;
+		deathAnimR.speed = 0.1f;
 
-	//death looking left
-	deathAnimL.PushBack({ 100, 1702, 50, 37 });
-	deathAnimL.PushBack({ 50, 1702, 50, 37 });
-	deathAnimL.PushBack({ 0, 1702, 50, 37 });
-	deathAnimL.PushBack({ 300, 1739, 50, 37 });
-	deathAnimL.PushBack({ 250, 1739, 50, 37 });
-	deathAnimL.PushBack({ 200, 1739, 50, 37 });
-	deathAnimL.PushBack({ 150, 1739, 50, 37 });
-	deathAnimL.PushBack({ 100, 1739, 50, 37 });
-	deathAnimL.loop = true;
-	deathAnimL.speed = 0.1f;
+		//death looking left
+		deathAnimL.PushBack({ 100, 1702, 50, 37 });
+		deathAnimL.PushBack({ 50, 1702, 50, 37 });
+		deathAnimL.PushBack({ 0, 1702, 50, 37 });
+		deathAnimL.PushBack({ 300, 1739, 50, 37 });
+		deathAnimL.PushBack({ 250, 1739, 50, 37 });
+		deathAnimL.PushBack({ 200, 1739, 50, 37 });
+		deathAnimL.PushBack({ 150, 1739, 50, 37 });
+		deathAnimL.PushBack({ 100, 1739, 50, 37 });
+		deathAnimL.loop = true;
+		deathAnimL.speed = 0.1f;
+
+	}
 
 }
 
@@ -135,6 +137,7 @@ bool Player::Awake(pugi::xml_node& config)
 	playerData.canJumpAgain = config.attribute("canJumpAgain").as_bool();
 	playerData.isDead = config.attribute("isDead").as_bool();
 	playerData.winner = config.attribute("winner").as_bool();
+	playerData.attacking = config.attribute("attacking").as_bool();
 
 	return ret;
 }
@@ -148,6 +151,11 @@ bool Player::Start()
 
 	playerData.winner = false;
 	chekpoint = false;
+
+	enemyRect.x = 100;
+	enemyRect.y = 300;
+	enemyRect.w = 50;
+	enemyRect.h = 50;
 
 	if (!revive && !app->title->cont && !restart)
 	{
@@ -183,6 +191,25 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	//Atack Collider
+	if (playerData.direction == 1)
+	{
+		attackColliderRect.w = playerData.playerBody.w / 2;
+		attackColliderRect.h = playerData.playerBody.h;
+		attackColliderRect.x = playerData.playerBody.x + playerData.playerBody.w;
+		attackColliderRect.y = playerData.playerBody.y;
+	}
+	else if (playerData.direction == 0)
+	{
+		attackColliderRect.w = playerData.playerBody.w / 2;
+		attackColliderRect.h = playerData.playerBody.h;
+		attackColliderRect.x = playerData.playerBody.x - attackColliderRect.w;
+		attackColliderRect.y = playerData.playerBody.y;
+	}
+	attackCollider.AddCollider(attackColliderRect.x, attackColliderRect.y, attackColliderRect.w, attackColliderRect.h);
+
+	enemyCol.AddCollider(enemyRect.x, enemyRect.y, enemyRect.w, enemyRect.h);
+
 	if (playerData.yVel <= -playerData.maxVel)
 	{
 		playerData.yVel = -playerData.maxVel;
@@ -245,6 +272,7 @@ bool Player::Update(float dt)
 		}
 
 	}
+
 	// Handle the player DOUBLE jump.
 	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain && !app->scene->godMode) {
 		playerData.yVel = 8;
@@ -288,6 +316,18 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
 		currentAnimation = &idleAnimL;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && !playerData.attacking)
+	{
+		playerData.attacking = true;
+		//attack anim
+		LOG("ATTACK!");
+		attackCollider.GetCollider().CheckCollision(enemyCol.GetCollider(), 0.0f, ATTACK);
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_UP && playerData.attacking)
+	{
+		playerData.attacking = false;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
@@ -378,7 +418,7 @@ bool Player::Update(float dt)
 
 	//LOG("playerX=%d", playerData.playerBody.x);
 	//LOG("playerY=%d", playerData.playerBody.y);
-	LOG("playerYVel=%d", playerData.yVel);
+	//LOG("playerYVel=%d", playerData.yVel);
 
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -414,10 +454,13 @@ bool Player::PostUpdate()
 	jumpL.loopCount = 0;
 	jumpR.loopCount = 0;
 
-	// Draw Player Collider
+	// Draw Player Colliders
 	if (app->scene->collidersOn)
 	{
-		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, 0);
+		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, PLAYER);
+		attackCollider.GetCollider().DebugDraw(attackColliderRect, ATTACK);
+		enemyCol.GetCollider().DebugDraw(enemyRect, DEAD);
+
 	}
 
 	return ret;

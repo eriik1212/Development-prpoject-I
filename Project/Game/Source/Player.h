@@ -21,6 +21,8 @@ struct PlayerData
 	bool jumping;
 	bool canJumpAgain;
 
+	bool attacking;
+
 	bool isDead, winner, isCollidingUp;
 
 	int direction; //1 if player looks right, 0 if player looks left
@@ -78,6 +80,13 @@ public:
 
 	bool restart = false;
 	bool revive = false;
+
+	ModuleCollisions attackCollider;
+	SDL_Rect attackColliderRect;
+
+	ModuleCollisions enemyCol;
+	SDL_Rect enemyRect;
+
 
 	SDL_Texture* playerTex = nullptr;
 	Animation walkR,

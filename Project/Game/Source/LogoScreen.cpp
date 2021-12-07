@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "Window.h"
 #include "GameOverScreen.h"
 
 
@@ -34,9 +35,15 @@ bool LogoScreen::Start()
 	backgroundLogo.w = 690;
 	backgroundLogo.h = 480;
 
+	logoRect.w = 283;
+	logoRect.h = 260;
+	logoRect.x = (app->win->width / 2) - (logoRect.w / 2);
+	logoRect.y = (app->win->height / 2) - (logoRect.h / 2);
+
+
 	// Members Texture
 	
-	screen = app->tex->Load("Assets/textures/ginuh_logo.png");
+	logo = app->tex->Load("Assets/textures/ginuh_logo.png");
 
 		//Aqui podem posar algun so a veure amb la pantalla d'inici
 		//app->audio->PlayMusic("Assets/Audio/02_character_selection.ogg", 1.0f);
@@ -71,6 +78,6 @@ bool LogoScreen::PostUpdate()
 {
 
 	app->render->DrawRectangle(backgroundLogo, 255, 255, 255, 255);
-	app->render->DrawTexture(screen, 0, 0, false, NULL);
+	app->render->DrawTexture(logo,  logoRect.x, logoRect.y, false, NULL);
 	return true;
 }

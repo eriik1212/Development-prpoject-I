@@ -227,8 +227,8 @@ void App::FinishUpdate()
 	PerfTimer* delayt = new PerfTimer();
 	delayt->Start();
 	if (maxFrameRate > 0 && delay > 0) SDL_Delay(delay);
-	LOG("Expected %f milliseconds and the real delay is %f", delay, delayt->ReadMs());
-	LOG("dt: %f", dt);
+	//LOG("Expected %f milliseconds and the real delay is %f", delay, delayt->ReadMs());
+	//LOG("dt: %f", dt);
 	app->win->SetTitle(title);
 }
 

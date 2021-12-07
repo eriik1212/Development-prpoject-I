@@ -13,7 +13,8 @@ enum CollidersType
 	PLAYER = 0, //0
 	WALL, // 1
 	DEAD, // 2
-	WIN //3
+	WIN, //3
+	ATTACK //4
 };
 
 class Collider
@@ -34,7 +35,7 @@ public:
 	iPoint GetHalfSize() { return iPoint(body.w / 2, body.h / 2); }
 
 	// Draws all existing colliders with some transparency
-	// PLAYER = 0, WALL = 1, DEAD = 2, WIN = 3
+	// PLAYER = 0, WALL = 1, DEAD = 2, WIN = 3, ATTACK = 4
 	void DebugDraw(SDL_Rect body, int type);
 private:
 	SDL_Rect& body;

@@ -32,9 +32,10 @@ public:
 
 public:
 	// Members Texture
-	SDL_Texture* screen;
+	SDL_Texture* logo;
 
 	SDL_Rect backgroundLogo;
+	SDL_Rect logoRect;
 };
 
 #endif //__MODULE_MEMBERS_H__

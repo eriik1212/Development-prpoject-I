@@ -87,6 +87,16 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 			return true;
 		}
 	}
+	if (type == ATTACK)
+	{
+		if (intersectX < 0.0f && intersectY < 0.0f)
+		{
+			other.Move(100, 0);
+			LOG("INSIDE COLLISION");
+
+			return true;
+		}
+	}
 
 	return false;
 }
@@ -107,6 +117,9 @@ void Collider::DebugDraw(SDL_Rect body, int type)
 		break;
 	case CollidersType::WIN:
 		app->render->DrawRectangle(body, 255, 255, 0, alpha);
+		break;
+	case CollidersType::ATTACK:
+		app->render->DrawRectangle(body, 125, 255, 125, alpha);
 		break;
 	}
 

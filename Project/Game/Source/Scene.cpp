@@ -171,86 +171,86 @@ bool Scene::Update(float dt)
 	// ----------------------------------------------------------------------------------------------------- PARALLAX EFFECT
 	{
 		// SKY
-		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 0, 0, true, NULL, 0);
-		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 1, 0, true, NULL, 0);
-		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 2, 0, true, NULL, 0);
-		app->render->DrawTexture(background_sky, (app->render->camera.w / 4) * 3, 0, true, NULL, 0);
+		app->render->DrawTexture(background_sky, (app->render->camera.w / 6) * 0, 0, true, NULL, 0);
+		app->render->DrawTexture(background_sky, (app->render->camera.w / 6) * 1, 0, true, NULL, 0);
+		app->render->DrawTexture(background_sky, (app->render->camera.w / 6) * 2, 0, true, NULL, 0);
+		app->render->DrawTexture(background_sky, (app->render->camera.w / 6) * 3, 0, true, NULL, 0);
 		
 		// BACK CLOUD
-		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 0, 0, true, NULL, 0.1f);
-		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 1, 0, true, NULL, 0.1f);
-		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 2, 0, true, NULL, 0.1f);
-		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 3, 0, true, NULL, 0.1f);
-		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 4) * 4, 0, true, NULL, 0.1f);
+		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 6) * 0, 0, true, NULL, 0.1f);
+		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 6) * 1, 0, true, NULL, 0.1f);
+		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 6) * 2, 0, true, NULL, 0.1f);
+		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 6) * 3, 0, true, NULL, 0.1f);
+		app->render->DrawTexture(background_backcloud, (app->render->camera.w / 6) * 4, 0, true, NULL, 0.1f);
 
 		// BACK MOUNTAIN
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 0, 0, true, NULL, 0.15f);
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 1, 0, true, NULL, 0.15f);
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 2, 0, true, NULL, 0.15f);
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 3, 0, true, NULL, 0.15f);
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 4, 0, true, NULL, 0.15f);
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 5, 0, true, NULL, 0.15f);
-		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 4) * 6, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 0, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 1, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 2, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 3, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 4, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 5, 0, true, NULL, 0.15f);
+		app->render->DrawTexture(background_backmountain, (app->render->camera.w / 6) * 6, 0, true, NULL, 0.15f);
 
 		// MIDDLE CLOUD
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 0, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 1, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 2, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 3, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 4, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 5, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 6, 0, true, NULL, 0.2f);
-		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 4) * 7, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 0, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 1, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 2, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 3, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 4, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 5, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 6, 0, true, NULL, 0.2f);
+		app->render->DrawTexture(background_middlecloud, (app->render->camera.w / 6) * 7, 0, true, NULL, 0.2f);
 
 		// MIDDLE MOUNTAIN
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 0, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 1, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 2, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 3, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 4, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 5, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 6, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 7, 0, true, NULL, 0.25f);
-		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 4) * 8, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 0, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 1, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 2, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 3, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 4, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 5, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 6, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 7, 0, true, NULL, 0.25f);
+		app->render->DrawTexture(background_middlemountain, (app->render->camera.w / 6) * 8, 0, true, NULL, 0.25f);
 
 		// FRONT CLOUDS
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 0, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 1, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 2, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 3, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 4, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 5, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 6, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 7, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 8, 0, true, NULL, 0.3f);
-		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 4) * 9, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 0, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 1, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 2, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 3, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 4, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 5, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 6, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 7, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 8, 0, true, NULL, 0.3f);
+		app->render->DrawTexture(background_frontcloud, (app->render->camera.w / 6) * 9, 0, true, NULL, 0.3f);
 
 		// FRONT MOUNTAIN
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 0, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 1, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 2, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 3, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 4, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 5, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 6, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 7, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 8, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 9, 0, true, NULL, 0.35f);
-		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 4) * 10, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 0, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 1, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 2, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 3, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 4, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 5, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 6, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 7, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 8, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 9, 0, true, NULL, 0.35f);
+		app->render->DrawTexture(background_frontmountain, (app->render->camera.w / 6) * 10, 0, true, NULL, 0.35f);
 
 		// GRASS
-		/*app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 0, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 1, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 2, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 3, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 4, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 5, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 6, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 7, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 8, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 9, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 10, 0, NULL, 0.4f);
-		app->render->DrawTexture(background_grass, (app->render->camera.w / 4) * 11, 0, NULL, 0.4f);*/
+		/*app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 0, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 1, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 2, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 3, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 4, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 5, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 6, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 7, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 8, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 9, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 10, 0, NULL, 0.4f);
+		app->render->DrawTexture(background_grass, (app->render->camera.w / 6) * 11, 0, NULL, 0.4f);*/
 	}
 	
 
@@ -259,7 +259,7 @@ bool Scene::Update(float dt)
 	if (app->play->playerData.winner == true)
 	{
 		
-		app->render->DrawTexture(winTexture, app->render->camera.w/4, app->render->camera.h / 4, true, NULL, 0);
+		app->render->DrawTexture(winTexture, app->render->camera.w/6, app->render->camera.h / 6, true, NULL, 0);
 
 		if(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		app->fade->FadeToBlack(this, app->title, 30);
