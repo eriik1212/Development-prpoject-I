@@ -29,6 +29,12 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy_Bird.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy_Fox.cpp">
+      <Filter>Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -76,6 +82,12 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Enemies.h" />
     <ClInclude Include="Source\Enemy.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy_Bird.h">
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy_Fox.h">
       <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>

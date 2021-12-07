@@ -6,10 +6,13 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Window.h"
 
 #include "Player.h"
 
 #include "Enemy.h"
+#include "Enemy_Bird.h"
+#include "Enemy_Fox.h"
 
 #define SPAWN_MARGIN 50
 
@@ -28,8 +31,8 @@ ModuleEnemies::~ModuleEnemies()
 bool ModuleEnemies::Start()
 {
 
-	fox = app->tex->Load("Assets/Enemies/white_enemy.png");
-	bird = app->tex->Load("Assets/Enemies/purple_enemy.png");
+	fox = app->tex->Load("Assets/enemies/fox_sprites.png");
+	bird = app->tex->Load("Assets/enemies/bird_sprites.png");
 	
 
 	enemyDamageFX = app->audio->LoadFx("Assets/FX/punch_2.wav");
@@ -107,9 +110,9 @@ void ModuleEnemies::HandleEnemiesSpawn()
 		if (spawnQueue[i].type != ENEMY_TYPE::NO_TYPE)
 		{
 			// Spawn a new enemy if the screen has reached a spawn position
-			if (spawnQueue[i].x * SCREEN_SIZE < app->render->camera.x + (app->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
+			if (spawnQueue[i].x * app->win->GetScale() < app->render->camera.x + (app->render->camera.w * app->win->GetScale()) + SPAWN_MARGIN)
 			{
-				LOG("Spawning enemy at %d", spawnQueue[i].x * SCREEN_SIZE);
+				LOG("Spawning enemy at %d", spawnQueue[i].x * app->win->GetScale());
 
 				SpawnEnemy(spawnQueue[i]);
 				spawnQueue[i].type = ENEMY_TYPE::NO_TYPE; // Removing the newly spawned enemy from the queue
@@ -147,8 +150,8 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 			case ENEMY_TYPE::BIRD:
-				enemies[i] = new Enemy_Purple(info.x, info.y);
-				enemies[i]->texture = purple;
+				enemies[i] = new Enemy_Bird(info.x, info.y);
+				enemies[i]->texture = bird;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
 
@@ -156,40 +159,16 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 					enemies[i]->lifes[a] = 1;
 				}
 				break;
-			case ENEMY_TYPE::WHITE_ENEMY:
-				enemies[i] = new Enemy_White(info.x, info.y);
-				enemies[i]->texture = white;
+			case ENEMY_TYPE::FOX:
+				enemies[i] = new Enemy_Fox(info.x, info.y);
+				enemies[i]->texture = fox;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
 				for (int a = 0; a < MAX_LIFE; ++a) {
 					enemies[i]->lifes[a] = 1;
 				}
 				break;
-			case ENEMY_TYPE::ORANGE_ENEMY:
-				enemies[i] = new Enemy_Orange(info.x, info.y);
-				enemies[i]->texture = orange;
-				enemies[i]->destroyedFx = enemyDestroyedFx;
-				enemies[i]->damageFX = enemyDamageFX;
-
-				for (int a = 0; a < MAX_LIFE; ++a) {
-					enemies[i]->lifes[a] = 1;
-				}
-				break;
-			case ENEMY_TYPE::BOSS_ENEMY:
-				enemies[i] = new Enemy_Boss(info.x, info.y);
-				enemies[i]->texture = boss;
-				enemies[i]->destroyedFx = enemyDestroyedFx;
-				enemies[i]->damageFX = enemyDamageFX;
-
-				for (int a = 0; a < MAX_LIFE; ++a) {
-					enemies[i]->lifes[a] = 1;
-				}
-				break;
-			case ENEMY_TYPE::BALL_ENEMY:
-				enemies[i] = new Enemy_Ball(info.x, info.y);
-				enemies[i]->texture = ball;
-				enemies[i]->damageFX = enemyDamageFX;
-				break;
+			
 			}
 
 			break;
@@ -210,7 +189,7 @@ void updateLifes(unsigned short* lifes, unsigned short damage)
 	}
 }
 
-void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
+/*void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
@@ -218,7 +197,7 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 		{
 			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
 
-			if (App->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT])
+			if (app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT])
 			{
 				App->collisions->matrix[Collider::Type::ENEMY][Collider::Type::PLAYER_SHOT] = true;
 			}
@@ -238,4 +217,4 @@ void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
 			break;
 		}
 	}
-}
+}*/
