@@ -12,6 +12,11 @@
 #include "ModuleCollisions.h"
 #include "GameOverScreen.h"
 #include "TitleScreen.h"
+#include "Enemies.h"
+#include "Enemy.h"
+#include "Enemy_Bird.h"
+#include "Enemy_Fox.h"
+#include "Level2.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,8 +37,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	logo = new LogoScreen(false);
 	title = new TitleScreen(false);
 	scene = new Scene(false);
+	level2 = new Level2(false);
 	map = new Map(false);
 	play = new Player(false);
+	enemies = new ModuleEnemies(false);
 	fade = new ModuleFadeToBlack(true);
 	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);
@@ -48,9 +55,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(level2);
 	AddModule(logo);
 	AddModule(title);
 	AddModule(play);
+	AddModule(enemies);
 	AddModule(fade);
 	//AddModule(collisions);
 	AddModule(gameOver);

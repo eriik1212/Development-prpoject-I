@@ -35,6 +35,7 @@
     <ClCompile Include="Source\Enemy_Fox.cpp">
       <Filter>Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Level2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Source\Enemy_Fox.h">
       <Filter>Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Level2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

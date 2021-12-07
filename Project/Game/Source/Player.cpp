@@ -191,6 +191,34 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	//CAMERA
+	float speed = 1 * dt;
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
+	{
+		app->render->camera.x -= app->play->playerData.xVel * dt;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && debug)
+	{
+		app->render->camera.x += app->play->playerData.xVel * dt;
+	}
+	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
+	{
+		app->render->camera.y -= app->play->playerData.xVel;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
+	{
+		app->render->camera.y += app->play->playerData.xVel;
+	}*/
+
+	//DEBUG
+	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	{
+		if (debug)
+			debug = false;
+		else if (!debug)
+			debug = true;
+	}
+
 	//Atack Collider
 	if (playerData.direction == 1)
 	{
@@ -216,23 +244,42 @@ bool Player::Update(float dt)
 	}
 
 	// GOD MODE (FLY)
-	if (app->scene->godMode)
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+
+		if (godMode)
+			godMode = false;
+		else if (!godMode)
+			godMode = true;
+	}
+
+	if (godMode)
 	{
 		playerData.yVel = 0;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && app->scene->godMode)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode)
 	{
 		playerData.playerBody.y -= 8;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && app->scene->godMode)
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode)
 	{
 		playerData.playerBody.y -= -8;
 
 	}
 
+	//COLLIDERSON
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+
+		if (collidersOn)
+			collidersOn = false;
+		else if (!collidersOn)
+			collidersOn = true;
+	}
+
 	//Floor
-	if (playerData.isCollidingUp == true && !app->scene->godMode)
+	if (playerData.isCollidingUp == true && !godMode)
 	{
 		playerData.yVel = 0;
 		playerData.jumping = false;
@@ -242,10 +289,10 @@ bool Player::Update(float dt)
 	if (playerData.playerBody.y >= 400 ) {
 		playerData.playerBody.y = 399;
 	}
-	else if (playerData.playerBody.y <= 0 && app->scene->godMode) {
+	else if (playerData.playerBody.y <= 0 && godMode) {
 		playerData.playerBody.y = 1;
 	}
-	else if (!app->scene->godMode)
+	else if (!godMode)
 	{
 		app->play->playerData.isCollidingUp = false;
 		playerData.yVel += playerData.gravity;
@@ -253,7 +300,7 @@ bool Player::Update(float dt)
 	}
 
 	// Handle the player jump.
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !app->scene->godMode) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !godMode) {
 		playerData.yVel = 10;
 		playerData.playerBody.y -= playerData.yVel;
 		playerData.jumping = true;
@@ -274,7 +321,7 @@ bool Player::Update(float dt)
 	}
 
 	// Handle the player DOUBLE jump.
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain && !app->scene->godMode) {
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain && !godMode) {
 		playerData.yVel = 8;
 		playerData.jumping = true;
 		playerData.canJumpAgain = false;
@@ -424,6 +471,7 @@ bool Player::Update(float dt)
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(playerTex, playerData.playerBody.x - 7, playerData.playerBody.y, true, &rect);
 
+
 	// Draw map
 	app->map->Draw();
 
@@ -455,7 +503,7 @@ bool Player::PostUpdate()
 	jumpR.loopCount = 0;
 
 	// Draw Player Colliders
-	if (app->scene->collidersOn)
+	if (app->play->collidersOn)
 	{
 		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, PLAYER);
 		attackCollider.GetCollider().DebugDraw(attackColliderRect, ATTACK);

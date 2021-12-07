@@ -1,6 +1,7 @@
 #include "Collider.h"
 #include "Player.h"
 #include "Scene.h"
+#include "Level2.h"
 #include "Log.h"
 
 Collider::Collider(SDL_Rect& body) :
@@ -69,7 +70,7 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	}
 	if (type == DEAD)
 	{
-		if (intersectX < 0.0f && intersectY < 0.0f && !app->scene->godMode)
+		if (intersectX < 0.0f && intersectY < 0.0f && !app->play->godMode)
 		{
 			app->play->playerData.isDead = true;
 			app->play->playerData.jumping = true;

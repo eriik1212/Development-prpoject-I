@@ -12,6 +12,7 @@
 #include "TitleScreen.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Level2.h"
 
 Scene::Scene(bool enabled) : Module(enabled)
 {
@@ -36,11 +37,12 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-	//Load Map
-	app->map->Load("MapLVL1.tmx");
 
 	if (this->Enabled() && !this->Disabled()) 
 	{
+		//Load Map
+		app->map->Load("MapLVL1.tmx");
+
 		// Load music
 		app->audio->StopMusic();
 		app->audio->PlayMusic("Assets/audio/music/gameplay_music.ogg");
@@ -66,8 +68,8 @@ bool Scene::Start()
 	winTexture = app->tex->Load("Assets/textures/youwin.png");
 
 	app->play->playerData.isDead = false;
-	debug = false;
-	collidersOn = false;
+	app->play->debug = false;
+	app->play->collidersOn = false;
 
 	return true;
 }
@@ -78,38 +80,27 @@ bool Scene::PreUpdate()
 
 	return true;
 }
-int lastPosition;
+
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	float speed = 1 * dt;
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
-	{
-		app->render->camera.x -= app->play->playerData.xVel*dt;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && debug)
-	{
-		app->render->camera.x += app->play->playerData.xVel*dt;
-	}
-	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
-	{
-		app->render->camera.y -= app->play->playerData.xVel;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
-	{
-		app->render->camera.y += app->play->playerData.xVel;
-	}*/
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->fade->FadeToBlack(this, this, 30);
-
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
 
-		app->play->restart = true;
+		app->fade->FadeToBlack(this, app->scene, 30);
+	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		//Disable Player & map
+		app->play->Disable();
+		app->map->Disable();
+
+		app->fade->FadeToBlack(this, app->level2, 30);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -134,31 +125,7 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
-		if (debug)
-			debug = false;
-		else if (!debug)
-			debug = true;
-	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-		
-		if (collidersOn)
-			collidersOn = false;
-		else if (!collidersOn)
-			collidersOn = true;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-
-		if (godMode)
-			godMode = false;
-		else if (!godMode)
-			godMode = true;
-	}
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
@@ -261,10 +228,19 @@ bool Scene::Update(float dt)
 		
 		app->render->DrawTexture(winTexture, app->render->camera.w/6, app->render->camera.h / 6, true, NULL, 0);
 
-		if(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		app->fade->FadeToBlack(this, app->title, 30);
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			app->map->Disable();
+			app->map->CleanUp();
 
-		app->play->revive = true;
+			app->play->Disable();
+			app->play->CleanUp();
+
+			app->fade->FadeToBlack(this, app->level2, 30);
+
+			//app->play->revive = true;
+		}
+
 	}
 
 

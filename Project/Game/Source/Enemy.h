@@ -2,6 +2,7 @@
 #define __ENEMY_H__
 
 #include "Animation.h"
+#include "Point.h"
 #define MAX_LIFE 5
 #define MAX_LIFE_BOSS 15
 
@@ -27,10 +28,6 @@ public:
 
 	// Called from ModuleEnemies' Update
 	virtual void Draw();
-
-	// Collision response
-	// Triggers an animation and a sound fx
-	virtual void OnCollision(Collider* collider);
 
 public:
 	// The current position in the world

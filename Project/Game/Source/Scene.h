@@ -35,10 +35,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool collidersOn = false;
-	bool debug = false;
-	bool godMode = false;
-
 	// The wall/floor's collider
 	Collider* wallCollider = nullptr;
 

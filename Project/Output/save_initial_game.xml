@@ -6,12 +6,14 @@
 	<audio />
 	<map />
 	<scene />
+	<level2 />
 	<:anonymous />
 	<:anonymous />
 	<player>
 		<player x="196" y="308" />
 		<playerLimit Left="100" Right="300" />
 	</player>
+	<:anonymous />
 	<:anonymous />
 	<:anonymous />
 	<renderer>

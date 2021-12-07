@@ -66,6 +66,11 @@ public:
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 
+	bool collidersOn = false;
+	bool debug = false;
+	bool godMode = false;
+
+
 private:
 	SDL_Texture* img;
 

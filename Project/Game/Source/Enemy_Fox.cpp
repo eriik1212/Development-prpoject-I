@@ -1,11 +1,11 @@
-#include "Enemy_Bird.h"
+#include "Enemy_Fox.h"
 
 #include "App.h"
 #include "ModuleCollisions.h"
 
 
 
-Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
+Enemy_Fox::Enemy_Fox(int x, int y) : Enemy(x, y)
 {
 	// RIGHT 
 	rightAnimO.PushBack({ 0, 830, 88, 69 });
@@ -27,16 +27,16 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 }
 
 
-void Enemy_Bird::Update()
+void Enemy_Fox::Update()
 {
 	//------------------------------------------------------------LEFT direcction
-	if (currentAnim == &jumpLO)direcction = 0;
+	/*if (currentAnim == &jumpLO)direcction = 0;
 	if (currentAnim == &leftAnimO)direcction = 0;
-	if (currentAnim == &punchLO)direcction = 0;
+	if (currentAnim == &punchLO)direcction = 0;*/
 
 	//------------------------------------------------------------LEFT ANIM direction
-	if (currentAnim == &upAnimRO)direcction = 1;
-	if (currentAnim == &kickRO)direcction = 1;
+	/*if (currentAnim == &upAnimRO)direcction = 1;
+	if (currentAnim == &kickRO)direcction = 1;*/
 
 	/*if (app->collisions->GodMode == true) {
 
@@ -70,5 +70,5 @@ void Enemy_Bird::Update()
 
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
-	Enemy::Update();
+	 Enemy::Update();
 }

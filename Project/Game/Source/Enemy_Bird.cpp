@@ -47,13 +47,13 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 void Enemy_Bird::Update()
 {
 	//------------------------------------------------------------LEFT direcction
-	if (currentAnim == &jumpLO)direcction = 0;
+	/*if (currentAnim == &jumpLO)direcction = 0;
 	if (currentAnim == &leftAnimO)direcction = 0;
-	if (currentAnim == &punchLO)direcction = 0;
+	if (currentAnim == &punchLO)direcction = 0;*/
 
 	//------------------------------------------------------------LEFT ANIM direction
-	if (currentAnim == &upAnimRO)direcction = 1;
-	if (currentAnim == &kickRO)direcction = 1;
+	/*if (currentAnim == &upAnimRO)direcction = 1;
+	if (currentAnim == &kickRO)direcction = 1;*/
 
 	/*if (app->collisions->GodMode == true) {
 
@@ -84,8 +84,4 @@ void Enemy_Bird::Update()
 	
 	position = spawnPos + path.GetRelativePosition();
 	currentAnim = path.GetCurrentAnimation();*/
-
-	// Call to the base class. It must be called at the end
-	// It will update the collider depending on the position
-	Enemy::Update();
 }
