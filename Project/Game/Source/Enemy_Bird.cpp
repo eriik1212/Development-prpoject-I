@@ -12,9 +12,11 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 	//Idle anim
 	leftStandB.PushBack({ 0, 0, 16, 16 });
 	leftStandB.PushBack({ 16, 0, 16, 16 });
-	leftStandB.PushBack({ 16 * 2, 0, 16, 16 });
 	leftStandB.PushBack({ 0, 32, 16, 16 });
 	leftStandB.PushBack({ 16, 32, 16, 16 });
+	leftStandB.PushBack({ 32, 32, 16, 16 });
+	leftStandB.PushBack({ 16, 32, 16, 16 });
+	leftStandB.PushBack({ 0, 32, 16, 16 });
 	leftStandB.loop = true;
 	leftStandB.speed = 0.15f;
 
@@ -33,8 +35,28 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 
 
 	//RIGHT
+	//idle anim
+	rightStandB.PushBack({ 112, 48, 16, 16 });
+	rightStandB.PushBack({ 96, 48, 16, 16 });
+	rightStandB.PushBack({ 112, 80, 16, 16 });
+	rightStandB.PushBack({ 96, 80, 16, 16 });
+	rightStandB.PushBack({ 80, 80, 16, 16 });
+	rightStandB.PushBack({ 96, 80, 16, 16 });
+	rightStandB.PushBack({ 112, 80, 16, 16 });
+	rightStandB.loop = true;
+	rightStandB.speed = 0.15f;
 
-
+	//flying
+	leftFlyB.PushBack({ 112, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16 * 2, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16 * 3, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16 * 4, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16 * 5, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16 * 6, 64, 16, 16 });
+	leftFlyB.PushBack({ 112 - 16 * 7, 64, 16, 16 });
+	leftFlyB.loop = true;
+	leftFlyB.speed = 0.15f;
 
 	//PATH
 
@@ -47,13 +69,12 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 void Enemy_Bird::Update()
 {
 	//------------------------------------------------------------LEFT direcction
-	/*if (currentAnim == &jumpLO)direcction = 0;
-	if (currentAnim == &leftAnimO)direcction = 0;
-	if (currentAnim == &punchLO)direcction = 0;*/
-
+	if (currentAnim == &leftStandB)direcction = 0;
+	if (currentAnim == &leftFlyB)direcction = 0;
+	
 	//------------------------------------------------------------LEFT ANIM direction
-	/*if (currentAnim == &upAnimRO)direcction = 1;
-	if (currentAnim == &kickRO)direcction = 1;*/
+	if (currentAnim == &rightStandB)direcction = 1;
+	if (currentAnim == &leftFlyB)direcction = 1;
 
 	/*if (app->collisions->GodMode == true) {
 
@@ -80,8 +101,9 @@ void Enemy_Bird::Update()
 		else
 			coolTime += 0.1f;
 
-	}
+	}*/
 	
-	position = spawnPos + path.GetRelativePosition();
-	currentAnim = path.GetCurrentAnimation();*/
+	
+	currentAnim = &leftStandB;
+	Enemy::Update();
 }
