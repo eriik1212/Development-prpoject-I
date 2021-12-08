@@ -35,8 +35,8 @@ bool ModuleEnemies::Start()
 	bird = app->tex->Load("Assets/enemies/bird_sprites.png");
 	
 
-	enemyDamageFX = app->audio->LoadFx("Assets/FX/punch_2.wav");
-	enemyDestroyedFx = app->audio->LoadFx("Assets/FX/enemy_die.wav");
+	enemyDamageFX = app->audio->LoadFx("Assets/audio/FX/enter.wav");
+	enemyDestroyedFx = app->audio->LoadFx("Assets/audio/FX/enter.wav");
 
 	return true;
 }

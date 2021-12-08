@@ -41,7 +41,7 @@ bool TitleScreen::Start()
 	NewGamePressed= app->tex->Load("Assets/textures/PressedNG.png");
 	NewGameUnpressed= app->tex->Load("Assets/textures/UnpressedNG.png");
 	ContinuePressed= app->tex->Load("Assets/textures/PressedCont.png");
-	ContinueUnpressed= app->tex->Load("Assets/textures/UnpressedContP.png");
+	ContinueUnpressed= app->tex->Load("Assets/textures/UnpressedCont.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -127,13 +127,13 @@ bool TitleScreen::PostUpdate()
 	app->render->DrawTexture(Title, 0, 0, false, NULL);
 	if (option == 1)
 	{
-		app->render->DrawTexture(NewGamePressed, 271, 280, false, &NewGameRect);
-		app->render->DrawTexture(ContinueUnpressed, 246, 307, false, &ContinueRect);
+		app->render->DrawTexture(NewGamePressed, 432, 432, false, &NewGameRect);
+		app->render->DrawTexture(ContinueUnpressed, 405, 464, false, &ContinueRect);
 	}
 	else
 	{
-		app->render->DrawTexture(NewGameUnpressed, 271, 280, false, &NewGameRect);
-		app->render->DrawTexture(ContinuePressed, 246, 307, false, &ContinueRect);
+		app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
+		app->render->DrawTexture(ContinuePressed, 405, 464, false, &ContinueRect);
 	}
 	
 	// DrawTexture TEMPLATE
