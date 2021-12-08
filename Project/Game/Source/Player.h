@@ -70,7 +70,7 @@ public:
 	bool debug = false;
 	bool godMode = false;
 
-
+	int lastLevel = 1;
 private:
 	SDL_Texture* img;
 
@@ -83,7 +83,8 @@ private:
 public:
 	PlayerData playerData;
 
-	bool restart = false;
+	bool restartLVL1 = false;
+	bool restartLVL2 = false;
 	bool revive = false;
 
 	ModuleCollisions attackCollider;

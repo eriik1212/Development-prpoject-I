@@ -9,9 +9,17 @@
 #include "Scene.h"
 #include "ModuleCollisions.h"
 #include "TitleScreen.h"
+#include "FadeToBlack.h"
+#include "Level2.h"
+#include "GameOverScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
+
+#define CAMERA_LIMIT_LVL1 4200
+#define CAMERA_LIMIT_LVL2 8600
+#define PLAYER_LIMIT_LVL1 2900
+#define PLAYER_LIMIT_LVL2 5900
 
 Player::Player(bool enabled) : Module(enabled)
 {
@@ -157,7 +165,7 @@ bool Player::Start()
 	enemyRect.w = 50;
 	enemyRect.h = 50;
 
-	if (!revive && !app->title->cont && !restart)
+	if (!revive && !app->title->cont && !restartLVL1)
 	{
 		app->SaveInitialGameRequest();
 		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
@@ -168,13 +176,13 @@ bool Player::Start()
 		app->LoadGameRequest();
 
 	}
-	if (restart)
+	if (restartLVL1)
 	{
 		app->LoadInitialGameRequest();
 	}
 
 
-	restart = false;
+	restartLVL1 = false;
 	revive = false;
 
 	currentAnimation = &idleAnimR;
@@ -218,6 +226,8 @@ bool Player::Update(float dt)
 		else if (!debug)
 			debug = true;
 	}
+
+	
 
 	//Atack Collider
 	if (playerData.direction == 1)
@@ -430,8 +440,11 @@ bool Player::Update(float dt)
 			app->render->playerLimitR -= playerData.xVel;
 		}
 
-		if (playerData.playerBody.x >= 3000 + (app->render->camera.w / 2))
-			playerData.playerBody.x = 3000 + (app->render->camera.w / 2);
+		if (playerData.playerBody.x >= PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2) && lastLevel == 1)
+			playerData.playerBody.x = PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2);
+
+		if (playerData.playerBody.x >= PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2) && lastLevel == 2)
+			playerData.playerBody.x = PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2);
 	}
 	if (playerData.playerBody.x <= 100)
 	{
@@ -442,8 +455,11 @@ bool Player::Update(float dt)
 	if (app->render->camera.x >= 0)
 		app->render->camera.x = 0;
 
-	if (app->render->camera.x <= -4200)
-		app->render->camera.x = -4200;
+	if (app->render->camera.x <= -CAMERA_LIMIT_LVL1 && lastLevel == 1)
+		app->render->camera.x = -CAMERA_LIMIT_LVL1;
+
+	if (app->render->camera.x <= -CAMERA_LIMIT_LVL2 && lastLevel == 2)
+		app->render->camera.x = -CAMERA_LIMIT_LVL2;
 
 	// CHECKPOINT!
 	if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)

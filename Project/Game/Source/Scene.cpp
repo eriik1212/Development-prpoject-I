@@ -51,21 +51,33 @@ bool Scene::Start()
 		app->play->Enable();
 		app->map->Enable();
 
+		app->play->playerData.playerBody.x = 196;
+		app->play->playerData.playerBody.y = 308;
+
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->playerLimitL = 100;
+		app->render->playerLimitR = 300;
+
+		app->play->lastLevel = 1;
+
+		background_grass = app->tex->Load("Assets/textures/background_grass.png");
+
+		background_frontmountain = app->tex->Load("Assets/textures/background_frontmountain.png");
+		background_middlemountain = app->tex->Load("Assets/textures/background_middlemountain.png");
+		background_backmountain = app->tex->Load("Assets/textures/background_backmountain.png");
+
+		background_frontcloud = app->tex->Load("Assets/textures/background_frontcloud.png");
+		background_middlecloud = app->tex->Load("Assets/textures/background_middlecloud.png");
+		background_backcloud = app->tex->Load("Assets/textures/background_backcloud.png");
+
+		background_sky = app->tex->Load("Assets/textures/background_sky.png");
+
+		winTexture = app->tex->Load("Assets/textures/youwin.png");
+
 	}
 
-	background_grass = app->tex->Load("Assets/textures/background_grass.png");
-
-	background_frontmountain = app->tex->Load("Assets/textures/background_frontmountain.png");
-	background_middlemountain = app->tex->Load("Assets/textures/background_middlemountain.png");
-	background_backmountain = app->tex->Load("Assets/textures/background_backmountain.png");
-
-	background_frontcloud = app->tex->Load("Assets/textures/background_frontcloud.png");
-	background_middlecloud = app->tex->Load("Assets/textures/background_middlecloud.png");
-	background_backcloud = app->tex->Load("Assets/textures/background_backcloud.png");
-
-	background_sky = app->tex->Load("Assets/textures/background_sky.png");
-
-	winTexture = app->tex->Load("Assets/textures/youwin.png");
+	
 
 	app->play->playerData.isDead = false;
 	app->play->debug = false;
@@ -90,8 +102,9 @@ bool Scene::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->scene->Disable();
 
-		app->fade->FadeToBlack(this, app->scene, 30);
+		app->scene->Enable();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -99,8 +112,9 @@ bool Scene::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->scene->Disable();
 
-		app->fade->FadeToBlack(this, app->level2, 30);
+		app->level2->Enable();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -111,7 +125,7 @@ bool Scene::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 
-		app->play->restart = true;
+		app->play->restartLVL1 = true;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
