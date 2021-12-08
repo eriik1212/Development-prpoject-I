@@ -55,6 +55,8 @@ bool Level2::Start()
 		app->render->playerLimitL = 100;
 		app->render->playerLimitR = 300;
 
+		app->SaveGameRequest();
+
 		//Enable Player & map
 		app->play->Enable();
 		app->map->Enable();
@@ -108,6 +110,7 @@ bool Level2::Update(float dt)
 		app->level2->Disable();
 
 		app->scene->Enable();
+		app->LoadInitialGameRequest();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -147,7 +150,6 @@ bool Level2::Update(float dt)
 		app->map->mapData.tilesets.count());
 
 	//app->win->SetTitle(title.GetString());
-
 
 	// ----------------------------------------------------------------------------------------------------- PARALLAX EFFECT
 	{
@@ -221,7 +223,7 @@ bool Level2::Update(float dt)
 
 	}
 
-	/*if (app->play->playerData.winner == true)
+	if (app->play->playerData.winner == true)
 	{
 
 		app->render->DrawTexture(winTexture, app->render->camera.w / 6, app->render->camera.h / 6, true, NULL, 0);
@@ -230,7 +232,7 @@ bool Level2::Update(float dt)
 			app->fade->FadeToBlack(this, app->title, 30);
 
 		app->play->revive = true;
-	}*/
+	}
 
 
 	return true;

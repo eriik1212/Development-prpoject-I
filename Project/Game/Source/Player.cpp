@@ -167,7 +167,7 @@ bool Player::Start()
 
 	if (!revive && !app->title->cont && !restartLVL1)
 	{
-		app->SaveInitialGameRequest();
+		//app->SaveInitialGameRequest();
 		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
 	}
 

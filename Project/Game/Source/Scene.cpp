@@ -65,13 +65,17 @@ bool Scene::Start()
 		}
 		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 196, 308);
 
-		app->play->playerData.playerBody.x = 196;
-		app->play->playerData.playerBody.y = 308;
+		if (app->play->restartLVL1)
+		{
+			app->play->playerData.playerBody.x = 196;
+			app->play->playerData.playerBody.y = 308;
 
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		app->render->playerLimitL = 100;
-		app->render->playerLimitR = 300;
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			app->render->playerLimitL = 100;
+			app->render->playerLimitR = 300;
+		}
+		
 
 		app->play->lastLevel = 1;
 
@@ -88,6 +92,7 @@ bool Scene::Start()
 		background_sky = app->tex->Load("Assets/textures/background_sky.png");
 
 		winTexture = app->tex->Load("Assets/textures/youwin.png");
+
 
 	}
 
@@ -119,6 +124,8 @@ bool Scene::Update(float dt)
 		app->scene->Disable();
 
 		app->scene->Enable();
+		app->LoadInitialGameRequest();
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -258,15 +265,12 @@ bool Scene::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			app->map->Disable();
-			app->map->CleanUp();
-
+			//Disable Player & map
 			app->play->Disable();
-			app->play->CleanUp();
+			app->map->Disable();
+			app->scene->Disable();
 
-			app->fade->FadeToBlack(this, app->level2, 30);
-
-			//app->play->revive = true;
+			app->level2->Enable();
 		}
 
 	}

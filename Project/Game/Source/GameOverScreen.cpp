@@ -62,15 +62,18 @@ bool GameOverScreen::Update(float dt)
 		if (app->play->lastLevel == 1)
 		{
 			app->fade->FadeToBlack(this, app->scene, 30);
+			app->LoadGameRequest();
+
 
 		}
 		else if (app->play->lastLevel == 2)
 		{
 			app->fade->FadeToBlack(this, app->level2, 30);
+			app->LoadGameRequest();
+
 
 		}
 		app->audio->StopMusic();
-		app->LoadGameRequest();
 		//app->play->revive = true;
 		app->play->playerData.isDead = false;
 	}

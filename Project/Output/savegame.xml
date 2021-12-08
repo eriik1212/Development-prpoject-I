@@ -4,7 +4,9 @@
 	<input />
 	<textures />
 	<audio />
-	<map />
+	<map>
+		<level num="1" />
+	</map>
 	<scene />
 	<level2 />
 	<:anonymous />

@@ -349,7 +349,7 @@ bool Map::Load(const char* filename)
 	// Load general info
     if(ret == true)
     {
-        // L03: DONE 3: Create and call a private function to load and fill all your map data
+        // Create and call a private function to load and fill all your map data
 		ret = LoadMap(mapFile);
 	}
 
@@ -431,7 +431,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 
-	// L03: DONE 4: Load Tileset attributes
+	// Load Tileset attributes
 	set->name.Create(tileset_node.attribute("name").as_string());
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->tileWidth = tileset_node.attribute("tilewidth").as_int();
@@ -525,4 +525,22 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	}
 	
 	return ret;
+}
+
+bool Map::LoadState(pugi::xml_node& data)
+{
+	//Load Map Level
+	app->play->lastLevel = data.child("level").attribute("num").as_int();
+
+	return true;
+}
+
+bool Map::SaveState(pugi::xml_node& data) const
+{
+	//Save Map Level
+	pugi::xml_node map = data.append_child("level");
+
+	map.append_attribute("num") = app->play->lastLevel;
+
+	return true;
 }
