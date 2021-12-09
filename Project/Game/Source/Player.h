@@ -69,6 +69,7 @@ public:
 	bool collidersOn = false;
 	bool debug = false;
 	bool godMode = false;
+	bool inLeader = false;
 
 	int lastLevel = 1;
 private:
@@ -104,6 +105,9 @@ public:
 		deathAnimR,
 		deathAnimL,
 		victory;
+
+	SDL_Texture* winTexture;
+
 
 };
 #endif // __PLAYER_H__

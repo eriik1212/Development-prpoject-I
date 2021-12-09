@@ -155,9 +155,10 @@ bool Player::Start()
 {
 	playerTex = app->tex->Load("Assets/player/adventurer1.png");
 
+	winTexture = app->tex->Load("Assets/textures/youwin.png");
+
 	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
-	playerData.winner = false;
 	chekpoint = false;
 
 	enemyRect.x = 100;
@@ -176,14 +177,6 @@ bool Player::Start()
 		app->LoadGameRequest();
 
 	}
-	if (restartLVL1)
-	{
-		app->LoadInitialGameRequest();
-	}
-
-
-	restartLVL1 = false;
-	revive = false;
 
 	currentAnimation = &idleAnimR;
 
@@ -278,6 +271,22 @@ bool Player::Update(float dt)
 
 	}
 
+	//IN LEADER
+	if (inLeader)
+	{
+		playerData.yVel = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inLeader)
+	{
+		playerData.playerBody.y -= 2;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inLeader)
+	{
+		playerData.playerBody.y -= -2;
+
+	}
+
 	//COLLIDERSON
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
@@ -302,7 +311,7 @@ bool Player::Update(float dt)
 	else if (playerData.playerBody.y <= 0 && godMode) {
 		playerData.playerBody.y = 1;
 	}
-	else if (!godMode)
+	else if (!godMode && !inLeader)
 	{
 		app->play->playerData.isCollidingUp = false;
 		playerData.yVel += playerData.gravity;
@@ -469,6 +478,7 @@ bool Player::Update(float dt)
 		app->SaveGameRequest();
 
 	}
+
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,

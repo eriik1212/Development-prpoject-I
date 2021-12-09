@@ -97,11 +97,17 @@ bool TitleScreen::Update(float dt)
 		else //continue option
 		{
 			cont = true;
-			if(app->play->lastLevel == 1)
+			if (app->play->lastLevel == 1)
+			{
 				app->fade->FadeToBlack(this, app->scene, 30);
 
-			if(app->play->lastLevel == 2)
+			}
+
+			if (app->play->lastLevel == 2)
+			{
 				app->fade->FadeToBlack(this, app->level2, 30);
+
+			}
 
 		}
 		

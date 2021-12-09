@@ -55,8 +55,6 @@ private:
 	SDL_Texture* background_grass1;
 	SDL_Texture* background_grass2;
 
-	SDL_Texture* winTexture;
-
 };
 #endif // __LEVEL2_H__
 

@@ -215,6 +215,48 @@ void Map::Draw()
 			}
 		}
 
+		if (mapLayerItem->data->properties.GetProperty("Leader") == 1) {
+
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						if (app->play->collidersOn)
+						{
+							app->render->DrawTexture(tileset->texture,
+								pos.x,
+								pos.y + (32 - r.h), true,
+								&r);
+						}
+
+						if (pos.x < (app->play->playerData.playerBody.x + 50) && pos.x >(app->play->playerData.playerBody.x - 50))
+						{
+							leaderColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+							leaderColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, LEADER);
+
+							if (app->play->collidersOn)
+							{
+								leaderColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 5);
+							}
+						}
+					}
+
+				}
+			}
+		}
+
 		mapLayerItem = mapLayerItem->next;
 	}
 }

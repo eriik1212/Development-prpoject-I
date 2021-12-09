@@ -75,9 +75,7 @@ bool Scene::Start()
 			app->render->playerLimitL = 100;
 			app->render->playerLimitR = 300;
 		}
-		
 
-		app->play->lastLevel = 1;
 
 		background_grass = app->tex->Load("Assets/textures/background_grass.png");
 
@@ -90,8 +88,6 @@ bool Scene::Start()
 		background_backcloud = app->tex->Load("Assets/textures/background_backcloud.png");
 
 		background_sky = app->tex->Load("Assets/textures/background_sky.png");
-
-		winTexture = app->tex->Load("Assets/textures/youwin.png");
 
 
 	}
@@ -108,6 +104,22 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	if (app->play->restartLVL1)
+	{
+		app->play->playerData.playerBody.x = 196;
+		app->play->playerData.playerBody.y = 308;
+
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->playerLimitL = 100;
+		app->render->playerLimitR = 300;
+
+		app->play->lastLevel = 1;
+
+		app->play->restartLVL1 = false;
+
+		app->SaveGameRequest();
+	}
 
 	return true;
 }
@@ -124,7 +136,8 @@ bool Scene::Update(float dt)
 		app->scene->Disable();
 
 		app->scene->Enable();
-		app->LoadInitialGameRequest();
+		
+		app->play->restartLVL1 = true;
 
 	}
 
@@ -136,6 +149,9 @@ bool Scene::Update(float dt)
 		app->scene->Disable();
 
 		app->level2->Enable();
+
+		app->play->restartLVL2 = true;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -260,8 +276,6 @@ bool Scene::Update(float dt)
 
 	if (app->play->playerData.winner == true)
 	{
-		
-		app->render->DrawTexture(winTexture, app->render->camera.w/6, app->render->camera.h / 6, true, NULL, 0);
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
@@ -270,7 +284,11 @@ bool Scene::Update(float dt)
 			app->map->Disable();
 			app->scene->Disable();
 
+			app->play->restartLVL2 = true;
+			app->play->playerData.winner = false;
+
 			app->level2->Enable();
+
 		}
 
 	}

@@ -62,7 +62,8 @@ bool LogoScreen::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) ==KEY_DOWN)
 	{
 		//Fade Out
-		app->fade->FadeToBlack(this, app->title, 30);
+		app->fade->FadeToBlack(this, app->title, 60);
+
 	}
 
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

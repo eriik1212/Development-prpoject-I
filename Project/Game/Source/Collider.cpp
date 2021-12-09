@@ -85,6 +85,8 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 		{
 			app->play->playerData.winner = true;
 
+			app->render->DrawTexture(app->play->winTexture, app->render->camera.w / 6, app->render->camera.h / 6, true, NULL, 0);
+
 			return true;
 		}
 	}
@@ -96,6 +98,20 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 			LOG("INSIDE COLLISION");
 
 			return true;
+		}
+	}
+	if (type == LEADER)
+	{
+		if (intersectX < -15.0f && intersectY < 200.0f)
+		{
+			app->play->inLeader = true;
+
+			return true;
+		}
+		else
+		{
+			app->play->inLeader = false;
+
 		}
 	}
 
@@ -121,6 +137,9 @@ void Collider::DebugDraw(SDL_Rect body, int type)
 		break;
 	case CollidersType::ATTACK:
 		app->render->DrawRectangle(body, 125, 255, 125, alpha);
+		break;
+	case CollidersType::LEADER:
+		app->render->DrawRectangle(body, 0, 255, 125, alpha);
 		break;
 	}
 

@@ -47,21 +47,22 @@ bool Level2::Start()
 		app->audio->StopMusic();
 		app->audio->PlayMusic("Assets/audio/music/gameplay_music.ogg");
 
-		app->play->playerData.playerBody.x = 80;
-		app->play->playerData.playerBody.y = 348;
+		if (app->play->restartLVL2)
+		{
+			app->play->playerData.playerBody.x = 80;
+			app->play->playerData.playerBody.y = 348;
 
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		app->render->playerLimitL = 100;
-		app->render->playerLimitR = 300;
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			app->render->playerLimitL = 100;
+			app->render->playerLimitR = 300;
+		}
 
 		app->SaveGameRequest();
 
 		//Enable Player & map
 		app->play->Enable();
 		app->map->Enable();
-
-		app->play->lastLevel = 2;
 
 		app->play->playerData.isDead = false;
 		app->play->debug = false;
@@ -83,7 +84,6 @@ bool Level2::Start()
 		background_grass1 = app->tex->Load("Assets/textures/dark_forest/Layer_0001_8.png");
 		background_grass2 = app->tex->Load("Assets/textures/dark_forest/Layer_0000_9.png");
 
-		winTexture = app->tex->Load("Assets/textures/youwin.png");
 	}
 
 
@@ -94,6 +94,22 @@ bool Level2::Start()
 // Called each loop iteration
 bool Level2::PreUpdate()
 {
+	if (app->play->restartLVL2)
+	{
+		app->play->playerData.playerBody.x = 80;
+		app->play->playerData.playerBody.y = 348;
+
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->playerLimitL = 100;
+		app->render->playerLimitR = 300;
+
+		app->play->lastLevel = 2;
+
+		app->play->restartLVL2 = false;
+
+		app->SaveGameRequest();
+	}
 
 	return true;
 }
@@ -110,7 +126,9 @@ bool Level2::Update(float dt)
 		app->level2->Disable();
 
 		app->scene->Enable();
-		app->LoadInitialGameRequest();
+		
+		app->play->restartLVL1 = true;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -122,6 +140,9 @@ bool Level2::Update(float dt)
 
 		app->level2->Enable();
 
+		app->play->restartLVL2 = true;
+
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -131,6 +152,9 @@ bool Level2::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+
+		app->play->restartLVL2 = true;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
@@ -225,11 +249,11 @@ bool Level2::Update(float dt)
 
 	if (app->play->playerData.winner == true)
 	{
-
-		app->render->DrawTexture(winTexture, app->render->camera.w / 6, app->render->camera.h / 6, true, NULL, 0);
-
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-			app->fade->FadeToBlack(this, app->title, 30);
+		{
+			app->fade->FadeToBlack(this, app->title, 60);
+
+		}
 
 		app->play->revive = true;
 	}
