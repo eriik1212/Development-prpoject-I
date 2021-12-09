@@ -36,6 +36,7 @@
       <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Source\Level2.cpp" />
+    <ClCompile Include="Source\HUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -92,6 +93,7 @@
       <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Source\Level2.h" />
+    <ClInclude Include="Source\HUD.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
