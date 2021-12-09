@@ -8,8 +8,6 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
-// L03: DONE 2: Create a struct to hold information for a TileSet
-// Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
 {
 	SString	name;
@@ -25,12 +23,9 @@ struct TileSet
 	int	tilecount;
 	int	columns;
 
-	// L04: DONE 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
 };
 
-// L03: DONE 1: We create an enum for map type, just for convenience,
-// NOTE: Platformer game will be of type ORTHOGONAL
 enum MapTypes
 {
 	MAPTYPE_UNKNOWN = 0,
@@ -39,7 +34,6 @@ enum MapTypes
 	MAPTYPE_STAGGERED
 };
 
-// L06: TODO 5: Create a generic structure to hold properties
 struct Properties
 {
 	struct Property
@@ -64,7 +58,6 @@ struct Properties
 		list.clear();
 	}
 
-	// L06: TODO 7: Method to ask for the value of a custom property
 	int GetProperty(const char* name, int default_value = 0) const;
 
 	List<Property*> list;
@@ -131,6 +124,10 @@ public:
 
 	iPoint WorldToMap(int x, int y) const;
 
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 private:
 
 	// Methods to load all required map data
@@ -155,6 +152,7 @@ public:
 	ModuleCollisions tilesColliders;
 	ModuleCollisions dieColliders;
 	ModuleCollisions winColliders;
+	ModuleCollisions leaderColliders;
 
 private:
 

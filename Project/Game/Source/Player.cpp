@@ -9,9 +9,17 @@
 #include "Scene.h"
 #include "ModuleCollisions.h"
 #include "TitleScreen.h"
+#include "FadeToBlack.h"
+#include "Level2.h"
+#include "GameOverScreen.h"
 
 #include "Defs.h"
 #include "Log.h"
+
+#define CAMERA_LIMIT_LVL1 4200
+#define CAMERA_LIMIT_LVL2 8600
+#define PLAYER_LIMIT_LVL1 2900
+#define PLAYER_LIMIT_LVL2 5900
 
 Player::Player(bool enabled) : Module(enabled)
 {
@@ -164,9 +172,10 @@ bool Player::Start()
 {
 	playerTex = app->tex->Load("Assets/player/adventurer1.png");
 
+	winTexture = app->tex->Load("Assets/textures/youwin.png");
+
 	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
 
-	playerData.winner = false;
 	chekpoint = false;
 
 	enemyRect.x = 100;
@@ -174,9 +183,9 @@ bool Player::Start()
 	enemyRect.w = 50;
 	enemyRect.h = 50;
 
-	if (!revive && !app->title->cont && !restart)
+	if (!revive && !app->title->cont && !restartLVL1)
 	{
-		app->SaveInitialGameRequest();
+		//app->SaveInitialGameRequest();
 		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
 	}
 
@@ -185,14 +194,6 @@ bool Player::Start()
 		app->LoadGameRequest();
 
 	}
-	if (restart)
-	{
-		app->LoadInitialGameRequest();
-	}
-
-
-	restart = false;
-	revive = false;
 
 	currentAnimation = &idleAnimR;
 
@@ -235,6 +236,8 @@ bool Player::Update(float dt)
 		else if (!debug)
 			debug = true;
 	}
+
+	
 
 	//Atack Collider
 	if (playerData.direction == 1)
@@ -285,6 +288,22 @@ bool Player::Update(float dt)
 
 	}
 
+	//IN LEADER
+	if (inLeader)
+	{
+		playerData.yVel = 0;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inLeader)
+	{
+		playerData.playerBody.y -= 2;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inLeader)
+	{
+		playerData.playerBody.y -= -2;
+
+	}
+
 	//COLLIDERSON
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
@@ -309,7 +328,7 @@ bool Player::Update(float dt)
 	else if (playerData.playerBody.y <= 0 && godMode) {
 		playerData.playerBody.y = 1;
 	}
-	else if (!godMode)
+	else if (!godMode && !inLeader)
 	{
 		app->play->playerData.isCollidingUp = false;
 		playerData.yVel += playerData.gravity;
@@ -447,8 +466,11 @@ bool Player::Update(float dt)
 			app->render->playerLimitR -= playerData.xVel;
 		}
 
-		if (playerData.playerBody.x >= 3000 + (app->render->camera.w / 2))
-			playerData.playerBody.x = 3000 + (app->render->camera.w / 2);
+		if (playerData.playerBody.x >= PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2) && lastLevel == 1)
+			playerData.playerBody.x = PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2);
+
+		if (playerData.playerBody.x >= PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2) && lastLevel == 2)
+			playerData.playerBody.x = PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2);
 	}
 	if (playerData.playerBody.x <= 100)
 	{
@@ -459,8 +481,11 @@ bool Player::Update(float dt)
 	if (app->render->camera.x >= 0)
 		app->render->camera.x = 0;
 
-	if (app->render->camera.x <= -4200)
-		app->render->camera.x = -4200;
+	if (app->render->camera.x <= -CAMERA_LIMIT_LVL1 && lastLevel == 1)
+		app->render->camera.x = -CAMERA_LIMIT_LVL1;
+
+	if (app->render->camera.x <= -CAMERA_LIMIT_LVL2 && lastLevel == 2)
+		app->render->camera.x = -CAMERA_LIMIT_LVL2;
 
 	// CHECKPOINT!
 	if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
@@ -470,6 +495,7 @@ bool Player::Update(float dt)
 		app->SaveGameRequest();
 
 	}
+
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width, app->map->mapData.height,

@@ -42,6 +42,19 @@ public:
 	int scrollingOffset = 0;
 private:
 
+	SDL_Texture* background_sky1;
+	SDL_Texture* background_sky2;
+	SDL_Texture* background_sky3;
+	SDL_Texture* background_forest1;
+	SDL_Texture* background_lights1;
+	SDL_Texture* background_forest2;
+	SDL_Texture* background_forest3;
+	SDL_Texture* background_lights2;
+	SDL_Texture* background_forest4;
+	SDL_Texture* background_forest5;
+	SDL_Texture* background_grass1;
+	SDL_Texture* background_grass2;
+
 };
 #endif // __LEVEL2_H__
 

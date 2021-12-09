@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "Level2.h"
 
 
 TitleScreen::TitleScreen(bool enabled) : Module(enabled)
@@ -33,6 +34,9 @@ bool TitleScreen::Start()
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+
+		app->LoadGameRequest();
+
 	}
 	changeFX = app->audio->LoadFx("Assets/audio/fx/switching.wav");
 	enterFX = app->audio->LoadFx("Assets/audio/fx/enter.wav");
@@ -82,7 +86,8 @@ bool TitleScreen::Update(float dt)
 		if (option == 1)//New game option
 		{
 			cont = false;
-			app->SaveGameRequest();
+			app->play->restartLVL1 = true;
+			//app->SaveGameRequest();
 			app->fade->FadeToBlack(this, app->scene, 30);
 			
 			app->play->playerData.isDead = false;
@@ -92,7 +97,18 @@ bool TitleScreen::Update(float dt)
 		else //continue option
 		{
 			cont = true;
-			app->fade->FadeToBlack(this, app->scene, 30);
+			if (app->play->lastLevel == 1)
+			{
+				app->fade->FadeToBlack(this, app->scene, 30);
+
+			}
+
+			if (app->play->lastLevel == 2)
+			{
+				app->fade->FadeToBlack(this, app->level2, 30);
+
+			}
+
 		}
 		
 		

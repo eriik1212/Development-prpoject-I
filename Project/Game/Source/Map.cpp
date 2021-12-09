@@ -215,6 +215,48 @@ void Map::Draw()
 			}
 		}
 
+		if (mapLayerItem->data->properties.GetProperty("Leader") == 1) {
+
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) {
+
+						//now we always use the firt tileset in the list
+						//TileSet* tileset = mapData.tilesets.start->data;
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						SDL_Rect r = tileset->GetTileRect(gid);
+						iPoint pos = MapToWorld(x, y);
+
+						if (app->play->collidersOn)
+						{
+							app->render->DrawTexture(tileset->texture,
+								pos.x,
+								pos.y + (32 - r.h), true,
+								&r);
+						}
+
+						if (pos.x < (app->play->playerData.playerBody.x + 50) && pos.x >(app->play->playerData.playerBody.x - 50))
+						{
+							leaderColliders.AddCollider(pos.x, pos.y + (32 - r.h), r.w, r.h);
+
+							leaderColliders.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0.0f, LEADER);
+
+							if (app->play->collidersOn)
+							{
+								leaderColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 5);
+							}
+						}
+					}
+
+				}
+			}
+		}
+
 		mapLayerItem = mapLayerItem->next;
 	}
 }
@@ -349,7 +391,7 @@ bool Map::Load(const char* filename)
 	// Load general info
     if(ret == true)
     {
-        // L03: DONE 3: Create and call a private function to load and fill all your map data
+        // Create and call a private function to load and fill all your map data
 		ret = LoadMap(mapFile);
 	}
 
@@ -431,7 +473,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 
-	// L03: DONE 4: Load Tileset attributes
+	// Load Tileset attributes
 	set->name.Create(tileset_node.attribute("name").as_string());
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->tileWidth = tileset_node.attribute("tilewidth").as_int();
@@ -525,4 +567,22 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	}
 	
 	return ret;
+}
+
+bool Map::LoadState(pugi::xml_node& data)
+{
+	//Load Map Level
+	app->play->lastLevel = data.child("level").attribute("num").as_int();
+
+	return true;
+}
+
+bool Map::SaveState(pugi::xml_node& data) const
+{
+	//Save Map Level
+	pugi::xml_node map = data.append_child("level");
+
+	map.append_attribute("num") = app->play->lastLevel;
+
+	return true;
 }

@@ -14,7 +14,8 @@ enum CollidersType
 	WALL, // 1
 	DEAD, // 2
 	WIN, //3
-	ATTACK //4
+	ATTACK, //4
+	LEADER //5
 };
 
 class Collider

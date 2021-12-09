@@ -69,8 +69,9 @@ public:
 	bool collidersOn = false;
 	bool debug = false;
 	bool godMode = false;
+	bool inLeader = false;
 
-
+	int lastLevel = 1;
 private:
 	SDL_Texture* img;
 
@@ -83,7 +84,8 @@ private:
 public:
 	PlayerData playerData;
 
-	bool restart = false;
+	bool restartLVL1 = false;
+	bool restartLVL2 = false;
 	bool revive = false;
 
 	ModuleCollisions attackCollider;
@@ -105,6 +107,9 @@ public:
 		victory,
 		upStairsL,
 		upStairsR;
+
+	SDL_Texture* winTexture;
+
 
 };
 #endif // __PLAYER_H__

@@ -47,7 +47,18 @@ bool Level2::Start()
 		app->audio->StopMusic();
 		app->audio->PlayMusic("Assets/audio/music/gameplay_music.ogg");
 
-		app->LoadInitialGameRequest();
+		if (app->play->restartLVL2)
+		{
+			app->play->playerData.playerBody.x = 80;
+			app->play->playerData.playerBody.y = 348;
+
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			app->render->playerLimitL = 100;
+			app->render->playerLimitR = 300;
+		}
+
+		app->SaveGameRequest();
 
 		//Enable Player & map
 		app->play->Enable();
@@ -56,6 +67,23 @@ bool Level2::Start()
 		app->play->playerData.isDead = false;
 		app->play->debug = false;
 		app->play->collidersOn = false;
+
+		background_sky1 = app->tex->Load("Assets/textures/dark_forest/Layer_0011_0.png");
+		background_sky2 = app->tex->Load("Assets/textures/dark_forest/Layer_0010_1.png");
+		background_sky3 = app->tex->Load("Assets/textures/dark_forest/Layer_0009_2.png");
+
+		background_forest1 = app->tex->Load("Assets/textures/dark_forest/Layer_0008_3.png");
+		background_forest2 = app->tex->Load("Assets/textures/dark_forest/Layer_0006_4.png");
+		background_forest3 = app->tex->Load("Assets/textures/dark_forest/Layer_0005_5.png");
+		background_forest4 = app->tex->Load("Assets/textures/dark_forest/Layer_0003_6.png");
+		background_forest5 = app->tex->Load("Assets/textures/dark_forest/Layer_0002_7.png");
+
+		background_lights1 = app->tex->Load("Assets/textures/dark_forest/Layer_0007_Lights.png");
+		background_lights2 = app->tex->Load("Assets/textures/dark_forest/Layer_0004_Lights.png");
+
+		background_grass1 = app->tex->Load("Assets/textures/dark_forest/Layer_0001_8.png");
+		background_grass2 = app->tex->Load("Assets/textures/dark_forest/Layer_0000_9.png");
+
 	}
 
 
@@ -66,6 +94,22 @@ bool Level2::Start()
 // Called each loop iteration
 bool Level2::PreUpdate()
 {
+	if (app->play->restartLVL2)
+	{
+		app->play->playerData.playerBody.x = 80;
+		app->play->playerData.playerBody.y = 348;
+
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->render->playerLimitL = 100;
+		app->render->playerLimitR = 300;
+
+		app->play->lastLevel = 2;
+
+		app->play->restartLVL2 = false;
+
+		app->SaveGameRequest();
+	}
 
 	return true;
 }
@@ -79,10 +123,11 @@ bool Level2::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->level2->Disable();
 
-		app->fade->FadeToBlack(this, app->scene, 30);
-
-		app->play->restart = true;
+		app->scene->Enable();
+		
+		app->play->restartLVL1 = true;
 
 	}
 
@@ -91,10 +136,12 @@ bool Level2::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->level2->Disable();
 
-		app->fade->FadeToBlack(this, app->level2, 30);
+		app->level2->Enable();
 
-		app->play->restart = true;
+		app->play->restartLVL2 = true;
+
 
 	}
 
@@ -106,7 +153,8 @@ bool Level2::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 
-		app->play->restart = true;
+		app->play->restartLVL2 = true;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
@@ -127,20 +175,88 @@ bool Level2::Update(float dt)
 
 	//app->win->SetTitle(title.GetString());
 
-
 	// ----------------------------------------------------------------------------------------------------- PARALLAX EFFECT
-
-
-	/*if (app->play->playerData.winner == true)
 	{
+		// SKY
+		app->render->DrawTexture(background_sky1, (app->render->camera.w / 2) * 0, -150, false, NULL, 0);
+		app->render->DrawTexture(background_sky1, (app->render->camera.w / 2) * 1, -150, false, NULL, 0);
 
-		app->render->DrawTexture(winTexture, app->render->camera.w / 6, app->render->camera.h / 6, true, NULL, 0);
+		app->render->DrawTexture(background_sky2, (app->render->camera.w / 2) * 0, -150, false, NULL, 0);
+		app->render->DrawTexture(background_sky2, (app->render->camera.w / 2) * 1, -150, false, NULL, 0);
 
+		app->render->DrawTexture(background_sky3, (app->render->camera.w / 2) * 0, -150, false, NULL, 0);
+		app->render->DrawTexture(background_sky3, (app->render->camera.w / 2) * 1, -150, false, NULL, 0);
+
+		app->render->DrawTexture(background_forest1, (app->render->camera.w / 2) * 0, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_forest1, (app->render->camera.w / 2) * 1, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_forest1, (app->render->camera.w / 2) * 2, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_forest1, (app->render->camera.w / 2) * 3, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_forest1, (app->render->camera.w / 2) * 4, -150, false, NULL, 0.1f);
+
+		app->render->DrawTexture(background_lights1, app->render->camera.w * 0, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_lights1, app->render->camera.w * 1, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_lights1, app->render->camera.w * 2, -150, false, NULL, 0.1f);
+		app->render->DrawTexture(background_lights1, app->render->camera.w * 3, -150, false, NULL, 0.1f);
+
+		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 0, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 1, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 2, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 3, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 4, -150, false, NULL, 0.15f);
+
+		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 0, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 1, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 2, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 3, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 4, -150, false, NULL, 0.2f);
+
+		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 0, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 1, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 2, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 3, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 4, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 5, -150, false, NULL, 0.25f);
+
+		app->render->DrawTexture(background_lights2, (app->render->camera.w) * 0, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_lights2, (app->render->camera.w) * 1, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_lights2, (app->render->camera.w) * 2, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_lights2, (app->render->camera.w) * 3, -150, false, NULL, 0.25f);
+
+		app->render->DrawTexture(background_forest5, (app->render->camera.w / 2) * 0, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest5, (app->render->camera.w / 2) * 1, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest5, (app->render->camera.w / 2) * 2, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest5, (app->render->camera.w / 2) * 3, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest5, (app->render->camera.w / 2) * 4, -150, false, NULL, 0.25f);
+		app->render->DrawTexture(background_forest5, (app->render->camera.w / 2) * 5, -150, false, NULL, 0.25f);
+
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 0, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 1, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 2, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 3, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 4, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 5, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass1, (app->render->camera.w / 2) * 6, -150, false, NULL, 0.3f);
+
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 0, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 1, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 2, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 3, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 4, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 5, -150, false, NULL, 0.3f);
+		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 6, -150, false, NULL, 0.3f);
+
+	}
+
+	if (app->play->playerData.winner == true)
+	{
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-			app->fade->FadeToBlack(this, app->title, 30);
+		{
+			app->fade->FadeToBlack(this, app->title, 60);
+
+		}
 
 		app->play->revive = true;
-	}*/
+	}
 
 
 	return true;

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "FadeToBlack.h"
 #include "Log.h"
+#include "Level2.h"
 
 
 GameOverScreen::GameOverScreen(bool enabled) : Module(enabled)
@@ -58,9 +59,22 @@ bool GameOverScreen::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		//Fade Out
-		app->fade->FadeToBlack(this, app->scene, 30);
+		if (app->play->lastLevel == 1)
+		{
+			app->fade->FadeToBlack(this, app->scene, 30);
+			app->LoadGameRequest();
+
+
+		}
+		else if (app->play->lastLevel == 2)
+		{
+			app->fade->FadeToBlack(this, app->level2, 30);
+			app->LoadGameRequest();
+
+
+		}
 		app->audio->StopMusic();
-		app->play->revive = true;
+		//app->play->revive = true;
 		app->play->playerData.isDead = false;
 	}
 
