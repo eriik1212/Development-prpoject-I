@@ -64,8 +64,6 @@ public:
 
 	// All spawned enemies in the scene
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
-
-	
 	
 
 private:

@@ -2,10 +2,11 @@
 
 #include "App.h"
 #include "ModuleCollisions.h"
+#include "Player.h"
 
 
 
-Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
+Enemy_Bird::Enemy_Bird(bool enabled, int x, int y) : Enemy(x, y), Module(enabled)
 {
 	// LEFT
 
@@ -60,7 +61,13 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 
 	//PATH
 
+	//Collider
+	birdBody.x = 196;
+	birdBody.y = 308;
+	birdBody.w = 16;
+	birdBody.h = 16;
 
+	birdCollider.AddCollider(birdBody.x, birdBody.y, birdBody.w, birdBody.h);
 
 	//must be one algorithm of class
 }

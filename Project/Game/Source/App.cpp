@@ -41,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(false);
 	play = new Player(false);
 	enemies = new ModuleEnemies(false);
+	bird_enemy = new Enemy_Bird(false, 0, 0);
 	fade = new ModuleFadeToBlack(true);
 	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);
@@ -60,6 +61,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(title);
 	AddModule(play);
 	AddModule(enemies);
+	//AddModule(bird_enemy); //CRASH
 	AddModule(fade);
 	//AddModule(collisions);
 	AddModule(gameOver);

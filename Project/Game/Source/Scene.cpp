@@ -14,6 +14,7 @@
 #include "Log.h"
 #include "Level2.h"
 #include "Enemies.h"
+#include "Enemy_Bird.h"
 
 Scene::Scene(bool enabled) : Module(enabled)
 {
@@ -63,7 +64,7 @@ bool Scene::Start()
 				app->enemies->enemies[i] = nullptr;
 			}
 		}
-		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 196, 308);
+		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, app->bird_enemy->birdBody.x, app->bird_enemy->birdBody.y);
 
 		if (app->play->restartLVL1)
 		{

@@ -2,6 +2,8 @@
 
 #include "App.h"
 #include "ModuleCollisions.h"
+#include "Textures.h"
+#include "Log.h"
 #include "Audio.h"
 #include "Render.h"
 #include "Player.h"
@@ -56,5 +58,17 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	if (currentAnim != nullptr)
-		app->render->DrawTexture(texture, position.x, position.y, false, &(currentAnim->GetCurrentFrame()));
+		app->render->DrawTexture(texture, position.x, position.y, true, &(currentAnim->GetCurrentFrame()));
+}
+
+
+// Called before quitting
+bool Enemy::CleanUp()
+{
+	LOG("Freeing scene");
+
+	app->tex->CleanUp();
+	//app->audio->CleanUp();
+
+	return true;
 }

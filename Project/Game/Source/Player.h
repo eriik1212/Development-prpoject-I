@@ -91,10 +91,6 @@ public:
 	ModuleCollisions attackCollider;
 	SDL_Rect attackColliderRect;
 
-	ModuleCollisions enemyCol;
-	SDL_Rect enemyRect;
-
-
 	SDL_Texture* playerTex = nullptr;
 	SDL_Texture* fullHeart = nullptr;
 	SDL_Texture* emptyHeart = nullptr;

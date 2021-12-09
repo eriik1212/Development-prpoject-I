@@ -251,7 +251,7 @@ bool Level2::Update(float dt)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			app->fade->FadeToBlack(this, app->title, 60);
+			app->fade->FadeToBlack(this, app->title, 30);
 
 		}
 
@@ -277,7 +277,7 @@ bool Level2::PostUpdate()
 // Called before quitting
 bool Level2::CleanUp()
 {
-	LOG("Freeing scene");
+	LOG("Freeing level2");
 
 	app->tex->CleanUp();
 	//app->audio->CleanUp();

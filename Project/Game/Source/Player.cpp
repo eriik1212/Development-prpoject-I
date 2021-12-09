@@ -12,6 +12,9 @@
 #include "FadeToBlack.h"
 #include "Level2.h"
 #include "GameOverScreen.h"
+#include "Enemies.h"
+#include "Enemy.h"
+#include "Enemy_Bird.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -145,17 +148,17 @@ Player::Player(bool enabled) : Module(enabled)
 		hit1L.PushBack({ 300, 1110, 50, 37 });
 		hit1L.PushBack({ 250, 1110, 50, 37 });
 		hit1L.loop = true;
-		hit1L.speed = 0.1f;
+		hit1L.speed = 0.3f;
 
 		//hit animation 1 R
-		hit1R.PushBack({ 150, 481, 50, 37 });
-		hit1R.PushBack({ 200, 481, 50, 37 });
-		hit1R.PushBack({ 250, 481, 50, 37 });
-		hit1R.PushBack({ 300, 481, 50, 37 });
-		hit1R.PushBack({ 0, 518, 50, 37 });
-		hit1R.PushBack({ 50, 518, 50, 37 });
+		hit1R.PushBack({ 150, 481, 49, 37 });
+		hit1R.PushBack({ 200, 481, 49, 37 });
+		hit1R.PushBack({ 250, 481, 49, 37 });
+		hit1R.PushBack({ 300, 481, 49, 37 });
+		hit1R.PushBack({ 0, 518, 49, 37 });
+		hit1R.PushBack({ 50, 518, 49, 37 });
 		hit1R.loop = true;
-		hit1R.speed = 0.1f;
+		hit1R.speed = 0.3f;
 
 		//Player gets damaged from L
 		getsDamagedL.PushBack({ 50, 1702, 50, 37 });
@@ -212,11 +215,6 @@ bool Player::Start()
 
 
 	chekpoint = false;
-
-	enemyRect.x = 100;
-	enemyRect.y = 300;
-	enemyRect.w = 50;
-	enemyRect.h = 50;
 
 	if (!revive && !app->title->cont && !restartLVL1)
 	{
@@ -291,8 +289,6 @@ bool Player::Update(float dt)
 	}
 	attackCollider.AddCollider(attackColliderRect.x, attackColliderRect.y, attackColliderRect.w, attackColliderRect.h);
 
-	enemyCol.AddCollider(enemyRect.x, enemyRect.y, enemyRect.w, enemyRect.h);
-
 	if (playerData.yVel <= -playerData.maxVel)
 	{
 		playerData.yVel = -playerData.maxVel;
@@ -327,6 +323,14 @@ bool Player::Update(float dt)
 	if (inLeader)
 	{
 		playerData.yVel = 0;
+		if (playerData.direction == 1)
+		{
+			currentAnimation = &upStairsR;
+		}
+		else if (playerData.direction == 0)
+		{
+			currentAnimation = &upStairsL;
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inLeader)
 	{
@@ -334,11 +338,11 @@ bool Player::Update(float dt)
 
 		if (playerData.direction == 1)
 		{
-			currentAnimation == &upStairsR;
+			currentAnimation = &upStairsR;
 		}
 		else if (playerData.direction == 0)
 		{
-			currentAnimation == &upStairsL;
+			currentAnimation = &upStairsL;
 		}
 	}
 
@@ -348,15 +352,15 @@ bool Player::Update(float dt)
 
 		if (playerData.direction == 1)
 		{
-			currentAnimation == &upStairsR;
+			currentAnimation = &upStairsR;
 		}
 		else if (playerData.direction == 0)
 		{
-			currentAnimation == &upStairsL;
+			currentAnimation = &upStairsL;
 		}
 	}
 
-	//COLLIDERSON
+	//COLLIDERS ON
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 
@@ -388,7 +392,12 @@ bool Player::Update(float dt)
 	}
 
 	// Handle the player jump.
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !playerData.jumping && !godMode) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN &&
+		!playerData.jumping &&
+		!godMode &&
+		currentAnimation != &hit1R &&
+		currentAnimation != &hit1L) 
+	{
 		playerData.yVel = 10;
 		playerData.playerBody.y -= playerData.yVel;
 		playerData.jumping = true;
@@ -409,7 +418,13 @@ bool Player::Update(float dt)
 	}
 
 	// Handle the player DOUBLE jump.
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && playerData.jumping && playerData.canJumpAgain && !godMode) {
+	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN &&
+		playerData.jumping &&
+		playerData.canJumpAgain &&
+		!godMode &&
+		currentAnimation != &hit1R &&
+		currentAnimation != &hit1L)
+	{
 		playerData.yVel = 8;
 		playerData.jumping = true;
 		playerData.canJumpAgain = false;
@@ -428,7 +443,9 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT &&
+		currentAnimation != &hit1R &&
+		currentAnimation != &hit1L)
 
 	{
 		playerData.playerBody.x += playerData.xVel;
@@ -436,37 +453,61 @@ bool Player::Update(float dt)
 		playerData.direction = 1;
 
 	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP &&
+		currentAnimation != &hit1R &&
+		currentAnimation != &hit1L)
 	{
 		currentAnimation = &idleAnimR;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT &&
+		currentAnimation != &hit1R &&
+		currentAnimation != &hit1L)
 	{
 		playerData.playerBody.x -= playerData.xVel;
 		currentAnimation = &walkL;
 		playerData.direction = 0;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP &&
+		currentAnimation != &hit1R &&
+		currentAnimation != &hit1L)
 	{
 		currentAnimation = &idleAnimL;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && !playerData.attacking)
+	// ------------------------------------------------------------------------------------------------------ ATTACK!
+	//RIGTH
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
+		!playerData.attacking &&
+		playerData.direction == 1 &&
+		currentAnimation != &hit1R)
 	{
 		playerData.attacking = true;
-		if (playerData.direction == 1)
-		{
-			currentAnimation == &hit1R;
-		}	
-		if (playerData.direction == 0)
-		{
-			currentAnimation == &hit1L;
-		}
+
+		hit1R.Reset();
+		currentAnimation = &hit1R;	
 		
 		LOG("ATTACK!");
-		attackCollider.GetCollider().CheckCollision(enemyCol.GetCollider(), 0.0f, ATTACK);
+
+		attackCollider.GetCollider().CheckCollision(app->bird_enemy->birdCollider.GetCollider(), 0.0f, ATTACK);
+
+	}
+	//LEFT
+	else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
+		!playerData.attacking && 
+		playerData.direction == 0 &&
+		currentAnimation != &hit1L)
+	{
+		playerData.attacking = true;
+
+		hit1L.Reset();
+		currentAnimation = &hit1L;
+
+		LOG("ATTACK!");
+
+		attackCollider.GetCollider().CheckCollision(app->bird_enemy->birdCollider.GetCollider(), 0.0f, ATTACK);
+
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_UP && playerData.attacking)
 	{
@@ -593,10 +634,31 @@ bool Player::PostUpdate()
 {
 	bool ret = true;
 
+	//PAINT ENEMIES
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (app->enemies->enemies[i] != nullptr)
+		{
+			app->enemies->enemies[i]->Draw();
+		}
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	// After Hits Animations, go back to Idle Anim
+	// HIT 
+	// RIGHT
+	if (hit1R.loopCount > 0)
+	{
+		idleAnimR.Reset();
+		currentAnimation = &idleAnimR;
+	}
+	else if (hit1L.loopCount > 0)
+	{
+		idleAnimL.Reset();
+		currentAnimation = &idleAnimL;
+	}
 	// After JUMP Animations, go back to IDLE Anim
 	if (jumpL.loopCount > 0)
 	{
@@ -611,13 +673,15 @@ bool Player::PostUpdate()
 
 	jumpL.loopCount = 0;
 	jumpR.loopCount = 0;
+	hit1R.loopCount = 0;
+	hit1L.loopCount = 0;
 
 	// Draw Player Colliders
 	if (app->play->collidersOn)
 	{
 		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, PLAYER);
 		attackCollider.GetCollider().DebugDraw(attackColliderRect, ATTACK);
-		enemyCol.GetCollider().DebugDraw(enemyRect, DEAD);
+		app->bird_enemy->birdCollider.GetCollider().DebugDraw(app->bird_enemy->birdBody, ENEMY);
 
 	}
 

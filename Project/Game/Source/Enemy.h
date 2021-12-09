@@ -29,6 +29,9 @@ public:
 	// Called from ModuleEnemies' Update
 	virtual void Draw();
 
+	// Called before quitting
+	bool CleanUp();
+
 public:
 	// The current position in the world
 	iPoint position;

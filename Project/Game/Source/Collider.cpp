@@ -3,6 +3,9 @@
 #include "Scene.h"
 #include "Level2.h"
 #include "Log.h"
+#include "Enemy_Bird.h"
+#include "Enemies.h"
+#include "Enemy.h"
 
 Collider::Collider(SDL_Rect& body) :
 	body(body)
@@ -94,7 +97,8 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
-			other.Move(100, 0);
+			/*app->bird_enemy->birdBody.x -= 50;
+			app->bird_enemy->birdCollider.GetCollider().body.x -= 50;*/
 			LOG("INSIDE COLLISION");
 
 			return true;
@@ -140,6 +144,9 @@ void Collider::DebugDraw(SDL_Rect body, int type)
 		break;
 	case CollidersType::LEADER:
 		app->render->DrawRectangle(body, 0, 255, 125, alpha);
+		break;
+	case CollidersType::ENEMY:
+		app->render->DrawRectangle(body, 255, 0, 255, alpha);
 		break;
 	}
 

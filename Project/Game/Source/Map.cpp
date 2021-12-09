@@ -121,7 +121,7 @@ void Map::Draw()
 
 							if (app->play->collidersOn)
 							{
-								tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 1);
+								tilesColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, WALL);
 							}
 						}
 
@@ -164,7 +164,7 @@ void Map::Draw()
 
 							if (app->play->collidersOn)
 							{
-								dieColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 2);
+								dieColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, DEAD);
 							}
 						}
 					}
@@ -206,7 +206,7 @@ void Map::Draw()
 
 							if (app->play->collidersOn)
 							{
-								winColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 3);
+								winColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, WIN);
 							}
 						}
 					}
@@ -248,7 +248,7 @@ void Map::Draw()
 
 							if (app->play->collidersOn)
 							{
-								leaderColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, 5);
+								leaderColliders.GetCollider().DebugDraw({ pos.x, pos.y + (32 - r.h), r.w, r.h }, LEADER);
 							}
 						}
 					}

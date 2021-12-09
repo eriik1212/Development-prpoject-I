@@ -150,7 +150,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 			case ENEMY_TYPE::BIRD:
-				enemies[i] = new Enemy_Bird(info.x, info.y);
+				enemies[i] = new Enemy_Bird(true, info.x, info.y);
 				enemies[i]->texture = bird;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;

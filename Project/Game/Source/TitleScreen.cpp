@@ -71,7 +71,7 @@ bool TitleScreen::Start()
 	//app->audio->PlayMusic("Assets/Audio/02_character_selection.ogg", 1.0f);
 
 	//Fade In
-	//app->fade->FadeToBlack(this, app->gameOver, 30);
+	app->fade->FadeToBlack(this, app->title, 30);
 
 	return true;
 }
@@ -141,6 +141,7 @@ bool TitleScreen::PostUpdate()
 {
 
 	app->render->DrawTexture(Title, 0, 0, false, NULL);
+
 	if (option == 1)
 	{
 		app->render->DrawTexture(NewGamePressed, 432, 432, false, &NewGameRect);

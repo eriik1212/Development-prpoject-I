@@ -15,7 +15,8 @@ enum CollidersType
 	DEAD, // 2
 	WIN, //3
 	ATTACK, //4
-	LEADER //5
+	LEADER, //5
+	ENEMY //6
 };
 
 class Collider
