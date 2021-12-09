@@ -110,6 +110,23 @@ Player::Player(bool enabled) : Module(enabled)
 		deathAnimL.loop = true;
 		deathAnimL.speed = 0.1f;
 
+
+		//interacting stairs left
+		upStairsL.PushBack({ 100, 999, 50, 37 });
+		upStairsL.PushBack({ 50, 999, 50, 37 });
+		upStairsL.PushBack({ 0, 999, 50, 37 });
+		upStairsL.PushBack({ 300, 1036, 50, 37 });
+		upStairsL.loop = true;
+		upStairsL.speed = 0.1f;
+
+
+		//interacting stairs right
+		upStairsR.PushBack({ 200, 407, 50, 37 });
+		upStairsR.PushBack({ 250, 407, 50, 37 });
+		upStairsR.PushBack({ 300, 407, 50, 37 });
+		upStairsR.PushBack({ 0, 444, 50, 37 });
+		upStairsR.loop = true;
+		upStairsR.speed = 0.1f;
 	}
 
 }

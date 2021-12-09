@@ -102,7 +102,9 @@ public:
 		idleAnimR,
 		deathAnimR,
 		deathAnimL,
-		victory;
+		victory,
+		upStairsL,
+		upStairsR;
 
 };
 #endif // __PLAYER_H__
