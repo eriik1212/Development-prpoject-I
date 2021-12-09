@@ -5,20 +5,20 @@
 	<textures />
 	<audio />
 	<map>
-		<level num="2" />
+		<level num="1" />
 	</map>
 	<scene />
 	<level2 />
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<player x="1480" y="116" />
-		<playerLimit Left="1284" Right="1484" />
+		<player x="196" y="308" />
+		<playerLimit Left="100" Right="300" />
 	</player>
 	<:anonymous />
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="-1776" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </save_state>

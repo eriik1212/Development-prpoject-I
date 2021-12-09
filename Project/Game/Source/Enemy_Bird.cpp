@@ -103,7 +103,7 @@ void Enemy_Bird::Update()
 
 	}*/
 	
-	
+	position = spawnPos;
 	currentAnim = &leftStandB;
 	Enemy::Update();
 }

@@ -96,6 +96,11 @@ public:
 
 
 	SDL_Texture* playerTex = nullptr;
+	SDL_Texture* fullHeart = nullptr;
+	SDL_Texture* emptyHeart = nullptr;
+
+	int lifes;
+
 	Animation walkR,
 		walkL,
 		jumpR,
@@ -106,7 +111,13 @@ public:
 		deathAnimL,
 		victory,
 		upStairsL,
-		upStairsR;
+		upStairsR,
+		hit1L,
+		hit1R,
+		hit2L,
+		hit2R,
+		getsDamagedL,
+		getsDamagedR;
 
 	SDL_Texture* winTexture;
 

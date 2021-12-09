@@ -135,6 +135,40 @@ Player::Player(bool enabled) : Module(enabled)
 		upStairsR.PushBack({ 0, 444, 50, 37 });
 		upStairsR.loop = true;
 		upStairsR.speed = 0.1f;
+
+
+		//hit animation 1 L
+		hit1L.PushBack({ 150, 1073, 50, 37 });
+		hit1L.PushBack({ 100, 1073, 50, 37 });
+		hit1L.PushBack({ 50, 1073, 50, 37 });
+		hit1L.PushBack({ 0, 1073, 50, 37 });
+		hit1L.PushBack({ 300, 1110, 50, 37 });
+		hit1L.PushBack({ 250, 1110, 50, 37 });
+		hit1L.loop = true;
+		hit1L.speed = 0.1f;
+
+		//hit animation 1 R
+		hit1R.PushBack({ 150, 481, 50, 37 });
+		hit1R.PushBack({ 200, 481, 50, 37 });
+		hit1R.PushBack({ 250, 481, 50, 37 });
+		hit1R.PushBack({ 300, 481, 50, 37 });
+		hit1R.PushBack({ 0, 518, 50, 37 });
+		hit1R.PushBack({ 50, 518, 50, 37 });
+		hit1R.loop = true;
+		hit1R.speed = 0.1f;
+
+		//Player gets damaged from L
+		getsDamagedL.PushBack({ 50, 1702, 50, 37 });
+		getsDamagedL.PushBack({ 100, 1702, 50, 37 });
+		getsDamagedL.loop = true;
+		getsDamagedL.speed = 0.1f;
+
+
+		//Player gets damaged from R
+		getsDamagedR.PushBack({ 250, 1332, 50, 37 });
+		getsDamagedR.PushBack({ 200, 1332, 50, 37 });
+		getsDamagedR.loop = true;
+		getsDamagedR.speed = 0.1f;
 	}
 
 }
@@ -175,6 +209,7 @@ bool Player::Start()
 	winTexture = app->tex->Load("Assets/textures/youwin.png");
 
 	CheckPointFX = app->audio->LoadFx("Assets/audio/fx/checkpoint.wav");
+
 
 	chekpoint = false;
 
@@ -296,12 +331,29 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inLeader)
 	{
 		playerData.playerBody.y -= 2;
+
+		if (playerData.direction == 1)
+		{
+			currentAnimation == &upStairsR;
+		}
+		else if (playerData.direction == 0)
+		{
+			currentAnimation == &upStairsL;
+		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inLeader)
 	{
 		playerData.playerBody.y -= -2;
 
+		if (playerData.direction == 1)
+		{
+			currentAnimation == &upStairsR;
+		}
+		else if (playerData.direction == 0)
+		{
+			currentAnimation == &upStairsL;
+		}
 	}
 
 	//COLLIDERSON
@@ -404,7 +456,15 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && !playerData.attacking)
 	{
 		playerData.attacking = true;
-		//attack anim
+		if (playerData.direction == 1)
+		{
+			currentAnimation == &hit1R;
+		}	
+		if (playerData.direction == 0)
+		{
+			currentAnimation == &hit1L;
+		}
+		
 		LOG("ATTACK!");
 		attackCollider.GetCollider().CheckCollision(enemyCol.GetCollider(), 0.0f, ATTACK);
 	}
@@ -416,6 +476,9 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
 		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_P) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE
+		&& app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
 		&& !playerData.jumping)
 	{
 		if (currentAnimation != &idleAnimR
@@ -423,7 +486,11 @@ bool Player::Update(float dt)
 			&& currentAnimation != &walkR
 			&& currentAnimation != &walkL
 			&& currentAnimation != &jumpR
-			&& currentAnimation != &jumpL)
+			&& currentAnimation != &jumpL
+			&& currentAnimation != &hit1L
+			&& currentAnimation != &hit1R
+			&& currentAnimation != &upStairsL
+			&& currentAnimation != &upStairsR)
 		{
 			switch (playerData.direction) {
 
