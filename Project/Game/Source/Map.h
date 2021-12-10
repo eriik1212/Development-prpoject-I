@@ -133,25 +133,33 @@ public:
 	void DrawPath();
 	bool IsWalkable(int x, int y) const;
 
+	void ComputePath(int x, int y);
+
+	// Propagation methods
+	void PropagateBFS();
+
+	// BFS Pathfinding variables
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+	// Additional variables
+	List<iPoint> breadcrumbs;
+
 	// Load / Save
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
 private:
 
-	// BFS Pathfinding variables
-	PQueue<iPoint> frontier;
-	List<iPoint> visited;
 
-	// Additional variables
-	List<iPoint> breadcrumbs;
+
+
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
 	DynArray<iPoint> path;
 
 	SDL_Texture* tileX = nullptr;
+	SDL_Texture* pathfinding = nullptr;
 
-	// Propagation methods
-	void PropagateBFS();
+
 
 	// Methods to load all required map data
 	bool LoadMap(pugi::xml_node mapFile);

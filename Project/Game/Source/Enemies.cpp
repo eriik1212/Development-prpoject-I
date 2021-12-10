@@ -51,6 +51,11 @@ bool ModuleEnemies::Update(float dt)
 			enemies[i]->Update();
 	}
 
+	if (app->play->inEnemyView)
+	{
+		//app->bird_enemy->birdBody.x += 5;
+	}
+
 	HandleEnemiesDespawn();
 
 	return true;

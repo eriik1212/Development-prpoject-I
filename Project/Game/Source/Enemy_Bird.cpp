@@ -2,9 +2,12 @@
 
 #include "App.h"
 #include "ModuleCollisions.h"
+#include "Collider.h"
 #include "Scene.h"
 #include "Enemies.h"
+#include "Enemy.h"
 #include "Player.h"
+#include "Map.h"
 
 
 
@@ -71,12 +74,19 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 
 	birdCollider.AddCollider(birdBody.x, birdBody.y, birdBody.w, birdBody.h);
 
+	//Initialize the path (PATHFINDING)
+	app->map->frontier.Push(app->map->WorldToMap(birdBody.x, birdBody.y), 0);
+	app->map->visited.add(app->map->WorldToMap(birdBody.x, birdBody.y));
+	app->map->breadcrumbs.add(app->map->WorldToMap(birdBody.x, birdBody.y));
+
 	//must be one algorithm of class
 }
 
 
 void Enemy_Bird::Update()
 {
+	
+
 	if (app->play->playerData.attacking == true)
 	{
 		app->play->attackCollider.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ATTACK);
@@ -89,12 +99,12 @@ void Enemy_Bird::Update()
 	}
 
 	//------------------------------------------------------------LEFT direcction
-	if (currentAnim == &leftStandB)direcction = 0;
-	if (currentAnim == &leftFlyB)direcction = 0;
+	if (currentAnim == &leftStandB) direcction = 0;
+	if (currentAnim == &leftFlyB) direcction = 0;
 	
 	//------------------------------------------------------------LEFT ANIM direction
-	if (currentAnim == &rightStandB)direcction = 1;
-	if (currentAnim == &leftFlyB)direcction = 1;
+	if (currentAnim == &rightStandB) direcction = 1;
+	if (currentAnim == &leftFlyB) direcction = 1;
 
 	/*if (app->collisions->GodMode == true) {
 

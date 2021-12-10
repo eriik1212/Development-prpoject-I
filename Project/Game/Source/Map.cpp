@@ -6,6 +6,9 @@
 #include "Scene.h"
 #include "Player.h"
 #include "ModuleCollisions.h"
+#include "Enemies.h"
+#include "Enemy_Bird.h"
+#include "Enemy.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -46,6 +49,7 @@ bool Map::Awake(pugi::xml_node& config)
 
     folder.Create(config.child("folder").child_value());
 
+
     return ret;
 }
 
@@ -56,10 +60,11 @@ void Map::ResetPath()
 	breadcrumbs.clear();
 	path.Clear();
 
-	frontier.Push(iPoint(19, 4), 0);
-	visited.add(iPoint(19, 4));
-	breadcrumbs.add(iPoint(19, 4));
-
+	
+	frontier.Push(iPoint(5, 4), 0);
+	visited.add(iPoint(5, 4));
+	breadcrumbs.add(iPoint(5, 4));
+	
 	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
 }
 
@@ -73,12 +78,12 @@ void Map::DrawPath()
 	while (item)
 	{
 		point = item->data;
-		TileSet* tileset = GetTilesetFromTileId(26);
+		TileSet* tileset = GetTilesetFromTileId(301);
 
-		SDL_Rect rec = tileset->GetTileRect(26);
+		SDL_Rect rec = tileset->GetTileRect(301);
 		iPoint pos = MapToWorld(point.x, point.y);
 
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		app->render->DrawTexture(pathfinding, pos.x, pos.y, true, &rec);
 
 		item = item->next;
 	}
@@ -87,12 +92,12 @@ void Map::DrawPath()
 	for (uint i = 0; i < frontier.Count(); ++i)
 	{
 		point = *(frontier.Peek(i));
-		TileSet* tileset = GetTilesetFromTileId(25);
+		TileSet* tileset = GetTilesetFromTileId(302);
 
-		SDL_Rect rec = tileset->GetTileRect(25);
+		SDL_Rect rec = tileset->GetTileRect(302);
 		iPoint pos = MapToWorld(point.x, point.y);
 
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		app->render->DrawTexture(pathfinding, pos.x, pos.y, true, &rec);
 	}
 
 	// Draw path
@@ -110,15 +115,52 @@ bool Map::IsWalkable(int x, int y) const
 	// and the tile is walkable (tile id 0 in the navigation layer)
 
 	bool isWalkable = false;
-	if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height) {
 
-		//gets the second layer
-		MapLayer* layer = mapData.layers.start->next->data;
-		int tileId = layer->Get(x, y);
-		if (tileId != 26) isWalkable = true;
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
+
+	while (mapLayerItem != NULL) {
+		if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height) {
+
+			//gets the second layer
+			MapLayer* layer = mapData.layers.start->next->data;
+			int tileId = layer->Get(x, y);
+			if (mapLayerItem->data->properties.GetProperty("Navigation") != 1) isWalkable = true;
+		}
+		return isWalkable;
+	}
+}
+
+void Map::ComputePath(int x, int y)
+{
+	path.Clear();
+	iPoint goal = WorldToMap(x, y);
+
+	// L11: TODO 2: Follow the breadcrumps to goal back to the origin
+	// add each step into "path" dyn array (it will then draw automatically)
+	
+	path.PushBack(goal);
+	int index = visited.find(goal);
+
+	if (index == -1)
+	{
+		app->play->inEnemyView = false;
+
+	}
+	else
+	{
+		app->play->inEnemyView = true;
+
 	}
 
-	return isWalkable;
+	while ((index >= 0) && (goal != breadcrumbs[index]))
+	{
+
+		goal = breadcrumbs[index];
+		path.PushBack(goal);
+		index = visited.find(goal);
+
+	}
 }
 
 void Map::PropagateBFS()
@@ -363,7 +405,14 @@ void Map::Draw()
 		}
 
 		mapLayerItem = mapLayerItem->next;
+
+		if (app->play->collidersOn)
+		{
+			DrawPath();
+			
+		}
 	}
+
 }
 
 iPoint Map::MapToWorld(int x, int y) const
@@ -483,6 +532,8 @@ bool Map::Load(const char* filename)
 {
     bool ret = true;
     SString tmp("%s%s", folder.GetString(), filename);
+	tileX = app->tex->Load("Assets/maps/x.png");
+	pathfinding = app->tex->Load("Assets/maps/pathfinding.png");
 
 	pugi::xml_document mapFile; 
     pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());

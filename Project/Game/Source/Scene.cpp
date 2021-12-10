@@ -130,6 +130,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (app->map->visited.count() < 60) app->map->PropagateBFS();
+
+	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) app->map->ResetPath();
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -302,6 +305,8 @@ bool Scene::Update(float dt)
 	}
 
 
+	app->map->ComputePath(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y);
+	
 	return true;
 }
 

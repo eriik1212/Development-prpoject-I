@@ -72,6 +72,9 @@ public:
 	bool inLeader = false;
 
 	int lastLevel = 1;
+
+	bool inEnemyView = false;
+
 private:
 	SDL_Texture* img;
 
