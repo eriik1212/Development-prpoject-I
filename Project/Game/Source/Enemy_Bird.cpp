@@ -2,11 +2,13 @@
 
 #include "App.h"
 #include "ModuleCollisions.h"
+#include "Scene.h"
+#include "Enemies.h"
 #include "Player.h"
 
 
 
-Enemy_Bird::Enemy_Bird(bool enabled, int x, int y) : Enemy(x, y), Module(enabled)
+Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 {
 	// LEFT
 
@@ -62,8 +64,8 @@ Enemy_Bird::Enemy_Bird(bool enabled, int x, int y) : Enemy(x, y), Module(enabled
 	//PATH
 
 	//Collider
-	birdBody.x = 196;
-	birdBody.y = 308;
+	birdBody.x = x;
+	birdBody.y = y;
 	birdBody.w = 16;
 	birdBody.h = 16;
 
@@ -75,6 +77,17 @@ Enemy_Bird::Enemy_Bird(bool enabled, int x, int y) : Enemy(x, y), Module(enabled
 
 void Enemy_Bird::Update()
 {
+	if (app->play->playerData.attacking == true)
+	{
+		app->play->attackCollider.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ATTACK);
+
+	}
+
+	if (app->play->collidersOn == true)
+	{
+		birdCollider.GetCollider().DebugDraw(birdBody, ENEMY);
+	}
+
 	//------------------------------------------------------------LEFT direcction
 	if (currentAnim == &leftStandB)direcction = 0;
 	if (currentAnim == &leftFlyB)direcction = 0;

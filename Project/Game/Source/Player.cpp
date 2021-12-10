@@ -216,13 +216,13 @@ bool Player::Start()
 
 	chekpoint = false;
 
-	if (!revive && !app->title->cont && !restartLVL1)
+	if (!app->title->cont && !restartLVL1)
 	{
 		//app->SaveInitialGameRequest();
 		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
 	}
 
-	if (revive || app->title->cont)
+	if (app->title->cont)
 	{
 		app->LoadGameRequest();
 
@@ -270,7 +270,19 @@ bool Player::Update(float dt)
 			debug = true;
 	}
 
-	
+	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		app->fade->FadeToBlack(this, app->title, 30);
+
+		//Disable Player & map
+		app->play->Disable();
+		app->map->Disable();
+		app->level2->Disable();
+		app->scene->Disable();
+		app->enemies->Disable();
+
+
+	}
 
 	//Atack Collider
 	if (playerData.direction == 1)
@@ -489,9 +501,6 @@ bool Player::Update(float dt)
 		currentAnimation = &hit1R;	
 		
 		LOG("ATTACK!");
-
-		attackCollider.GetCollider().CheckCollision(app->bird_enemy->birdCollider.GetCollider(), 0.0f, ATTACK);
-
 	}
 	//LEFT
 	else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
@@ -505,11 +514,8 @@ bool Player::Update(float dt)
 		currentAnimation = &hit1L;
 
 		LOG("ATTACK!");
-
-		attackCollider.GetCollider().CheckCollision(app->bird_enemy->birdCollider.GetCollider(), 0.0f, ATTACK);
-
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_UP && playerData.attacking)
+	else if (playerData.attacking)
 	{
 		playerData.attacking = false;
 	}
@@ -681,8 +687,6 @@ bool Player::PostUpdate()
 	{
 		playerData.GetCollider().DebugDraw(app->play->playerData.playerBody, PLAYER);
 		attackCollider.GetCollider().DebugDraw(attackColliderRect, ATTACK);
-		app->bird_enemy->birdCollider.GetCollider().DebugDraw(app->bird_enemy->birdBody, ENEMY);
-
 	}
 
 	return ret;

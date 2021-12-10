@@ -3,8 +3,12 @@
 
 #include "Module.h"
 #include "List.h"
+#include "PQueue.h"
 #include "Point.h"
 #include "ModuleCollisions.h"
+#include "DynArray.h"
+
+#define COST_MAP_SIZE	100
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -124,11 +128,30 @@ public:
 
 	iPoint WorldToMap(int x, int y) const;
 
+	// BFS Pathfinding methods
+	void ResetPath();
+	void DrawPath();
+	bool IsWalkable(int x, int y) const;
+
 	// Load / Save
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
 private:
+
+	// BFS Pathfinding variables
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+
+	// Additional variables
+	List<iPoint> breadcrumbs;
+	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+	DynArray<iPoint> path;
+
+	SDL_Texture* tileX = nullptr;
+
+	// Propagation methods
+	void PropagateBFS();
 
 	// Methods to load all required map data
 	bool LoadMap(pugi::xml_node mapFile);

@@ -11,6 +11,7 @@
 #include "GameOverScreen.h"
 #include "FadeToBlack.h"
 #include "TitleScreen.h"
+#include "Enemies.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -68,7 +69,7 @@ bool Level2::Start()
 		app->play->debug = false;
 		app->play->collidersOn = false;
 
-		background_sky1 = app->tex->Load("Assets/textures/dark_forest/Layer_0011_0.png");
+		//background_sky1 = app->tex->Load("Assets/textures/dark_forest/Layer_0011_0.png");
 		background_sky2 = app->tex->Load("Assets/textures/dark_forest/Layer_0010_1.png");
 		background_sky3 = app->tex->Load("Assets/textures/dark_forest/Layer_0009_2.png");
 
@@ -124,6 +125,7 @@ bool Level2::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 		app->level2->Disable();
+		app->enemies->Disable();
 
 		app->scene->Enable();
 		
@@ -137,6 +139,7 @@ bool Level2::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 		app->level2->Disable();
+		app->enemies->Disable();
 
 		app->level2->Enable();
 
@@ -152,6 +155,7 @@ bool Level2::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->enemies->Disable();
 
 		app->play->restartLVL2 = true;
 
@@ -159,6 +163,8 @@ bool Level2::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
 	{
+		app->enemies->Disable();
+
 		app->fade->FadeToBlack(this, app->gameOver, 30);
 	}
 
@@ -178,8 +184,8 @@ bool Level2::Update(float dt)
 	// ----------------------------------------------------------------------------------------------------- PARALLAX EFFECT
 	{
 		// SKY
-		app->render->DrawTexture(background_sky1, (app->render->camera.w / 2) * 0, -150, false, NULL, 0);
-		app->render->DrawTexture(background_sky1, (app->render->camera.w / 2) * 1, -150, false, NULL, 0);
+		/*app->render->DrawTexture(background_sky1, (app->render->camera.w / 2) * 0, -150, false, NULL, 0);
+		app->render->DrawTexture(background_sky1, (app->render->camera.w / 2) * 1, -150, false, NULL, 0);*/
 
 		app->render->DrawTexture(background_sky2, (app->render->camera.w / 2) * 0, -150, false, NULL, 0);
 		app->render->DrawTexture(background_sky2, (app->render->camera.w / 2) * 1, -150, false, NULL, 0);
@@ -247,16 +253,20 @@ bool Level2::Update(float dt)
 
 	}
 
-	if (app->play->playerData.winner == true)
+	/*if (app->play->playerData.winner == true)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			app->fade->FadeToBlack(this, app->title, 30);
 
-		}
+			//Disable Player & map
+			app->play->Disable();
+			app->map->Disable();
+			app->level2->Disable();
+			app->enemies->Disable();
 
-		app->play->revive = true;
-	}
+		}
+	}*/
 
 
 	return true;

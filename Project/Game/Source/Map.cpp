@@ -49,6 +49,111 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
+void Map::ResetPath()
+{
+	frontier.Clear();
+	visited.clear();
+	breadcrumbs.clear();
+	path.Clear();
+
+	frontier.Push(iPoint(19, 4), 0);
+	visited.add(iPoint(19, 4));
+	breadcrumbs.add(iPoint(19, 4));
+
+	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
+}
+
+void Map::DrawPath()
+{
+	iPoint point;
+
+	// Draw visited
+	ListItem<iPoint>* item = visited.start;
+
+	while (item)
+	{
+		point = item->data;
+		TileSet* tileset = GetTilesetFromTileId(26);
+
+		SDL_Rect rec = tileset->GetTileRect(26);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+
+		item = item->next;
+	}
+
+	// Draw frontier
+	for (uint i = 0; i < frontier.Count(); ++i)
+	{
+		point = *(frontier.Peek(i));
+		TileSet* tileset = GetTilesetFromTileId(25);
+
+		SDL_Rect rec = tileset->GetTileRect(25);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+	}
+
+	// Draw path
+	for (uint i = 0; i < path.Count(); ++i)
+	{
+		iPoint pos = MapToWorld(path[i].x, path[i].y);
+		app->render->DrawTexture(tileX, pos.x, pos.y, true);
+	}
+
+}
+
+bool Map::IsWalkable(int x, int y) const
+{
+	// L10: DONE 3: return true only if x and y are within map limits
+	// and the tile is walkable (tile id 0 in the navigation layer)
+
+	bool isWalkable = false;
+	if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height) {
+
+		//gets the second layer
+		MapLayer* layer = mapData.layers.start->next->data;
+		int tileId = layer->Get(x, y);
+		if (tileId != 26) isWalkable = true;
+	}
+
+	return isWalkable;
+}
+
+void Map::PropagateBFS()
+{
+	// L10: DONE 1: If frontier queue contains elements
+	// pop the last one and calculate its 4 neighbors
+	iPoint curr;
+	if (frontier.Pop(curr))
+	{
+		// L10: DONE 2: For each neighbor, if not visited, add it
+		// to the frontier queue and visited list
+		iPoint neighbors[4];
+		neighbors[0].create(curr.x + 1, curr.y + 0);
+		neighbors[1].create(curr.x + 0, curr.y + 1);
+		neighbors[2].create(curr.x - 1, curr.y + 0);
+		neighbors[3].create(curr.x + 0, curr.y - 1);
+
+		for (uint i = 0; i < 4; ++i)
+		{
+			if (IsWalkable(neighbors[i].x, neighbors[i].y))
+			{
+				if (visited.find(neighbors[i]) == -1)
+				{
+					frontier.Push(neighbors[i], 0);
+					visited.add(neighbors[i]);
+
+					// L11: TODO 1: Record the direction to the previous node 
+					// with the new list "breadcrumps"
+					breadcrumbs.add(curr);
+				}
+			}
+		}
+	}
+}
+
 // Draw the map (all requried layers)
 void Map::Draw()
 {

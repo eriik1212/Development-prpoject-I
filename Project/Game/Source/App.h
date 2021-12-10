@@ -24,7 +24,7 @@ class LogoScreen;
 class Player;
 class TitleScreen;
 class ModuleEnemies;
-class Enemy_Bird;
+//class Enemy_Bird;
 //class ModuleCollisions;
 class ModuleFadeToBlack;
 class GameOverScreen;
@@ -108,7 +108,7 @@ public:
 	TitleScreen* title;
 	Player* play;
 	ModuleEnemies* enemies;
-	Enemy_Bird* bird_enemy;
+	//Enemy_Bird* bird_enemy;
 	ModuleFadeToBlack* fade;
 	//ModuleCollisions* collisions;
 	GameOverScreen* gameOver;

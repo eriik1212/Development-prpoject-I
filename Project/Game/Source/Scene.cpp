@@ -64,7 +64,9 @@ bool Scene::Start()
 				app->enemies->enemies[i] = nullptr;
 			}
 		}
-		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, app->bird_enemy->birdBody.x, app->bird_enemy->birdBody.y);
+
+		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 196, 300);
+
 
 		if (app->play->restartLVL1)
 		{
@@ -135,6 +137,7 @@ bool Scene::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 		app->scene->Disable();
+		app->enemies->Disable();
 
 		app->scene->Enable();
 		
@@ -148,6 +151,7 @@ bool Scene::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 		app->scene->Disable();
+		app->enemies->Disable();
 
 		app->level2->Enable();
 
@@ -162,12 +166,15 @@ bool Scene::Update(float dt)
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->enemies->Disable();
 
 		app->play->restartLVL1 = true;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
 	{
+		app->enemies->Disable();
+
 		app->fade->FadeToBlack(this, app->gameOver, 30);
 	}
 

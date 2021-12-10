@@ -5,12 +5,12 @@
 #include "ModuleCollisions.h"
 #include "Point.h"
 
-class Enemy_Bird : public Enemy, public Module
+class Enemy_Bird : public Enemy
 {
 public:
 	// Constructor (x y coordinates in the world)
 	// Creates animation and movement data and the collider
-	Enemy_Bird(bool enabled, int x, int y);
+	Enemy_Bird(int x, int y);
 
 	float coolDown = 8.0f;
 	float coolTime = 0.0f;

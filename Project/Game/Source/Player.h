@@ -86,7 +86,6 @@ public:
 
 	bool restartLVL1 = false;
 	bool restartLVL2 = false;
-	bool revive = false;
 
 	ModuleCollisions attackCollider;
 	SDL_Rect attackColliderRect;
