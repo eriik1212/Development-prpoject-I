@@ -9,10 +9,16 @@
 
   * WASD: Move Adventurers
   * Space Bar: Jump
+  * P: Attack!
+  
+  *_On A Leader_:
+	** W: Up
+	** S: Down
   
 ## DEBUG FEATURES:
 
-  * F1 Start from the first
+  * F1 Start from the first level
+  * F2 Start from the second level
   * F3 Start from the beginning of the current level
   * F5 Save the current game state
   * F6 Load the previous state (even across levels)
