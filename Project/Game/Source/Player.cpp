@@ -217,12 +217,6 @@ bool Player::Start()
 
 	chekpoint = false;
 
-	if (!app->title->cont && !restartLVL1)
-	{
-		//app->SaveInitialGameRequest();
-		LOG("Saving game at PlayerY = %d", playerData.playerBody.y);
-	}
-
 	if (app->title->cont)
 	{
 		app->LoadGameRequest();

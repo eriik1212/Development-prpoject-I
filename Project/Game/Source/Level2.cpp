@@ -67,6 +67,13 @@ bool Level2::Start()
 		app->map->Enable();
 		app->hud->Enable();
 
+		soulBody.x = 890;
+		soulBody.y = 308;
+		soulBody.w = 32;
+		soulBody.h = 32;
+
+		soulCollider.AddCollider(soulBody.x, soulBody.y, soulBody.w, soulBody.h);
+
 		app->play->playerData.isDead = false;
 		app->play->debug = false;
 		app->play->collidersOn = false;
@@ -120,6 +127,9 @@ bool Level2::PreUpdate()
 // Called each loop iteration
 bool Level2::Update(float dt)
 {
+	soulCollider.GetCollider().DebugDraw(soulBody, SOUL);
+
+	soulCollider.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{

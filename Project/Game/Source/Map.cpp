@@ -9,6 +9,7 @@
 #include "Enemies.h"
 #include "Enemy_Bird.h"
 #include "Enemy.h"
+#include "Input.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -53,12 +54,17 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
-void Map::ResetPath()
+void Map::ResetPath(iPoint initP)
 {
 	frontier.Clear();
 	visited.clear();
 	breadcrumbs.clear();
 	path.Clear();
+
+	//Initialize the path (PATHFINDING)
+	app->map->frontier.Push(iPoint(initP.x, initP.y), 0);
+	app->map->visited.add(iPoint(initP.x, initP.y));
+	app->map->breadcrumbs.add(iPoint(initP.x, initP.y));
 	
 	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
 }
@@ -133,20 +139,9 @@ void Map::ComputePath(int x, int y)
 
 	// Follow the breadcrumps to goal back to the origin
 	// add each step into "path" dyn array (it will then draw automatically)
-	
+
 	path.PushBack(goal);
 	int index = visited.find(goal);
-
-	if (index == -1)
-	{
-		app->play->inEnemyView = false;
-
-	}
-	else
-	{
-		app->play->inEnemyView = true;
-
-	}
 
 	while ((index >= 0) && (goal != breadcrumbs[index]))
 	{
@@ -189,6 +184,33 @@ void Map::PropagateBFS()
 			}
 		}
 	}
+}
+
+iPoint Map::GeneralPathFinding(iPoint initP, iPoint finalP)
+{
+	//Comprobation to avoid errors
+	if (!IsWalkable(initP.x, initP.y) || !IsWalkable(finalP.x, finalP.y) || initP == finalP)
+	{
+		return iPoint(-1, -1);
+	}
+
+	ResetPath(initP);
+
+	while (visited.find(finalP) == -1)
+	{
+		PropagateBFS();
+	}
+
+	iPoint finalPoint = MapToWorld(finalP.x, finalP.y);
+	ComputePath(finalPoint.x, finalPoint.y);
+
+	if ((path.Count() - 2) <= 0)
+	{
+		return iPoint(-1, -1);
+	}
+
+	//We return the next pos
+	return path[path.Count() - 2];
 }
 
 // Draw the map (all requried layers)
@@ -518,8 +540,6 @@ bool Map::CleanUp()
 		item2 = item2->next;
 	}
 	mapData.layers.clear();
-
-	ResetPath();
 
     return true;
 }

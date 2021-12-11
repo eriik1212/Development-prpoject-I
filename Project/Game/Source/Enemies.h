@@ -66,14 +66,16 @@ public:
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
 
 	void UpdateLifes(unsigned short* lifes, unsigned short damage);
+
+	void HandleEnemiesMovement();
 	
 	bool birdHitted = false;
+
 
 private:
 	// Spawns a new enemy using the data from the queue
 	void SpawnEnemy(const EnemySpawnpoint& info);
 
-private:
 	// A queue with all spawn points information
 	EnemySpawnpoint spawnQueue[MAX_ENEMIES];
 

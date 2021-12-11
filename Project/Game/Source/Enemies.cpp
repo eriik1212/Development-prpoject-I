@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "Enemy_Bird.h"
 #include "Enemy_Fox.h"
+#include "Map.h"
 
 #define SPAWN_MARGIN 50
 
@@ -51,10 +52,7 @@ bool ModuleEnemies::Update(float dt)
 			enemies[i]->Update();
 	}
 
-	if (app->play->inEnemyView)
-	{
-		//app->bird_enemy->birdBody.x += 5;
-	}
+	HandleEnemiesMovement();
 
 	HandleEnemiesDespawn();
 
@@ -194,6 +192,98 @@ void ModuleEnemies::UpdateLifes(unsigned short* lifes, unsigned short damage)
 		}
 		else if (*(lifes + i) == 1 && i >= (MAX_LIFE - damage)) {
 			*(lifes + i) = 0;
+		}
+	}
+}
+
+void ModuleEnemies::HandleEnemiesMovement()
+{
+	// Enemies Movement
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			if (!enemies[i]->moving)
+			{
+				iPoint movement = enemies[i]->Path();
+				enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
+				enemies[i]->moving = true;
+			}
+			
+
+			if (enemies[i]->movingTo.x != 100 && enemies[i]->movingTo.y != 120)
+			{
+				enemies[i]->moving = false;
+			}
+			else
+			{
+				// ----------------------------------------------------------------------- X
+
+				if (enemies[i]->position.x > (enemies[i]->movingTo.x + 3) ||
+					enemies[i]->position.x < (enemies[i]->movingTo.x - 3))
+				{
+					if (enemies[i]->movingTo.x > enemies[i]->position.x)
+					{
+						// For changing enemy position
+						enemies[i]->position.x += enemies[i]->vel;
+						
+						// For moving the collider
+						enemies[i]->birdCollider.GetCollider().Move(enemies[i]->vel, 0);
+
+						// For drawing the collider where it has to be
+						enemies[i]->birdBody.x += enemies[i]->vel;
+					}
+					else if (enemies[i]->movingTo.x < enemies[i]->position.x)
+					{
+						// For changing enemy position
+						enemies[i]->position.x -= enemies[i]->vel;
+
+						// For moving the collider
+						enemies[i]->birdCollider.GetCollider().Move(-enemies[i]->vel, 0);
+
+						// For drawing the collider where it has to be
+						enemies[i]->birdBody.x -= enemies[i]->vel;
+					}
+				}
+				else
+				{
+					enemies[i]->position.x = enemies[i]->movingTo.x;
+				}
+
+				// ----------------------------------------------------------------------- y
+
+				if (enemies[i]->position.y > (enemies[i]->movingTo.y + 3) ||
+					enemies[i]->position.y < (enemies[i]->movingTo.y - 3))
+				{
+					if (enemies[i]->movingTo.y > enemies[i]->position.y)
+					{
+						// For changing enemy position
+						enemies[i]->position.y += enemies[i]->vel;
+
+						// For moving the collider
+						enemies[i]->birdCollider.GetCollider().Move(0, enemies[i]->vel);
+
+						// For drawing the collider where it has to be
+						enemies[i]->birdBody.y += enemies[i]->vel;
+					}
+					else if (enemies[i]->movingTo.y < enemies[i]->position.y)
+					{
+						// For changing enemy position
+						enemies[i]->position.y -= enemies[i]->vel;
+
+						// For moving the collider
+						enemies[i]->birdCollider.GetCollider().Move(0, -enemies[i]->vel);
+
+						// For drawing the collider where it has to be
+						enemies[i]->birdBody.y -= enemies[i]->vel;
+					}
+				}
+				else
+				{
+					enemies[i]->position.y = enemies[i]->movingTo.y;
+				}
+			}
+
 		}
 	}
 }

@@ -41,9 +41,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	level2 = new Level2(false);
 	map = new Map(false);
 	play = new Player(false);
+	//bird_enemy = new Enemy_Bird(true, 0, 0);
 	enemies = new ModuleEnemies(false);
 	hud = new ModuleHUD(false);
-	//bird_enemy = new Enemy_Bird(false, 0, 0);
 	fade = new ModuleFadeToBlack(true);
 	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);

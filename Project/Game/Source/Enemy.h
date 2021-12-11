@@ -3,6 +3,9 @@
 
 #include "Animation.h"
 #include "Point.h"
+#include "Collider.h"
+#include "ModuleCollisions.h"
+
 #define MAX_LIFE 5
 #define MAX_LIFE_BOSS 15
 
@@ -29,12 +32,22 @@ public:
 	// Called from ModuleEnemies' Update
 	virtual void Draw();
 
+	// Handle Movement
+	iPoint Path();
+	bool moving;
+	iPoint movingTo;
+	int vel = 2;
+
 	// Called before quitting
 	bool CleanUp();
 
 public:
 	// The current position in the world
 	iPoint position;
+
+	SDL_Rect birdBody;
+
+	ModuleCollisions birdCollider;
 
 	float nohit = 10.0f;
 	int direcction = 0;

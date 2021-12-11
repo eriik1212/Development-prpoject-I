@@ -77,11 +77,6 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 
 	birdCollider.AddCollider(birdBody.x, birdBody.y, birdBody.w, birdBody.h);
 
-	//Initialize the path (PATHFINDING)
-	app->map->frontier.Push(app->map->WorldToMap(birdBody.x, birdBody.y), 0);
-	app->map->visited.add(app->map->WorldToMap(birdBody.x, birdBody.y));
-	app->map->breadcrumbs.add(app->map->WorldToMap(birdBody.x, birdBody.y));
-
 	coolDownBird = 0;
 
 	//must be one algorithm of class
@@ -90,6 +85,7 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 
 void Enemy_Bird::Update()
 {
+
 	//Check Enemy Attack Collision
 	coolDownBird++;
 

@@ -124,8 +124,17 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
-
 			LOG("Enemy Attacks!");
+
+			return true;
+		}
+	}
+	if (type == SOUL)
+	{
+		if (intersectX < 0.0f && intersectY < 0.0f)
+		{
+
+			LOG("SOUL PICKED UP!");
 
 			return true;
 		}
@@ -159,6 +168,9 @@ void Collider::DebugDraw(SDL_Rect body, int type)
 		break;
 	case CollidersType::ENEMY:
 		app->render->DrawRectangle(body, 255, 0, 255, alpha);
+		break;
+	case CollidersType::SOUL:
+		app->render->DrawRectangle(body, 0, 125, 255, alpha);
 		break;
 	}
 

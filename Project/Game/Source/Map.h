@@ -129,7 +129,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	// BFS Pathfinding methods
-	void ResetPath();
+	void ResetPath(iPoint initP);
 	void DrawPath();
 	bool IsWalkable(int x, int y) const;
 
@@ -137,6 +137,8 @@ public:
 
 	// Propagation methods
 	void PropagateBFS();
+
+	iPoint GeneralPathFinding(iPoint initP, iPoint finalP);
 
 	// BFS Pathfinding variables
 	PQueue<iPoint> frontier;
@@ -150,16 +152,11 @@ public:
 
 private:
 
-
-
-
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
 	DynArray<iPoint> path;
 
 	SDL_Texture* tileX = nullptr;
 	SDL_Texture* pathfinding = nullptr;
-
-
 
 	// Methods to load all required map data
 	bool LoadMap(pugi::xml_node mapFile);

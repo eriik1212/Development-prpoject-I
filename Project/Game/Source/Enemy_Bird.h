@@ -12,24 +12,17 @@ public:
 	// Creates animation and movement data and the collider
 	Enemy_Bird(int x, int y);
 
-	float coolDown = 8.0f;
-	float coolTime = 0.0f;
-	float velociti = 1.0f;
-
 	// The enemy is going to follow the different steps in the path
 	// Position will be updated depending on the speed defined at each step
 	void Update() override;
 
 	//void Bird_Movement();
 
-	SDL_Rect birdBody;
-
-	ModuleCollisions birdCollider;
+	
 
 private:
 	// The path that will define the position in the world
 	
-
 	iPoint positionEnemy;
 
 	// Enemy animations

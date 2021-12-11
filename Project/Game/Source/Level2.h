@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Render.h"
+#include "ModuleCollisions.h"
 
 struct SDL_Texture;
 
@@ -40,6 +41,10 @@ public:
 
 	// scrollingOffset for Parallax Effect
 	int scrollingOffset = 0;
+
+	SDL_Rect soulBody;
+	ModuleCollisions soulCollider;
+
 private:
 
 	SDL_Texture* background_sky1;

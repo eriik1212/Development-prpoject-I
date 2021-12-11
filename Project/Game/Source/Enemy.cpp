@@ -7,6 +7,7 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Player.h"
+#include "Map.h"
 
 
 
@@ -59,6 +60,11 @@ void Enemy::Draw()
 {
 	if (currentAnim != nullptr)
 		app->render->DrawTexture(texture, position.x, position.y, true, &(currentAnim->GetCurrentFrame()));
+}
+
+iPoint Enemy::Path()
+{
+	return app->map->GeneralPathFinding(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y));
 }
 
 

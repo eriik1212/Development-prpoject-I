@@ -67,7 +67,7 @@ bool Scene::Start()
 			}
 		}
 
-		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 196, 300);
+		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 300, 300);
 
 
 		if (app->play->restartLVL1)
@@ -132,7 +132,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (app->map->visited.count() < 60) app->map->PropagateBFS();
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
