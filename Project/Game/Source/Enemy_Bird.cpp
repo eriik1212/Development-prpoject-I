@@ -1,6 +1,7 @@
 #include "Enemy_Bird.h"
 
 #include "App.h"
+#include "Log.h"
 #include "ModuleCollisions.h"
 #include "Collider.h"
 #include "Scene.h"
@@ -8,6 +9,8 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Map.h"
+#include "Input.h"
+#include "HUD.h"
 
 
 
@@ -79,17 +82,47 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 	app->map->visited.add(app->map->WorldToMap(birdBody.x, birdBody.y));
 	app->map->breadcrumbs.add(app->map->WorldToMap(birdBody.x, birdBody.y));
 
+	coolDownBird = 0;
+
 	//must be one algorithm of class
 }
 
 
 void Enemy_Bird::Update()
 {
-	
+	//Check Enemy Attack Collision
+	coolDownBird++;
 
+	if (coolDownBird > 100 && app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY))
+	{
+		//app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY);
+		app->hud->lifes--;
+		coolDownBird = 0;
+		
+	}
+	else if (app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY) == false)
+	{
+		coolDownBird = 101;
+	}
+
+	if (coolDownBird >= 101) coolDownBird = 101;
+
+	//Check Player Attack Collision
 	if (app->play->playerData.attacking == true)
 	{
-		app->play->attackCollider.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ATTACK);
+		if (app->play->attackCollider.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ATTACK))
+		{
+			// For moving the collider
+			birdCollider.GetCollider().Move(50, 0);
+
+			// For drawing the collider where it has to be
+			birdBody.x += 50;
+
+			// For changing enemy position
+			position.x += 50;
+
+
+		}
 
 	}
 
@@ -105,6 +138,25 @@ void Enemy_Bird::Update()
 	//------------------------------------------------------------LEFT ANIM direction
 	if (currentAnim == &rightStandB) direcction = 1;
 	if (currentAnim == &leftFlyB) direcction = 1;
+
+	if (app->enemies->birdHitted)
+	{
+		for (uint i = 0; i < MAX_ENEMIES; ++i)
+		{
+			if (app->enemies->enemies[i] != nullptr)
+			{
+				app->enemies->UpdateLifes(app->enemies->enemies[i]->lifes, 1);
+
+				if (app->enemies->enemies[i]->lifes[0] == 0)
+				{
+					delete app->enemies->enemies[i];
+					app->enemies->enemies[i] = nullptr;
+				}
+			}
+		}
+
+		app->enemies->birdHitted = false;
+	}
 
 	/*if (app->collisions->GodMode == true) {
 
@@ -133,7 +185,39 @@ void Enemy_Bird::Update()
 
 	}*/
 	
-	position = spawnPos;
 	currentAnim = &leftStandB;
 	Enemy::Update();
 }
+
+/*void Enemy_Bird::Bird_Movement()
+{
+	// If frontier queue contains elements
+	// pop the last one and calculate its 4 neighbors
+	iPoint curr;
+	if (app->map->frontier.Pop(curr))
+	{
+		// For each neighbor, if not visited, add it
+		// to the frontier queue and visited list
+		iPoint neighbors[4];
+		neighbors[0].create(curr.x + 1, curr.y + 0);
+		neighbors[1].create(curr.x + 0, curr.y + 1);
+		neighbors[2].create(curr.x - 1, curr.y + 0);
+		neighbors[3].create(curr.x + 0, curr.y - 1);
+
+		for (uint i = 0; i < 4; ++i)
+		{
+			if (app->map->IsWalkable(neighbors[i].x, neighbors[i].y))
+			{
+				if (app->map->visited.find(neighbors[i]) == -1)
+				{
+					app->map->frontier.Push(neighbors[i], 0);
+					app->map->visited.add(neighbors[i]);
+
+					// Record the direction to the previous node 
+					// with the new list "breadcrumps"
+					app->map->breadcrumbs.add(curr);
+				}
+			}
+		}
+	}
+}*/

@@ -24,6 +24,7 @@ class LogoScreen;
 class Player;
 class TitleScreen;
 class ModuleEnemies;
+class ModuleHUD;
 //class Enemy_Bird;
 //class ModuleCollisions;
 class ModuleFadeToBlack;
@@ -108,6 +109,7 @@ public:
 	TitleScreen* title;
 	Player* play;
 	ModuleEnemies* enemies;
+	ModuleHUD* hud;
 	//Enemy_Bird* bird_enemy;
 	ModuleFadeToBlack* fade;
 	//ModuleCollisions* collisions;

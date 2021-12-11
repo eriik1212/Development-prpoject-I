@@ -63,10 +63,14 @@ bool ModuleEnemies::Update(float dt)
 
 bool ModuleEnemies::PostUpdate()
 {
-
-
-
-	
+	//PAINT ENEMIES
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			enemies[i]->Draw();
+		}
+	}
 
 	return true;
 }
@@ -180,7 +184,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 		}
 	}
 }
-void updateLifes(unsigned short* lifes, unsigned short damage)
+void ModuleEnemies::UpdateLifes(unsigned short* lifes, unsigned short damage)
 {
 
 	for (int i = (MAX_LIFE - 1); i >= 0; --i) {

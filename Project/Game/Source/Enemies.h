@@ -3,7 +3,7 @@
 
 #include "Module.h"
 
-#define MAX_ENEMIES 21
+#define MAX_ENEMIES 1
 #define MAX_LIFE 5     //enemy lifes
 #define MAX_LIFE_BOSS 15
 
@@ -64,7 +64,10 @@ public:
 
 	// All spawned enemies in the scene
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
+
+	void UpdateLifes(unsigned short* lifes, unsigned short damage);
 	
+	bool birdHitted = false;
 
 private:
 	// Spawns a new enemy using the data from the queue

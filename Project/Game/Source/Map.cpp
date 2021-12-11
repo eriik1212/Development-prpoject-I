@@ -59,11 +59,6 @@ void Map::ResetPath()
 	visited.clear();
 	breadcrumbs.clear();
 	path.Clear();
-
-	
-	frontier.Push(iPoint(5, 4), 0);
-	visited.add(iPoint(5, 4));
-	breadcrumbs.add(iPoint(5, 4));
 	
 	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
 }
@@ -111,7 +106,7 @@ void Map::DrawPath()
 
 bool Map::IsWalkable(int x, int y) const
 {
-	// L10: DONE 3: return true only if x and y are within map limits
+	// Return true only if x and y are within map limits
 	// and the tile is walkable (tile id 0 in the navigation layer)
 
 	bool isWalkable = false;
@@ -120,12 +115,12 @@ bool Map::IsWalkable(int x, int y) const
 	mapLayerItem = mapData.layers.start;
 
 	while (mapLayerItem != NULL) {
-		if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height) {
+		if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height && mapLayerItem->data->properties.GetProperty("Navigation") != 1) {
 
 			//gets the second layer
 			MapLayer* layer = mapData.layers.start->next->data;
 			int tileId = layer->Get(x, y);
-			if (mapLayerItem->data->properties.GetProperty("Navigation") != 1) isWalkable = true;
+			isWalkable = true;
 		}
 		return isWalkable;
 	}
@@ -136,7 +131,7 @@ void Map::ComputePath(int x, int y)
 	path.Clear();
 	iPoint goal = WorldToMap(x, y);
 
-	// L11: TODO 2: Follow the breadcrumps to goal back to the origin
+	// Follow the breadcrumps to goal back to the origin
 	// add each step into "path" dyn array (it will then draw automatically)
 	
 	path.PushBack(goal);
@@ -165,12 +160,12 @@ void Map::ComputePath(int x, int y)
 
 void Map::PropagateBFS()
 {
-	// L10: DONE 1: If frontier queue contains elements
+	// If frontier queue contains elements
 	// pop the last one and calculate its 4 neighbors
 	iPoint curr;
 	if (frontier.Pop(curr))
 	{
-		// L10: DONE 2: For each neighbor, if not visited, add it
+		// For each neighbor, if not visited, add it
 		// to the frontier queue and visited list
 		iPoint neighbors[4];
 		neighbors[0].create(curr.x + 1, curr.y + 0);
@@ -187,7 +182,7 @@ void Map::PropagateBFS()
 					frontier.Push(neighbors[i], 0);
 					visited.add(neighbors[i]);
 
-					// L11: TODO 1: Record the direction to the previous node 
+					// Record the direction to the previous node 
 					// with the new list "breadcrumps"
 					breadcrumbs.add(curr);
 				}
@@ -523,6 +518,8 @@ bool Map::CleanUp()
 		item2 = item2->next;
 	}
 	mapData.layers.clear();
+
+	ResetPath();
 
     return true;
 }

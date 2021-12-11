@@ -6,6 +6,7 @@
 #include "Enemy_Bird.h"
 #include "Enemies.h"
 #include "Enemy.h"
+#include "HUD.h"
 
 Collider::Collider(SDL_Rect& body) :
 	body(body)
@@ -75,7 +76,7 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f && !app->play->godMode)
 		{
-			app->play->playerData.isDead = true;
+			app->hud->lifes = 0;
 			app->play->playerData.jumping = true;
 			app->play->playerData.canJumpAgain = false;
 
@@ -97,8 +98,9 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
-			/*app->bird_enemy->birdBody.x -= 50;
-			app->bird_enemy->birdCollider.GetCollider().body.x -= 50;*/
+
+			app->enemies->birdHitted = true;
+
 			LOG("INSIDE COLLISION");
 
 			return true;
@@ -116,6 +118,16 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 		{
 			app->play->inLeader = false;
 
+		}
+	}
+	if (type == ENEMY)
+	{
+		if (intersectX < 0.0f && intersectY < 0.0f)
+		{
+
+			LOG("Enemy Attacks!");
+
+			return true;
 		}
 	}
 

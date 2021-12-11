@@ -68,8 +68,10 @@ bool ModuleHUD::Start()
 	bool ret = true;
 
 	FullHeartTex = app->tex->Load("Assets/textures/full_heart.png");
-	EmptyHeartTex = app->tex->Load("Assets/Introduction/empty_heart.png");
-	InventoryTex = app->tex->Load("Assets/FX/inventory.png");
+	EmptyHeartTex = app->tex->Load("Assets/textures/empty_heart.png");
+	InventoryTex = app->tex->Load("Assets/textures/inventory.png");
+
+	Reset();
 
 	// ----------------------------------------------------------------- FONTS
 	//char lookupTableNumb[] = { "0123456789 " };
@@ -86,8 +88,6 @@ bool ModuleHUD::Update(float dt)
 	{
 		lifes -= 1;
 	}
-	
-	
 
 	return true;
 }
@@ -102,35 +102,64 @@ bool ModuleHUD::PostUpdate()
 	// Draw UI (NumLifes) --------------------------------------
 	//sprintf_s(lifeText, 10, "%3d", lifes);
 
-	if (lifes == 3)
+	if (lifes == 5)
 	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1);
-		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2); 
-		app->render->DrawTexture(FullHeartTex, 132, 16, false, &heart3);
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+		app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
+		app->render->DrawTexture(FullHeartTex, 186, 16, false, &heart3, NULL);
+		app->render->DrawTexture(FullHeartTex, 239, 16, false, &heart3, NULL);
+	}
+
+	else if (lifes == 4)
+	{
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+		app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
+		app->render->DrawTexture(FullHeartTex, 186, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+	}
+
+	else if (lifes == 3)
+	{
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+		app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+
 	}
 
 	else if (lifes == 2)
 	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1);
-		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2);
-		app->render->DrawTexture(EmptyHeartTex, 132, 16, false, &heart3);
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
 	}
 
 	else if (lifes == 1)
 	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1);
-		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2);
-		app->render->DrawTexture(EmptyHeartTex, 132, 16, false, &heart3);
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
 	}
 
 	else if (lifes == 0)
 	{
-		app->render->DrawTexture(EmptyHeartTex, 27, 16, false, &heart1);
-		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2);
-		app->render->DrawTexture(EmptyHeartTex, 132, 16, false, &heart3);
+		app->render->DrawTexture(EmptyHeartTex, 27, 16, false, &heart1, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+
+		app->play->playerData.isDead = true;
 	}
 
-	app->render->DrawTexture(InventoryTex, 677, 8, false, &inventory);
+	app->render->DrawTexture(InventoryTex, 677, 8, false, &inventory, NULL);
 	
 
 	return true;
@@ -138,7 +167,7 @@ bool ModuleHUD::PostUpdate()
 
 void  ModuleHUD::Reset()
 {
-	lifes = 3;
+	lifes = 5;
 	
 }
 

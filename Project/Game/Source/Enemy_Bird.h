@@ -20,6 +20,8 @@ public:
 	// Position will be updated depending on the speed defined at each step
 	void Update() override;
 
+	//void Bird_Movement();
+
 	SDL_Rect birdBody;
 
 	ModuleCollisions birdCollider;
@@ -38,7 +40,7 @@ private:
 		rightAttackB,
 		leftAttackB;
 
-	
+	uint coolDownBird = 0;
 
 };
 

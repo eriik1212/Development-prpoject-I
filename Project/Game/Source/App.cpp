@@ -17,6 +17,7 @@
 #include "Enemy_Bird.h"
 #include "Enemy_Fox.h"
 #include "Level2.h"
+#include "HUD.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -41,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(false);
 	play = new Player(false);
 	enemies = new ModuleEnemies(false);
+	hud = new ModuleHUD(false);
 	//bird_enemy = new Enemy_Bird(false, 0, 0);
 	fade = new ModuleFadeToBlack(true);
 	//collisions = new ModuleCollisions(true);
@@ -61,6 +63,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(title);
 	AddModule(play);
 	AddModule(enemies);
+	AddModule(hud);
 	//AddModule(bird_enemy); //CRASH
 	AddModule(fade);
 	//AddModule(collisions);

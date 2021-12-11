@@ -14,6 +14,7 @@
 #include "Enemies.h"
 #include "Defs.h"
 #include "Log.h"
+#include"HUD.h"
 
 Level2::Level2(bool enabled) : Module(enabled)
 {
@@ -64,6 +65,7 @@ bool Level2::Start()
 		//Enable Player & map
 		app->play->Enable();
 		app->map->Enable();
+		app->hud->Enable();
 
 		app->play->playerData.isDead = false;
 		app->play->debug = false;
@@ -126,6 +128,7 @@ bool Level2::Update(float dt)
 		app->map->Disable();
 		app->level2->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->scene->Enable();
 		
@@ -140,6 +143,7 @@ bool Level2::Update(float dt)
 		app->map->Disable();
 		app->level2->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->level2->Enable();
 
@@ -156,6 +160,7 @@ bool Level2::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->play->restartLVL2 = true;
 
@@ -164,6 +169,7 @@ bool Level2::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
 	{
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->fade->FadeToBlack(this, app->gameOver, 30);
 	}

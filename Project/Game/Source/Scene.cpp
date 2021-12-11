@@ -15,6 +15,7 @@
 #include "Level2.h"
 #include "Enemies.h"
 #include "Enemy_Bird.h"
+#include "HUD.h"
 
 Scene::Scene(bool enabled) : Module(enabled)
 {
@@ -53,6 +54,7 @@ bool Scene::Start()
 		app->play->Enable();
 		app->map->Enable();
 		app->enemies->Enable();
+		app->hud->Enable();
 
 		// Iterate existing enemies
 		for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -132,8 +134,6 @@ bool Scene::Update(float dt)
 {
 	if (app->map->visited.count() < 60) app->map->PropagateBFS();
 
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) app->map->ResetPath();
-
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		//Disable Player & map
@@ -141,6 +141,7 @@ bool Scene::Update(float dt)
 		app->map->Disable();
 		app->scene->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->scene->Enable();
 		
@@ -155,6 +156,7 @@ bool Scene::Update(float dt)
 		app->map->Disable();
 		app->scene->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->level2->Enable();
 
@@ -170,6 +172,7 @@ bool Scene::Update(float dt)
 		app->play->Disable();
 		app->map->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->play->restartLVL1 = true;
 	}
@@ -177,6 +180,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
 	{
 		app->enemies->Disable();
+		app->hud->Disable();
 
 		app->fade->FadeToBlack(this, app->gameOver, 30);
 	}

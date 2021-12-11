@@ -15,6 +15,7 @@
 #include "Enemies.h"
 #include "Enemy.h"
 #include "Enemy_Bird.h"
+#include "HUD.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -639,15 +640,6 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	bool ret = true;
-
-	//PAINT ENEMIES
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (app->enemies->enemies[i] != nullptr)
-		{
-			app->enemies->enemies[i]->Draw();
-		}
-	}
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

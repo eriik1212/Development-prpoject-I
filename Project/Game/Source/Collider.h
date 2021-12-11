@@ -16,7 +16,8 @@ enum CollidersType
 	WIN, //3
 	ATTACK, //4
 	LEADER, //5
-	ENEMY //6
+	ENEMY, //6
+	SOUL //7
 };
 
 class Collider
@@ -39,6 +40,7 @@ public:
 	// Draws all existing colliders with some transparency
 	// PLAYER = 0, WALL = 1, DEAD = 2, WIN = 3, ATTACK = 4
 	void DebugDraw(SDL_Rect body, int type);
+
 private:
 	SDL_Rect& body;
 };
