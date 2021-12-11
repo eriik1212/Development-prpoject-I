@@ -33,17 +33,22 @@ public:
 	bool CleanUp();
 
 public:
-	SDL_Rect background,
-		konami,
-		konami1989,
-		bigTurtle;
+	SDL_Rect heart1,
+		heart2,
+		heart3,
+		inventory,
+		soul;
 
-	SDL_Texture* HUDTexture = nullptr;
+	SDL_Texture* InventoryTex = nullptr;
 
-	SDL_Texture* introTexture = nullptr;
+	SDL_Texture* FullHeartTex = nullptr;
+
+	SDL_Texture* EmptyHeartTex = nullptr;
+
+
 
 	// HUD & Foreground Animations
-	Animation
+	/*Animation
 		HUDP1,
 		HUDP1InsertCoins,
 		HUDP234,
@@ -53,20 +58,21 @@ public:
 		insertCoinP4,
 		lifeP1,
 		smallTurtle,
-		pressStart;
+		pressStart;*/
 
 	// Font score index
-	uint scoreP1 = 000;
+	/*uint scoreP1 = 000;
 	uint scoreP234 = 000;
 	uint lifes = 000;
 	int scoreFont = -1;
 	int lifeFont = -1;
 	char scoreTextP1[10] = { "\0" };
 	char scoreTextP234[10] = { "\0" };
-	char lifeText[10] = { "\0" };
+	char lifeText[10] = { "\0" };*/
 
 	// Sound effects indices
 	uint lifeIncrease = 0;
+	int lifes = 3;
 
 };
 

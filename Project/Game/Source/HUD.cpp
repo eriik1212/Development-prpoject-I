@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Audio.h"
 #include "ModuleCollisions.h"
+#include "Input.h"
 
 #include "Player.h"
 #include "Enemies.h"
@@ -19,43 +20,28 @@
 
 ModuleHUD::ModuleHUD(bool enabled) : Module(enabled)
 {
-	konami.x = 117;
-	konami.y = 220;
-	konami.w = 78;
-	konami.h = 19;
+	heart1.x = 0;
+	heart1.y = 0;
+	heart1.w = 40;
+	heart1.h = 43;
 
-	konami1989.x = 107;
-	konami1989.y = 314;
-	konami1989.w = 104;
-	konami1989.h = 8;
+	heart2.x = 0;
+	heart2.y = 0;
+	heart2.w = 40;
+	heart2.h = 43;
 
-	bigTurtle.x = 16;
-	bigTurtle.y = 824;
-	bigTurtle.w = 64;
-	bigTurtle.h = 128;
+	heart3.x = 0;
+	heart3.y = 0;
+	heart3.w = 40;
+	heart3.h = 43;
 
-	// HUD Player1
-	HUDP1.PushBack({ 5, 0, 72, 32 });
-
-	HUDP1InsertCoins.PushBack({ 5, 107, 72, 32 });
-
-	// HUD Player2,3,4
-	HUDP234.PushBack({ 77, 107, 213, 32 });
-
-	//SmallTurtleAnim
-	smallTurtle.PushBack({ 5, 37, 72, 33 });
-	smallTurtle.PushBack({ 5, 73, 72, 33 });
-	smallTurtle.speed = 0.05f;
-	smallTurtle.loop = true;
-
-	//Press Start Animation
-	pressStart.PushBack({ 6, 144, 70, 11 });
-	pressStart.PushBack({ 6, 155, 70, 11 });
-	pressStart.speed = 0.05f;
-	pressStart.loop = true;
+	inventory.x = 0;
+	inventory.y = 0;
+	inventory.w = 274;
+	inventory.h = 63;
 
 	// Life's Animation
-	lifeP1.PushBack({ 6, 233, 31, 11 });
+	/*lifeP1.PushBack({ 6, 233, 31, 11 });
 	lifeP1.PushBack({ 40, 233, 31, 11 });
 	lifeP1.PushBack({ 74, 233, 31, 11 });
 	lifeP1.PushBack({ 108, 233, 31, 11 });
@@ -66,64 +52,9 @@ ModuleHUD::ModuleHUD(bool enabled) : Module(enabled)
 	lifeP1.PushBack({ 280, 233, 31, 11 });
 	lifeP1.PushBack({ 314, 233, 31, 11 });
 	lifeP1.PushBack({ 360, 233, 31, 11 });
-	lifeP1.loop = false;
+	lifeP1.loop = false;*/
 
-	// INSERT COIN Anim for P1, P2, P3, P4
-	//P1
-	insertCoinP1.PushBack({ 315, 187, 71, 13 });
-	insertCoinP1.PushBack({ 6, 167, 71, 13 });
-	insertCoinP1.PushBack({ 83, 167, 71, 13 });
-	insertCoinP1.PushBack({ 160, 167, 71, 13 });
-	insertCoinP1.PushBack({ 238, 167, 71, 13 });
-	insertCoinP1.PushBack({ 315, 167, 71, 13 });
-	insertCoinP1.PushBack({ 6, 187, 71, 13 });
-	insertCoinP1.PushBack({ 83, 187, 71, 13 });
-	insertCoinP1.PushBack({ 160, 187, 71, 13 });
-	insertCoinP1.PushBack({ 238, 187, 71, 13 });
-	insertCoinP1.speed = 0.15f;
-	insertCoinP1.loop = true;
-
-	// P2
-	insertCoinP2.PushBack({ 6, 167, 71, 13 });
-	insertCoinP2.PushBack({ 83, 167, 71, 13 });
-	insertCoinP2.PushBack({ 160, 167, 71, 13 });
-	insertCoinP2.PushBack({ 238, 167, 71, 13 });
-	insertCoinP2.PushBack({ 315, 167, 71, 13 });
-	insertCoinP2.PushBack({ 6, 187, 71, 13 });
-	insertCoinP2.PushBack({ 83, 187, 71, 13 });
-	insertCoinP2.PushBack({ 160, 187, 71, 13 });
-	insertCoinP2.PushBack({ 238, 187, 71, 13 });
-	insertCoinP2.PushBack({ 315, 187, 71, 13 });
-	insertCoinP2.speed = 0.15f;
-	insertCoinP2.loop = true;
-
-	// P3
-	insertCoinP3.PushBack({ 83, 167, 71, 13 });
-	insertCoinP3.PushBack({ 160, 167, 71, 13 });
-	insertCoinP3.PushBack({ 238, 167, 71, 13 });
-	insertCoinP3.PushBack({ 315, 167, 71, 13 });
-	insertCoinP3.PushBack({ 6, 187, 71, 13 });
-	insertCoinP3.PushBack({ 83, 187, 71, 13 });
-	insertCoinP3.PushBack({ 160, 187, 71, 13 });
-	insertCoinP3.PushBack({ 238, 187, 71, 13 });
-	insertCoinP3.PushBack({ 315, 187, 71, 13 });
-	insertCoinP3.PushBack({ 6, 167, 71, 13 });
-	insertCoinP3.speed = 0.15f;
-	insertCoinP3.loop = true;
-
-	// P4
-	insertCoinP4.PushBack({ 160, 167, 71, 13 });
-	insertCoinP4.PushBack({ 238, 167, 71, 13 });
-	insertCoinP4.PushBack({ 315, 167, 71, 13 });
-	insertCoinP4.PushBack({ 6, 187, 71, 13 });
-	insertCoinP4.PushBack({ 83, 187, 71, 13 });
-	insertCoinP4.PushBack({ 160, 187, 71, 13 });
-	insertCoinP4.PushBack({ 238, 187, 71, 13 });
-	insertCoinP4.PushBack({ 315, 187, 71, 13 });
-	insertCoinP4.PushBack({ 6, 167, 71, 13 });
-	insertCoinP4.PushBack({ 83, 167, 71, 13 });
-	insertCoinP4.speed = 0.15f;
-	insertCoinP4.loop = true;
+	
 }
 
 ModuleHUD::~ModuleHUD()
@@ -136,12 +67,12 @@ bool ModuleHUD::Start()
 {
 	bool ret = true;
 
-	HUDTexture = app->tex->Load("Assets/UI & HUD/HUD.png");
-	introTexture = app->tex->Load("Assets/Introduction/introduction.png");
-	lifeIncrease = app->audio->LoadFx("Assets/FX/01_cowabunga.wav");
+	FullHeartTex = app->tex->Load("Assets/textures/full_heart.png");
+	EmptyHeartTex = app->tex->Load("Assets/Introduction/empty_heart.png");
+	InventoryTex = app->tex->Load("Assets/FX/inventory.png");
 
 	// ----------------------------------------------------------------- FONTS
-	char lookupTableNumb[] = { "0123456789 " };
+	//char lookupTableNumb[] = { "0123456789 " };
 	//scoreFont = app->fonts->Load("Assets/Fonts/fonts.png", lookupTableNumb, 1);
 	//lifeFont = app->fonts->Load("Assets/UI & HUD/num_lifes_font.png", lookupTableNumb, 1);
 
@@ -150,14 +81,11 @@ bool ModuleHUD::Start()
 
 bool ModuleHUD::Update(float dt)
 {
-	insertCoinP1.Update();
-	insertCoinP2.Update();
-	insertCoinP3.Update();
-	insertCoinP4.Update();
-
-	smallTurtle.Update();
-	pressStart.Update();
-
+	
+	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN )
+	{
+		lifes -= 1;
+	}
 	
 	
 
@@ -168,60 +96,50 @@ bool ModuleHUD::Update(float dt)
 bool ModuleHUD::PostUpdate()
 {
 	// Draw UI (score) --------------------------------------
-	sprintf_s(scoreTextP1, 10, "%3d", scoreP1); //P1
-	sprintf_s(scoreTextP234, 10, "%3d", scoreP234); //P234
+	//sprintf_s(scoreTextP1, 10, "%3d", scoreP1); //P1
+	//sprintf_s(scoreTextP234, 10, "%3d", scoreP234); //P234
 
 	// Draw UI (NumLifes) --------------------------------------
-	sprintf_s(lifeText, 10, "%3d", lifes);
+	//sprintf_s(lifeText, 10, "%3d", lifes);
 
-
-	app->render->DrawTexture(HUDTexture, 80, 0, &(HUDP234.GetCurrentFrame()), 0); // HUD Square Player2,3,4
-
-	app->render->DrawTexture(HUDTexture, 80, 16, &(insertCoinP2.GetCurrentFrame()), 0); // INSERT COIN Player2
-	app->render->DrawTexture(HUDTexture, 151, 16, &(insertCoinP3.GetCurrentFrame()), 0); // INSERT COIN Player3
-	app->render->DrawTexture(HUDTexture, 222, 16, &(insertCoinP4.GetCurrentFrame()), 0); // INSERT COIN Player4
-
-
-	/*app->fonts->BlitText(45, 8, scoreFont, scoreTextP1); // P1
-	app->fonts->BlitText(116, 8, scoreFont, scoreTextP234); // P2
-	app->fonts->BlitText(187, 8, scoreFont, scoreTextP234); // P3
-	app->fonts->BlitText(258, 8, scoreFont, scoreTextP234); // P4*/
-
-
-
-	// -------------------------------------------------------------------------------------------- HUD
-	if (lifes > 0 && (app->scene->Enabled() || app->level2->Enabled()))
+	if (lifes == 3)
 	{
-		app->render->DrawTexture(HUDTexture, 8, 0, &(smallTurtle.GetCurrentFrame()), 0); // HUD Square Player1
-		//app->fonts->BlitText(17, 16, lifeFont, lifeText);
-
-		app->render->DrawTexture(HUDTexture, 9, 34, &(pressStart.GetCurrentFrame()), 0); // HUD Square Player1
-
-		app->render->DrawTexture(introTexture, 12, 56, &bigTurtle, 0); // Big Blue Turtle
-
-		app->render->DrawTexture(introTexture, ((app->win->width / 2) - (konami.w / 2) - 4), (app->win->height - konami1989.h - konami.h - 4), &konami, 0); // KONAMI
-
-		app->render->DrawTexture(introTexture, (app->win->width / 2) - (konami1989.w / 2), (app->win->height - konami1989.h), &konami1989, 0); // KONAMI1989
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1);
+		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2); 
+		app->render->DrawTexture(FullHeartTex, 132, 16, false, &heart3);
 	}
-	
-	
-	/*else if (App->scene->Enabled() || App->level2->Enabled() || App->sceneCinematic->Enabled())
+
+	else if (lifes == 2)
 	{
-		App->render->Blit(HUDTexture, 8, 0, &(HUDP1.GetCurrentFrame()), 0); // HUD Square Player1
-		App->render->Blit(HUDTexture, 41, 16, &(lifeP1.GetCurrentFrame()), 0); // Full Life Indicator
-		App->fonts->BlitText(17, 16, lifeFont, lifeText);
-	}*/
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1);
+		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2);
+		app->render->DrawTexture(EmptyHeartTex, 132, 16, false, &heart3);
+	}
 
+	else if (lifes == 1)
+	{
+		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1);
+		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2);
+		app->render->DrawTexture(EmptyHeartTex, 132, 16, false, &heart3);
+	}
 
+	else if (lifes == 0)
+	{
+		app->render->DrawTexture(EmptyHeartTex, 27, 16, false, &heart1);
+		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2);
+		app->render->DrawTexture(EmptyHeartTex, 132, 16, false, &heart3);
+	}
+
+	app->render->DrawTexture(InventoryTex, 677, 8, false, &inventory);
+	
 
 	return true;
 }
 
 void  ModuleHUD::Reset()
 {
-	lifes = 0;
-	scoreP1 = 0;
-	lifeP1.Reset();
+	lifes = 3;
+	
 }
 
 bool ModuleHUD::CleanUp()
