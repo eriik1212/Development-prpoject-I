@@ -11,9 +11,9 @@
   * Space Bar: Jump
   * P: Attack!
   
-  *_On A Leader_:
-	** W: Up
-	** S: Down
+  * _On A Leader_:
+	* W: Up
+	* S: Down
   
 ## DEBUG FEATURES:
 
