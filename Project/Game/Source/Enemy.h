@@ -6,7 +6,7 @@
 #include "Collider.h"
 #include "ModuleCollisions.h"
 
-#define MAX_LIFE 5
+#define MAX_LIFE 3
 #define MAX_LIFE_BOSS 15
 
 struct SDL_Texture;
@@ -36,7 +36,7 @@ public:
 	iPoint Path();
 	bool moving;
 	iPoint movingTo;
-	int vel = 2;
+	float vel = 3.5f;
 
 	// Called before quitting
 	bool CleanUp();

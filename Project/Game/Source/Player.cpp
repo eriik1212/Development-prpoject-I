@@ -237,6 +237,9 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+
+	LOG("%d", playerData.playerBody.x);
+	LOG("%d", playerData.playerBody.y);
 	//CAMERA
 	float speed = 1 * dt;
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)

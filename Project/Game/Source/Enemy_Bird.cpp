@@ -89,7 +89,7 @@ void Enemy_Bird::Update()
 	//Check Enemy Attack Collision
 	coolDownBird++;
 
-	if (coolDownBird > 100 && app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY))
+	if (!app->play->godMode && coolDownBird > 100 && app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY))
 	{
 		//app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY);
 		app->hud->lifes--;
@@ -108,14 +108,33 @@ void Enemy_Bird::Update()
 	{
 		if (app->play->attackCollider.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ATTACK))
 		{
-			// For moving the collider
-			birdCollider.GetCollider().Move(50, 0);
+			if (app->play->playerData.direction == 1)
+			{
+				// For moving the collider
+				birdCollider.GetCollider().Move(50, -50);
 
-			// For drawing the collider where it has to be
-			birdBody.x += 50;
+				// For drawing the collider where it has to be
+				birdBody.x += 50;
+				birdBody.y -= 50;
 
-			// For changing enemy position
-			position.x += 50;
+				// For changing enemy position
+				position.x += 50;
+				position.y -= 50;
+			}
+			else
+			{
+				// For moving the collider
+				birdCollider.GetCollider().Move(-50, -50);
+
+				// For drawing the collider where it has to be
+				birdBody.x -= 50;
+				birdBody.y -= 50;
+
+				// For changing enemy position
+				position.x -= 50;
+				position.y -= 50;
+			}
+
 
 
 		}

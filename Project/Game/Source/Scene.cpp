@@ -67,9 +67,6 @@ bool Scene::Start()
 			}
 		}
 
-		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 300, 300);
-
-
 		if (app->play->restartLVL1)
 		{
 			app->play->playerData.playerBody.x = 196;

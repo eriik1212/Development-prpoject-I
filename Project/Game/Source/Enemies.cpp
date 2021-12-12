@@ -49,7 +49,20 @@ bool ModuleEnemies::Update(float dt)
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if (enemies[i] != nullptr)
+		{
 			enemies[i]->Update();
+
+			if (enemies[i] != nullptr && app->play->playerData.playerBody.x >= (enemies[i]->position.x - 200))
+			{
+				app->play->inEnemyView = true;
+
+			}
+			else
+			{
+				app->play->inEnemyView = false;
+			}
+		}
+
 	}
 
 	HandleEnemiesMovement();
@@ -203,15 +216,21 @@ void ModuleEnemies::HandleEnemiesMovement()
 	{
 		if (enemies[i] != nullptr)
 		{
-			if (!enemies[i]->moving)
+			if (!enemies[i]->moving && app->play->inEnemyView)
 			{
 				iPoint movement = enemies[i]->Path();
 				enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
 				enemies[i]->moving = true;
+
+				LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
+			}
+			else
+			{
+				enemies[i]->movingTo = enemies[i]->position;
 			}
 			
 
-			if (enemies[i]->movingTo.x != 100 && enemies[i]->movingTo.y != 120)
+			if (enemies[i]->movingTo.x == -32 && enemies[i]->movingTo.y == -32)
 			{
 				enemies[i]->moving = false;
 			}
@@ -219,8 +238,8 @@ void ModuleEnemies::HandleEnemiesMovement()
 			{
 				// ----------------------------------------------------------------------- X
 
-				if (enemies[i]->position.x > (enemies[i]->movingTo.x + 3) ||
-					enemies[i]->position.x < (enemies[i]->movingTo.x - 3))
+				if (enemies[i]->position.x > (enemies[i]->movingTo.x - 10) ||
+					enemies[i]->position.x < (enemies[i]->movingTo.x + 10))
 				{
 					if (enemies[i]->movingTo.x > enemies[i]->position.x)
 					{
@@ -252,8 +271,8 @@ void ModuleEnemies::HandleEnemiesMovement()
 
 				// ----------------------------------------------------------------------- y
 
-				if (enemies[i]->position.y > (enemies[i]->movingTo.y + 3) ||
-					enemies[i]->position.y < (enemies[i]->movingTo.y - 3))
+				if (enemies[i]->position.y > (enemies[i]->movingTo.y - 10) ||
+					enemies[i]->position.y < (enemies[i]->movingTo.y + 10))
 				{
 					if (enemies[i]->movingTo.y > enemies[i]->position.y)
 					{
@@ -283,6 +302,7 @@ void ModuleEnemies::HandleEnemiesMovement()
 					enemies[i]->position.y = enemies[i]->movingTo.y;
 				}
 			}
+			enemies[i]->moving = false;
 
 		}
 	}

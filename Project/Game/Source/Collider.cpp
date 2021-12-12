@@ -124,7 +124,7 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
-			LOG("Enemy Attacks!");
+			//LOG("Enemy Attacks!");
 
 			return true;
 		}

@@ -64,7 +64,8 @@ void Enemy::Draw()
 
 iPoint Enemy::Path()
 {
-	return app->map->GeneralPathFinding(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y));
+	return app->map->GeneralPathFinding(app->map->WorldToMap(position.x, position.y), 
+		app->map->WorldToMap(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y));
 }
 
 

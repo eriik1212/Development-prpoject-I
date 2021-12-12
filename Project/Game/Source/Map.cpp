@@ -117,19 +117,16 @@ bool Map::IsWalkable(int x, int y) const
 
 	bool isWalkable = false;
 
-	ListItem<MapLayer*>* mapLayerItem;
-	mapLayerItem = mapData.layers.start;
+	
 
-	while (mapLayerItem != NULL) {
-		if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height && mapLayerItem->data->properties.GetProperty("Navigation") != 1) {
+	if (x >= 0 && y >= 0 && x < mapData.width && y < mapData.height) {
 
-			//gets the second layer
-			MapLayer* layer = mapData.layers.start->next->data;
-			int tileId = layer->Get(x, y);
-			isWalkable = true;
-		}
-		return isWalkable;
+		//gets the second layer
+		MapLayer* layer = mapData.layers.start->next->data;
+		int tileId = layer->Get(x, y);
+		isWalkable = true;
 	}
+		return isWalkable;
 }
 
 void Map::ComputePath(int x, int y)
@@ -189,7 +186,7 @@ void Map::PropagateBFS()
 iPoint Map::GeneralPathFinding(iPoint initP, iPoint finalP)
 {
 	//Comprobation to avoid errors
-	if (!IsWalkable(initP.x, initP.y) || !IsWalkable(finalP.x, finalP.y) || initP == finalP)
+	if ((!IsWalkable(initP.x, initP.y) || !IsWalkable(finalP.x, finalP.y)) || initP == finalP)
 	{
 		return iPoint(-1, -1);
 	}
@@ -229,7 +226,7 @@ void Map::Draw()
 			{
 				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
-					// L04: DONE 9: Complete the draw function
+					// Complete the draw function
 					int gid = mapLayerItem->data->Get(x, y);
 
 					if (gid > 0) {
@@ -608,6 +605,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
 		mapData.width = map.attribute("width").as_int();
 		mapData.tileHeight = map.attribute("tileheight").as_int();
 		mapData.tileWidth = map.attribute("tilewidth").as_int();
+		mapData.id = map.attribute("firstgid").as_int();
 
 		// L05: DONE 1: Add formula to go from isometric map to world coordinates
 		mapData.type = MAPTYPE_UNKNOWN;

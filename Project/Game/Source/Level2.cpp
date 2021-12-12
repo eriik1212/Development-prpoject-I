@@ -65,6 +65,7 @@ bool Level2::Start()
 		//Enable Player & map
 		app->play->Enable();
 		app->map->Enable();
+		app->enemies->Enable();
 		app->hud->Enable();
 
 		soulBody.x = 890;
@@ -73,6 +74,8 @@ bool Level2::Start()
 		soulBody.h = 32;
 
 		soulCollider.AddCollider(soulBody.x, soulBody.y, soulBody.w, soulBody.h);
+
+		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
 
 		app->play->playerData.isDead = false;
 		app->play->debug = false;
