@@ -133,6 +133,8 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
+			app->hud->lifes++;
+
 			delete app->level2->soulCollider;
 			app->level2->soulCollider = nullptr;
 			app->hud->soulCounter += 1;

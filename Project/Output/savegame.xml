@@ -12,14 +12,14 @@
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<player x="1482" y="116" />
-		<playerLimit Left="1284" Right="1484" />
+		<player x="80" y="348" />
+		<playerLimit Left="100" Right="300" />
 	</player>
 	<:anonymous />
 	<:anonymous />
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="-1776" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </save_state>
