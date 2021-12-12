@@ -52,11 +52,7 @@ public:
 	SDL_Rect foxBody;
 	ModuleCollisions foxCollider;
 
-	float nohit = 10.0f;
 	int direcction = 0;
-
-	bool tocado = false;
-	bool retirar = false;
 
 	unsigned short lifes[MAX_LIFE];
 

@@ -14,7 +14,7 @@
 
 
 
-Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
+Enemy_Bird::Enemy_Bird(bool enabled, int x, int y) : Enemy(x, y), Module(enabled)
 {
 	// LEFT
 
@@ -171,35 +171,11 @@ void Enemy_Bird::Update()
 		app->enemies->birdHitted = false;
 	}
 
-	/*if (app->collisions->GodMode == true) {
-
-
-		app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = false;
-
-
-		if (coolTime >= coolDown) {
-
-			if (currentAnim == &punchLO)
-			{
-				app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = true;
-				coolTime = 0.0f;
-
-			}
-			else if (currentAnim == &kickRO)
-			{
-				app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = true;
-				coolTime = 0.0f;
-			}
-			else
-				app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = false;
-		}
-		else
-			coolTime += 0.1f;
-
-	}*/
 	
 	currentAnim = &leftStandB;
 	Enemy::Update();
 }
+
+
 
 

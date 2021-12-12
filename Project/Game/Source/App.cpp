@@ -41,7 +41,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	level2 = new Level2(false);
 	map = new Map(false);
 	play = new Player(false);
-	//bird_enemy = new Enemy_Bird(true, 0, 0);
+	bird_enemy = new Enemy_Bird(true, 0, 0);
+	fox_enemy = new Enemy_Fox(true, 0, 0);
 	enemies = new ModuleEnemies(false);
 	hud = new ModuleHUD(false);
 	fade = new ModuleFadeToBlack(true);
@@ -65,6 +66,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(enemies);
 	AddModule(hud);
 	//AddModule(bird_enemy); //CRASH
+	//AddModule(fox_enemy); //CRASH
 	AddModule(fade);
 	//AddModule(collisions);
 	AddModule(gameOver);

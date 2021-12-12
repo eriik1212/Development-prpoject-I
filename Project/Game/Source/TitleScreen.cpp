@@ -36,6 +36,7 @@ bool TitleScreen::Start()
 		app->map->Disable();
 
 		app->LoadGameRequest();
+		//app->LoadInitialGameRequest();
 
 	}
 	changeFX = app->audio->LoadFx("Assets/audio/fx/switching.wav");

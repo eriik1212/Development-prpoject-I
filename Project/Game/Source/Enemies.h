@@ -37,6 +37,13 @@ public:
 	// Loads the necessary textures for the enemies
 	bool Start() override;
 
+	// Called before render is available
+	bool Awake(pugi::xml_node&);
+
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	// Called at the middle of the application loop
 	// Handles all enemies logic and spawning/despawning
 	bool Update(float dt) override;

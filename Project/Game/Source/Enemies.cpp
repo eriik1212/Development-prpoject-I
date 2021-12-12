@@ -20,6 +20,8 @@
 
 ModuleEnemies::ModuleEnemies(bool enabled) : Module(enabled)
 {
+	name.Create("enemies");
+
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		enemies[i] = nullptr;
 }
@@ -40,6 +42,51 @@ bool ModuleEnemies::Start()
 	enemyDestroyedFx = app->audio->LoadFx("Assets/audio/FX/enter.wav");
 
 	return true;
+}
+
+// Called before render is available
+bool ModuleEnemies::Awake(pugi::xml_node& config)
+{
+	LOG("Loading Enemies");
+	bool ret = true;
+
+	app->bird_enemy->birdBody.x = config.attribute("xBird").as_int();
+	app->bird_enemy->birdBody.y = config.attribute("yBird").as_int();
+
+	app->fox_enemy->foxBody.x = config.attribute("xFox").as_int();
+	app->fox_enemy->foxBody.y = config.attribute("yFox").as_int();
+
+	return ret;
+}
+
+
+bool ModuleEnemies::LoadState(pugi::xml_node& data)
+{
+	//Load Fox Position
+	app->fox_enemy->foxBody.x = data.child("enemies").child("fox").attribute("x").as_int();
+	app->fox_enemy->foxBody.y = data.child("enemies").child("fox").attribute("y").as_int();
+
+	//Load Bird Position
+	app->bird_enemy->birdBody.x = data.child("bird").attribute("x").as_int();
+	app->bird_enemy->birdBody.y = data.child("bird").attribute("y").as_int();
+
+	return false;
+}
+
+bool ModuleEnemies::SaveState(pugi::xml_node& data) const
+{
+	//Save
+	pugi::xml_node fox = data.append_child("fox");
+
+	fox.append_attribute("x") = app->fox_enemy->foxBody.x;
+	fox.append_attribute("y") = app->fox_enemy->foxBody.y;
+
+	pugi::xml_node bird = data.append_child("bird");
+
+	bird.append_attribute("x") = app->bird_enemy->birdBody.x;
+	bird.append_attribute("y") = app->bird_enemy->birdBody.y;
+
+	return false;
 }
 
 bool ModuleEnemies::Update(float dt)
@@ -185,7 +232,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 			case ENEMY_TYPE::BIRD:
-				enemies[i] = new Enemy_Bird(info.x, info.y);
+				enemies[i] = new Enemy_Bird(true, info.x, info.y);
 				enemies[i]->texture = bird;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
@@ -197,7 +244,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 
 				break;
 			case ENEMY_TYPE::FOX:
-				enemies[i] = new Enemy_Fox(info.x, info.y);
+				enemies[i] = new Enemy_Fox(true, info.x, info.y);
 				enemies[i]->texture = fox;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;

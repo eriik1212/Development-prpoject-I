@@ -13,6 +13,8 @@
 #include "TitleScreen.h"
 #include "Enemies.h"
 #include "Defs.h"
+#include "Enemy_Bird.h"
+#include "Enemy_Fox.h"
 #include "Log.h"
 #include"HUD.h"
 

@@ -19,11 +19,14 @@
     <fullscreen_window value="false"/>
   </window>
 
-  <!-- Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>
 	<level num="1" />
   </map>
+  
+  <enemies
+  xBird="446" yBird="100"
+  xFox="826" yFox="308"/>
   
   <player 
   width="30" height="37" 

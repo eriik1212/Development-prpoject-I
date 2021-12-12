@@ -7,7 +7,7 @@
 #include "Enemies.h"
 #include "Enemy.h"
 
-Enemy_Fox::Enemy_Fox(int x, int y) : Enemy(x, y)
+Enemy_Fox::Enemy_Fox(bool enabled, int x, int y) : Enemy(x, y), Module(enabled)
 {
 	// Idle animation to right
 	FoxIdleR.PushBack({ 0, 0, 32, 32 });
@@ -153,3 +153,4 @@ void Enemy_Fox::Update()
 	currentAnim = &FoxIdleL;
 	 Enemy::Update();
 }
+
