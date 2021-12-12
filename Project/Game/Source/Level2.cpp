@@ -70,10 +70,13 @@ bool Level2::Start()
 
 		soulBody.x = 890;
 		soulBody.y = 308;
-		soulBody.w = 32;
-		soulBody.h = 32;
+		soulBody.w = 16;
+		soulBody.h = 16;
 
-		soulCollider.AddCollider(soulBody.x, soulBody.y, soulBody.w, soulBody.h);
+		soulCollider = new ModuleCollisions();
+
+		if(soulCollider != nullptr)
+		soulCollider->AddCollider(soulBody.x, soulBody.y, soulBody.w, soulBody.h);
 
 		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
 
@@ -130,9 +133,8 @@ bool Level2::PreUpdate()
 // Called each loop iteration
 bool Level2::Update(float dt)
 {
-	soulCollider.GetCollider().DebugDraw(soulBody, SOUL);
-
-	soulCollider.GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
+	if (soulCollider != nullptr) 
+		soulCollider->GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -296,6 +298,7 @@ bool Level2::PostUpdate()
 {
 	bool ret = true;
 
+	if(app->play->collidersOn && soulCollider != nullptr) soulCollider->GetCollider().DebugDraw(soulBody, SOUL);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

@@ -43,7 +43,7 @@ public:
 	int scrollingOffset = 0;
 
 	SDL_Rect soulBody;
-	ModuleCollisions soulCollider;
+	ModuleCollisions* soulCollider;
 
 private:
 
