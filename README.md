@@ -11,7 +11,7 @@
   * Space Bar: Jump
   * P: Attack!
   
-  * _On A Leader_:
+  * _On A Ladder_:
 	* W: Up
 	* S: Down
   
@@ -24,7 +24,8 @@
   * F6 Load the previous state (even across levels)
   * F9 View colliders / logic
   * F10 God Mode (fly around, cannot be killed)
+  * F11 Game limited to 30 fps
   
 ## GAME DESCRIPTION:
   
-  Enjoy the Alone Adventure of an Alone Adventurer.
+  Enjoy the Amazing Adventure of an Alone Adventurer.
