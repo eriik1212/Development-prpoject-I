@@ -26,10 +26,10 @@ private:
 	iPoint positionEnemy;
 
 	// Enemy animations
-	Animation leftAnimO,
-		rightAnimO,
-		upAnimRO,
-		upAnimLO;
+	Animation FoxWalkL,
+		FoxWalkR,
+		FoxIdleR,
+		FoxIdleL;
 
 
 

@@ -7,17 +7,47 @@
 
 Enemy_Fox::Enemy_Fox(int x, int y) : Enemy(x, y)
 {
-	// RIGHT 
-	rightAnimO.PushBack({ 0, 830, 88, 69 });
-	rightAnimO.PushBack({ 88, 830, 88, 69 });
-	rightAnimO.PushBack({ 88 * 2, 830, 88, 69 });
-	rightAnimO.PushBack({ 88 * 3, 830, 88, 69 });
-	rightAnimO.PushBack({ 88 * 4, 830, 88, 69 });
-	rightAnimO.PushBack({ 88 * 5, 830, 88, 69 });
-	rightAnimO.PushBack({ 88 * 6, 830,88, 69 });
-	rightAnimO.PushBack({ 88 * 7, 830, 88, 69 });
-	rightAnimO.loop = true;
-	rightAnimO.speed = 0.15f;
+	// Idle animation to right
+	FoxIdleR.PushBack({ 0, 0, 32, 32 });
+	FoxIdleR.PushBack({ 32, 0, 32, 32 });
+	FoxIdleR.PushBack({ 32 * 2, 0, 32, 32 });
+	FoxIdleR.PushBack({ 32 * 3, 0, 32, 32 });
+	FoxIdleR.PushBack({ 32 * 4, 0, 32, 32 });
+	FoxIdleR.loop = true;
+	FoxIdleR.speed = 0.15f;
+
+	// Idle animation to left
+	FoxIdleL.PushBack({ 416, 224, 32, 32 });
+	FoxIdleL.PushBack({ 416 - 32, 224, 32, 32 });
+	FoxIdleL.PushBack({ 416 - 32 * 2, 224, 32, 32 });
+	FoxIdleL.PushBack({ 416 - 32 * 3, 224, 32, 32 });
+	FoxIdleL.PushBack({ 416 - 32 * 4, 224, 32, 32 });
+	FoxIdleL.loop = true;
+	FoxIdleL.speed = 0.15f;
+
+	//Walk to right
+	FoxWalkR.PushBack({ 416, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32 * 2, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32 * 3, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32 * 4, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32 * 5, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32 * 6, 64, 32, 32 });
+	FoxWalkR.PushBack({ 32 * 7, 64, 32, 32 });
+	FoxWalkR.loop = true;
+	FoxWalkR.speed = 0.15f;
+
+	//Walk to left
+	FoxWalkL.PushBack({ 416, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32 * 2, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32 * 3, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32 * 4, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32 * 5, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32 * 6, 288, 32, 32 });
+	FoxWalkL.PushBack({ 416 - 32 * 7, 288, 32, 32 });
+	FoxWalkL.loop = true;
+	FoxWalkL.speed = 0.15f;
 
 	//PATH
 
