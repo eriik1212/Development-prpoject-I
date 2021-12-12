@@ -7,7 +7,7 @@
  
 ## CONTROLS:
 
-  * WASD: Move Adventurers
+  * WASD: Move Adventurer
   * Space Bar: Jump
   * P: Attack!
   
