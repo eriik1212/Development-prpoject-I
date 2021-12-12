@@ -37,7 +37,12 @@ public:
 		heart2,
 		heart3,
 		inventory,
-		soul;
+		soul1,
+		soul2,
+		soul3,
+		soul4,
+		soul5,
+		soul6;
 
 	SDL_Texture* InventoryTex = nullptr;
 
@@ -45,6 +50,7 @@ public:
 
 	SDL_Texture* EmptyHeartTex = nullptr;
 
+	SDL_Texture* DarkSoul = nullptr;
 
 
 	// HUD & Foreground Animations
@@ -73,6 +79,7 @@ public:
 	// Sound effects indices
 	uint lifeIncrease = 0;
 	int lifes = 3;
+	int soulCounter = 0;
 
 };
 

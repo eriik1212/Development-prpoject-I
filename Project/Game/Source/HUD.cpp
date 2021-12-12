@@ -40,6 +40,37 @@ ModuleHUD::ModuleHUD(bool enabled) : Module(enabled)
 	inventory.w = 274;
 	inventory.h = 63;
 
+	soul1.x = 0;
+	soul1.y = 0;
+	soul1.w = 17;
+	soul1.h = 17;
+
+	soul2.x = 0;
+	soul2.y = 0;
+	soul2.w = 17;
+	soul2.h = 17;
+
+	soul3.x = 0;
+	soul3.y = 0;
+	soul3.w = 17;
+	soul3.h = 17;
+
+	soul4.x = 0;
+	soul4.y = 0;
+	soul4.w = 17;
+	soul4.h = 17;
+
+	soul5.x = 0;
+	soul5.y = 0;
+	soul5.w = 17;
+	soul5.h = 17;
+
+	soul6.x = 0;
+	soul6.y = 0;
+	soul6.w = 17;
+	soul6.h = 17;
+
+
 	// Life's Animation
 	/*lifeP1.PushBack({ 6, 233, 31, 11 });
 	lifeP1.PushBack({ 40, 233, 31, 11 });
@@ -70,6 +101,7 @@ bool ModuleHUD::Start()
 	FullHeartTex = app->tex->Load("Assets/textures/full_heart.png");
 	EmptyHeartTex = app->tex->Load("Assets/textures/empty_heart.png");
 	InventoryTex = app->tex->Load("Assets/textures/inventory.png");
+	DarkSoul= app->tex->Load("Assets/textures/dark_fire.png");
 
 	Reset();
 
@@ -84,10 +116,7 @@ bool ModuleHUD::Start()
 bool ModuleHUD::Update(float dt)
 {
 	
-	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN )
-	{
-		lifes -= 1;
-	}
+	
 
 	return true;
 }
@@ -161,6 +190,47 @@ bool ModuleHUD::PostUpdate()
 
 	app->render->DrawTexture(InventoryTex, 677, 8, false, &inventory, NULL);
 	
+	switch (soulCounter)
+	{
+	case 0:
+		break;
+	case 1:
+		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+		break;
+		
+	case 2:
+		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+		break;
+	case 3:
+		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+		break;
+	case 4:
+		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+		app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
+		break;
+	case 5:
+		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+		app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
+		app->render->DrawTexture(DarkSoul, 841, 34, false, &soul5, NULL);
+		break;
+	case 6:
+		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+		app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
+		app->render->DrawTexture(DarkSoul, 841, 34, false, &soul5, NULL);
+		app->render->DrawTexture(DarkSoul, 868, 34, false, &soul6, NULL);
+		break;
+	default:
+		break;
+	}
 
 	return true;
 }

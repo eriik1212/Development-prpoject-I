@@ -135,7 +135,7 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 		{
 			delete app->level2->soulCollider;
 			app->level2->soulCollider = nullptr;
-
+			app->hud->soulCounter += 1;
 			LOG("SOUL PICKED UP!");
 
 			return true;
