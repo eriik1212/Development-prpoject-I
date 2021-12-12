@@ -45,6 +45,9 @@ public:
 	SDL_Rect soulBody;
 	ModuleCollisions* soulCollider;
 
+	Animation* redCurrentAnimation = nullptr;
+	Animation* blueCurrentAnimation = nullptr;
+
 private:
 
 	SDL_Texture* background_sky1;
@@ -59,6 +62,13 @@ private:
 	SDL_Texture* background_forest5;
 	SDL_Texture* background_grass1;
 	SDL_Texture* background_grass2;
+
+	SDL_Texture* redSoulTex = nullptr;
+	SDL_Texture* blueSoulTex = nullptr;
+
+
+	Animation redSoul,
+		blueSoul;
 
 };
 #endif // __LEVEL2_H__

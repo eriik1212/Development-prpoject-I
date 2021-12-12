@@ -20,6 +20,27 @@ Level2::Level2(bool enabled) : Module(enabled)
 {
 
 	name.Create("level2");
+
+	//RED SOUL
+	redSoul.PushBack({ 0, 0, 16, 16 });
+	redSoul.PushBack({ 0 + 16 * 1, 0, 16, 16 });
+	redSoul.PushBack({ 0 + 16 * 2, 0, 16, 16 });
+	redSoul.PushBack({ 0 + 16 * 3, 0, 16, 16 });
+	redSoul.PushBack({ 0 + 16 * 4, 0, 16, 16 });
+	redSoul.PushBack({ 0 + 16 * 5, 0, 16, 16 });
+	redSoul.loop = true;
+	redSoul.speed = 0.1f;
+
+	//BLUE SOUL
+	blueSoul.PushBack({ 0, 16, 16, 16 });
+	blueSoul.PushBack({ 0 + 16 * 1, 16, 16, 16 });
+	blueSoul.PushBack({ 0 + 16 * 2, 16, 16, 16 });
+	blueSoul.PushBack({ 0 + 16 * 3, 16, 16, 16 });
+	blueSoul.PushBack({ 0 + 16 * 4, 16, 16, 16 });
+	blueSoul.PushBack({ 0 + 16 * 5, 16, 16, 16 });
+	blueSoul.loop = true;
+	blueSoul.speed = 0.1f;
+
 }
 
 // Destructor
@@ -78,6 +99,9 @@ bool Level2::Start()
 		if(soulCollider != nullptr)
 		soulCollider->AddCollider(soulBody.x, soulBody.y, soulBody.w, soulBody.h);
 
+		redCurrentAnimation = &redSoul;
+		blueCurrentAnimation = &blueSoul;
+
 		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
 
 		app->play->playerData.isDead = false;
@@ -99,6 +123,9 @@ bool Level2::Start()
 
 		background_grass1 = app->tex->Load("Assets/textures/dark_forest/Layer_0001_8.png");
 		background_grass2 = app->tex->Load("Assets/textures/dark_forest/Layer_0000_9.png");
+
+		redSoulTex = app->tex->Load("Assets/textures/souls.png");
+		blueSoulTex = app->tex->Load("Assets/textures/souls.png");
 
 	}
 
@@ -133,6 +160,9 @@ bool Level2::PreUpdate()
 // Called each loop iteration
 bool Level2::Update(float dt)
 {
+	redCurrentAnimation->Update();
+	blueCurrentAnimation->Update();
+
 	if (soulCollider != nullptr) 
 		soulCollider->GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
 
@@ -273,6 +303,15 @@ bool Level2::Update(float dt)
 		app->render->DrawTexture(background_grass2, (app->render->camera.w / 2) * 6, -150, false, NULL, 0.3f);
 
 	}
+
+	// DRAW RED SOUL
+	if (soulCollider != nullptr)
+	{
+		SDL_Rect soulRect = redCurrentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(redSoulTex, soulBody.x, soulBody.y, true, &soulRect);
+	}
+
+	LOG("%d", soulBody.x);
 
 	/*if (app->play->playerData.winner == true)
 	{
