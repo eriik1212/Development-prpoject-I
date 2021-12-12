@@ -31,6 +31,7 @@ private:
 		FoxIdleR,
 		FoxIdleL;
 
+	uint coolDownFox = 0;
 
 
 };

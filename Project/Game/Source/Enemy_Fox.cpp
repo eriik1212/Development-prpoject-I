@@ -2,8 +2,10 @@
 
 #include "App.h"
 #include "ModuleCollisions.h"
-
-
+#include "Player.h"
+#include "HUD.h"
+#include "Enemies.h"
+#include "Enemy.h"
 
 Enemy_Fox::Enemy_Fox(int x, int y) : Enemy(x, y)
 {
@@ -49,56 +51,105 @@ Enemy_Fox::Enemy_Fox(int x, int y) : Enemy(x, y)
 	FoxWalkL.loop = true;
 	FoxWalkL.speed = 0.15f;
 
-	//PATH
+	//Collider
+	foxBody.x = x;
+	foxBody.y = y;
+	foxBody.w = 32;
+	foxBody.h = 32;
 
+	foxCollider.AddCollider(foxBody.x, foxBody.y, foxBody.w, foxBody.h);
 
-
-	//must be one algorithm of class
+	coolDownFox = 0;
 }
 
 
 void Enemy_Fox::Update()
 {
-	//------------------------------------------------------------LEFT direcction
-	/*if (currentAnim == &jumpLO)direcction = 0;
-	if (currentAnim == &leftAnimO)direcction = 0;
-	if (currentAnim == &punchLO)direcction = 0;*/
+	//Check Enemy Attack Collision
+	coolDownFox++;
 
-	//------------------------------------------------------------LEFT ANIM direction
-	/*if (currentAnim == &upAnimRO)direcction = 1;
-	if (currentAnim == &kickRO)direcction = 1;*/
+	if (!app->play->godMode && coolDownFox > 100 && app->play->playerData.GetCollider().CheckCollision(foxCollider.GetCollider(), 0.0f, ENEMY))
+	{
+		//app->play->playerData.GetCollider().CheckCollision(birdCollider.GetCollider(), 0.0f, ENEMY);
+		app->hud->lifes--;
+		coolDownFox = 0;
 
-	/*if (app->collisions->GodMode == true) {
+	}
+	else if (app->play->playerData.GetCollider().CheckCollision(foxCollider.GetCollider(), 0.0f, ENEMY) == false)
+	{
+		coolDownFox = 101;
+	}
 
+	if (coolDownFox >= 101) coolDownFox = 101;
 
-		app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = false;
-
-
-		if (coolTime >= coolDown) {
-
-			if (currentAnim == &punchLO)
+	//Check Player Attack Collision
+	if (app->play->playerData.attacking == true)
+	{
+		if (app->play->attackCollider.GetCollider().CheckCollision(foxCollider.GetCollider(), 0.0f, ATTACK))
+		{
+			if (app->play->playerData.direction == 1)
 			{
-				app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = true;
-				coolTime = 0.0f;
+				// For moving the collider
+				foxCollider.GetCollider().Move(50, 0);
 
-			}
-			else if (currentAnim == &kickRO)
-			{
-				app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = true;
-				coolTime = 0.0f;
+				// For drawing the collider where it has to be
+				foxBody.x += 50;
+
+				// For changing enemy position
+				position.x += 50;
 			}
 			else
-				app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT] = false;
+			{
+				// For moving the collider
+				foxCollider.GetCollider().Move(-50, 0);
+
+				// For drawing the collider where it has to be
+				foxBody.x -= 50;
+
+				// For changing enemy position
+				position.x -= 50;
+			}
+
+
+
 		}
-		else
-			coolTime += 0.1f;
 
 	}
 
-	position = spawnPos + path.GetRelativePosition();
-	currentAnim = path.GetCurrentAnimation();*/
+	if (app->play->collidersOn == true)
+	{
+		foxCollider.GetCollider().DebugDraw(foxBody, ENEMY);
+	}
+
+	//------------------------------------------------------------LEFT direcction
+	if (currentAnim == &FoxIdleL) direcction = 0;
+	if (currentAnim == &FoxWalkL) direcction = 0;
+
+	//------------------------------------------------------------RIGHT ANIM direction
+	if (currentAnim == &FoxIdleR) direcction = 1;
+	if (currentAnim == &FoxWalkR) direcction = 1;
+
+	if (app->enemies->foxHitted)
+	{
+		for (uint i = 0; i < MAX_ENEMIES; ++i)
+		{
+			if (app->enemies->enemies[i] != nullptr)
+			{
+				app->enemies->UpdateLifes(app->enemies->enemies[i]->lifes, 1);
+
+				if (app->enemies->enemies[i]->lifes[0] == 0)
+				{
+					delete app->enemies->enemies[i];
+					app->enemies->enemies[i] = nullptr;
+				}
+			}
+		}
+
+		app->enemies->foxHitted = false;
+	}
 
 	// Call to the base class. It must be called at the end
 	// It will update the collider depending on the position
+	currentAnim = &FoxIdleL;
 	 Enemy::Update();
 }

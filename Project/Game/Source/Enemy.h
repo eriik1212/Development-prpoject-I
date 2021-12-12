@@ -33,7 +33,8 @@ public:
 	virtual void Draw();
 
 	// Handle Movement
-	iPoint Path();
+	iPoint FlyingPath();
+	iPoint FloorPath();
 	bool moving;
 	iPoint movingTo;
 	float vel = 3.5f;
@@ -46,8 +47,10 @@ public:
 	iPoint position;
 
 	SDL_Rect birdBody;
-
 	ModuleCollisions birdCollider;
+
+	SDL_Rect foxBody;
+	ModuleCollisions foxCollider;
 
 	float nohit = 10.0f;
 	int direcction = 0;
@@ -56,6 +59,10 @@ public:
 	bool retirar = false;
 
 	unsigned short lifes[MAX_LIFE];
+
+	bool isFox = false;
+	bool isBird = false;
+
 	// The enemy's texture
 	SDL_Texture* texture = nullptr;
 

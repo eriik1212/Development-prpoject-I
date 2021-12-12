@@ -78,8 +78,6 @@ Enemy_Bird::Enemy_Bird(int x, int y) : Enemy(x, y)
 	birdCollider.AddCollider(birdBody.x, birdBody.y, birdBody.w, birdBody.h);
 
 	coolDownBird = 0;
-
-	//must be one algorithm of class
 }
 
 
@@ -150,7 +148,7 @@ void Enemy_Bird::Update()
 	if (currentAnim == &leftStandB) direcction = 0;
 	if (currentAnim == &leftFlyB) direcction = 0;
 	
-	//------------------------------------------------------------LEFT ANIM direction
+	//------------------------------------------------------------RIGHT ANIM direction
 	if (currentAnim == &rightStandB) direcction = 1;
 	if (currentAnim == &leftFlyB) direcction = 1;
 
@@ -204,35 +202,4 @@ void Enemy_Bird::Update()
 	Enemy::Update();
 }
 
-/*void Enemy_Bird::Bird_Movement()
-{
-	// If frontier queue contains elements
-	// pop the last one and calculate its 4 neighbors
-	iPoint curr;
-	if (app->map->frontier.Pop(curr))
-	{
-		// For each neighbor, if not visited, add it
-		// to the frontier queue and visited list
-		iPoint neighbors[4];
-		neighbors[0].create(curr.x + 1, curr.y + 0);
-		neighbors[1].create(curr.x + 0, curr.y + 1);
-		neighbors[2].create(curr.x - 1, curr.y + 0);
-		neighbors[3].create(curr.x + 0, curr.y - 1);
 
-		for (uint i = 0; i < 4; ++i)
-		{
-			if (app->map->IsWalkable(neighbors[i].x, neighbors[i].y))
-			{
-				if (app->map->visited.find(neighbors[i]) == -1)
-				{
-					app->map->frontier.Push(neighbors[i], 0);
-					app->map->visited.add(neighbors[i]);
-
-					// Record the direction to the previous node 
-					// with the new list "breadcrumps"
-					app->map->breadcrumbs.add(curr);
-				}
-			}
-		}
-	}
-}*/

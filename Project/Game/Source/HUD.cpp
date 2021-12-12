@@ -131,6 +131,8 @@ bool ModuleHUD::PostUpdate()
 	// Draw UI (NumLifes) --------------------------------------
 	//sprintf_s(lifeText, 10, "%3d", lifes);
 
+	if (lifes >= 6) lifes = 5;
+
 	if (lifes == 5)
 	{
 		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);

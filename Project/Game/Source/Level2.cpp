@@ -103,6 +103,7 @@ bool Level2::Start()
 		blueCurrentAnimation = &blueSoul;
 
 		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
+		app->enemies->AddEnemy(ENEMY_TYPE::FOX, 826, 308);
 
 		app->play->playerData.isDead = false;
 		app->play->debug = false;

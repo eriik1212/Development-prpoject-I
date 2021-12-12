@@ -73,7 +73,8 @@ public:
 
 	int lastLevel = 1;
 
-	bool inEnemyView = false;
+	bool inBirdView = false;
+	bool inFoxView = false;
 
 private:
 	SDL_Texture* img;

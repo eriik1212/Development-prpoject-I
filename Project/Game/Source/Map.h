@@ -139,7 +139,8 @@ public:
 	// Propagation methods
 	void PropagateBFS();
 
-	iPoint GeneralPathFinding(iPoint initP, iPoint finalP);
+	iPoint FlyingPathFinding(iPoint initP, iPoint finalP);
+	iPoint FloorPathFinding(iPoint initP, iPoint finalP);
 
 	// BFS Pathfinding variables
 	PQueue<iPoint> frontier;

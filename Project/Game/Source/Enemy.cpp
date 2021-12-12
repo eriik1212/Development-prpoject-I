@@ -62,9 +62,15 @@ void Enemy::Draw()
 		app->render->DrawTexture(texture, position.x, position.y, true, &(currentAnim->GetCurrentFrame()));
 }
 
-iPoint Enemy::Path()
+iPoint Enemy::FlyingPath()
 {
-	return app->map->GeneralPathFinding(app->map->WorldToMap(position.x, position.y), 
+	return app->map->FlyingPathFinding(app->map->WorldToMap(position.x, position.y), 
+		app->map->WorldToMap(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y));
+}
+
+iPoint Enemy::FloorPath()
+{
+	return app->map->FloorPathFinding(app->map->WorldToMap(position.x, position.y),
 		app->map->WorldToMap(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y));
 }
 

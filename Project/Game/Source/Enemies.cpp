@@ -51,16 +51,31 @@ bool ModuleEnemies::Update(float dt)
 		if (enemies[i] != nullptr)
 		{
 			enemies[i]->Update();
-
-			if (enemies[i] != nullptr && app->play->playerData.playerBody.x >= (enemies[i]->position.x - 200))
+			if (enemies[i] != nullptr && enemies[i]->isBird)
 			{
-				app->play->inEnemyView = true;
+				if (enemies[i] != nullptr && app->play->playerData.playerBody.x >= (enemies[i]->position.x - 200))
+				{
+					app->play->inBirdView = true;
 
+				}
+				else
+				{
+					app->play->inBirdView = false;
+				}
 			}
-			else
+			if (enemies[i] != nullptr && enemies[i]->isFox)
 			{
-				app->play->inEnemyView = false;
+				if (enemies[i] != nullptr && app->play->playerData.playerBody.x >= (enemies[i]->position.x - 200))
+				{
+					app->play->inFoxView = true;
+
+				}
+				else
+				{
+					app->play->inFoxView = false;
+				}
 			}
+			
 		}
 
 	}
@@ -174,19 +189,24 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				enemies[i]->texture = bird;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
+				enemies[i]->isBird = true;
 
 				for (int a = 0; a < MAX_LIFE; ++a) {
 					enemies[i]->lifes[a] = 1;
 				}
+
 				break;
 			case ENEMY_TYPE::FOX:
 				enemies[i] = new Enemy_Fox(info.x, info.y);
 				enemies[i]->texture = fox;
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
+				enemies[i]->isFox = true;
+
 				for (int a = 0; a < MAX_LIFE; ++a) {
 					enemies[i]->lifes[a] = 1;
 				}
+
 				break;
 			
 			}
@@ -216,124 +236,156 @@ void ModuleEnemies::HandleEnemiesMovement()
 	{
 		if (enemies[i] != nullptr)
 		{
-			if (!enemies[i]->moving && app->play->inEnemyView)
+			if (enemies[i]->isBird)
 			{
-				iPoint movement = enemies[i]->Path();
-				enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
-				enemies[i]->moving = true;
 
-				LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
-			}
-			else
-			{
-				enemies[i]->movingTo = enemies[i]->position;
-			}
-			
+				if (!enemies[i]->moving && app->play->inBirdView)
+				{
+					iPoint movement = enemies[i]->FlyingPath();
+					enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
+					enemies[i]->moving = true;
 
-			if (enemies[i]->movingTo.x == -32 && enemies[i]->movingTo.y == -32)
-			{
+					LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
+				}
+				else
+				{
+					enemies[i]->movingTo = enemies[i]->position;
+				}
+
+
+				if (enemies[i]->movingTo.x == -32 && enemies[i]->movingTo.y == -32)
+				{
+					enemies[i]->moving = false;
+				}
+				else
+				{
+					// ----------------------------------------------------------------------- X
+
+					if (enemies[i]->position.x > (enemies[i]->movingTo.x - 4) ||
+						enemies[i]->position.x < (enemies[i]->movingTo.x + 4))
+					{
+						if (enemies[i]->movingTo.x > enemies[i]->position.x)
+						{
+							// For changing enemy position
+							enemies[i]->position.x += enemies[i]->vel;
+
+							// For moving the collider
+							enemies[i]->birdCollider.GetCollider().Move(enemies[i]->vel, 0);
+
+							// For drawing the collider where it has to be
+							enemies[i]->birdBody.x += enemies[i]->vel;
+						}
+						else if (enemies[i]->movingTo.x < enemies[i]->position.x)
+						{
+							// For changing enemy position
+							enemies[i]->position.x -= enemies[i]->vel;
+
+							// For moving the collider
+							enemies[i]->birdCollider.GetCollider().Move(-enemies[i]->vel, 0);
+
+							// For drawing the collider where it has to be
+							enemies[i]->birdBody.x -= enemies[i]->vel;
+						}
+					}
+					else
+					{
+						enemies[i]->position.x = enemies[i]->movingTo.x;
+					}
+
+					// ----------------------------------------------------------------------- y
+
+					if (enemies[i]->position.y > (enemies[i]->movingTo.y - 4) ||
+						enemies[i]->position.y < (enemies[i]->movingTo.y + 4))
+					{
+						if (enemies[i]->movingTo.y > enemies[i]->position.y)
+						{
+							// For changing enemy position
+							enemies[i]->position.y += enemies[i]->vel;
+
+							// For moving the collider
+							enemies[i]->birdCollider.GetCollider().Move(0, enemies[i]->vel);
+
+							// For drawing the collider where it has to be
+							enemies[i]->birdBody.y += enemies[i]->vel;
+						}
+						else if (enemies[i]->movingTo.y < enemies[i]->position.y)
+						{
+							// For changing enemy position
+							enemies[i]->position.y -= enemies[i]->vel;
+
+							// For moving the collider
+							enemies[i]->birdCollider.GetCollider().Move(0, -enemies[i]->vel);
+
+							// For drawing the collider where it has to be
+							enemies[i]->birdBody.y -= enemies[i]->vel;
+						}
+					}
+					else
+					{
+						enemies[i]->position.y = enemies[i]->movingTo.y;
+					}
+				}
 				enemies[i]->moving = false;
 			}
-			else
+			else if (enemies[i]->isFox)
 			{
-				// ----------------------------------------------------------------------- X
 
-				if (enemies[i]->position.x > (enemies[i]->movingTo.x - 10) ||
-					enemies[i]->position.x < (enemies[i]->movingTo.x + 10))
+				if (!enemies[i]->moving && app->play->inFoxView)
 				{
-					if (enemies[i]->movingTo.x > enemies[i]->position.x)
-					{
-						// For changing enemy position
-						enemies[i]->position.x += enemies[i]->vel;
-						
-						// For moving the collider
-						enemies[i]->birdCollider.GetCollider().Move(enemies[i]->vel, 0);
+					iPoint movement = enemies[i]->FloorPath();
+					enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
+					enemies[i]->moving = true;
 
-						// For drawing the collider where it has to be
-						enemies[i]->birdBody.x += enemies[i]->vel;
-					}
-					else if (enemies[i]->movingTo.x < enemies[i]->position.x)
-					{
-						// For changing enemy position
-						enemies[i]->position.x -= enemies[i]->vel;
-
-						// For moving the collider
-						enemies[i]->birdCollider.GetCollider().Move(-enemies[i]->vel, 0);
-
-						// For drawing the collider where it has to be
-						enemies[i]->birdBody.x -= enemies[i]->vel;
-					}
+					LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
 				}
 				else
 				{
-					enemies[i]->position.x = enemies[i]->movingTo.x;
+					enemies[i]->movingTo = enemies[i]->position;
 				}
 
-				// ----------------------------------------------------------------------- y
 
-				if (enemies[i]->position.y > (enemies[i]->movingTo.y - 10) ||
-					enemies[i]->position.y < (enemies[i]->movingTo.y + 10))
+				if (enemies[i]->movingTo.x == -32 && enemies[i]->movingTo.y == -32)
 				{
-					if (enemies[i]->movingTo.y > enemies[i]->position.y)
-					{
-						// For changing enemy position
-						enemies[i]->position.y += enemies[i]->vel;
-
-						// For moving the collider
-						enemies[i]->birdCollider.GetCollider().Move(0, enemies[i]->vel);
-
-						// For drawing the collider where it has to be
-						enemies[i]->birdBody.y += enemies[i]->vel;
-					}
-					else if (enemies[i]->movingTo.y < enemies[i]->position.y)
-					{
-						// For changing enemy position
-						enemies[i]->position.y -= enemies[i]->vel;
-
-						// For moving the collider
-						enemies[i]->birdCollider.GetCollider().Move(0, -enemies[i]->vel);
-
-						// For drawing the collider where it has to be
-						enemies[i]->birdBody.y -= enemies[i]->vel;
-					}
+					enemies[i]->moving = false;
 				}
 				else
 				{
-					enemies[i]->position.y = enemies[i]->movingTo.y;
+					// ----------------------------------------------------------------------- X
+
+					if (enemies[i]->position.x > (enemies[i]->movingTo.x - 4) ||
+						enemies[i]->position.x < (enemies[i]->movingTo.x + 4))
+					{
+						if (enemies[i]->movingTo.x > enemies[i]->position.x)
+						{
+							// For changing enemy position
+							enemies[i]->position.x += enemies[i]->vel;
+
+							// For moving the collider
+							enemies[i]->foxCollider.GetCollider().Move(enemies[i]->vel, 0);
+
+							// For drawing the collider where it has to be
+							enemies[i]->foxBody.x += enemies[i]->vel;
+						}
+						else if (enemies[i]->movingTo.x < enemies[i]->position.x)
+						{
+							// For changing enemy position
+							enemies[i]->position.x -= enemies[i]->vel;
+
+							// For moving the collider
+							enemies[i]->foxCollider.GetCollider().Move(-enemies[i]->vel, 0);
+
+							// For drawing the collider where it has to be
+							enemies[i]->foxBody.x -= enemies[i]->vel;
+						}
+					}
+					else
+					{
+						enemies[i]->position.x = enemies[i]->movingTo.x;
+					}
 				}
+				enemies[i]->moving = false;
 			}
-			enemies[i]->moving = false;
-
+			
 		}
 	}
 }
-
-/*void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
-{
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
-		{
-			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
-
-			if (app->collisions->matrix[Collider::Type::PLAYER][Collider::Type::ENEMY_HIT])
-			{
-				App->collisions->matrix[Collider::Type::ENEMY][Collider::Type::PLAYER_SHOT] = true;
-			}
-			//---------------------------------------------------------------iNTENT DE VIDES ALS ENEMICS-----------------------------------------------
-			updateLifes(enemies[i]->lifes, 1);
-			if (enemies[i]->lifes[0] == 0)
-			{
-				App->HUD->scoreP1++;
-				delete enemies[i];
-				enemies[i] = nullptr;
-			}
-
-
-
-
-
-			break;
-		}
-	}
-}*/

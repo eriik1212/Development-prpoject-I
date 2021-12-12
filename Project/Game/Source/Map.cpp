@@ -183,7 +183,34 @@ void Map::PropagateBFS()
 	}
 }
 
-iPoint Map::GeneralPathFinding(iPoint initP, iPoint finalP)
+iPoint Map::FlyingPathFinding(iPoint initP, iPoint finalP)
+{
+	//Comprobation to avoid errors
+	if ((!IsWalkable(initP.x, initP.y) || !IsWalkable(finalP.x, finalP.y)) || initP == finalP)
+	{
+		return iPoint(-1, -1);
+	}
+
+	ResetPath(initP);
+
+	while (visited.find(finalP) == -1)
+	{
+		PropagateBFS();
+	}
+
+	iPoint finalPoint = MapToWorld(finalP.x, finalP.y);
+	ComputePath(finalPoint.x, finalPoint.y);
+
+	if ((path.Count() - 2) <= 0)
+	{
+		return iPoint(-1, -1);
+	}
+
+	//We return the next pos
+	return path[path.Count() - 2];
+}
+
+iPoint Map::FloorPathFinding(iPoint initP, iPoint finalP)
 {
 	//Comprobation to avoid errors
 	if ((!IsWalkable(initP.x, initP.y) || !IsWalkable(finalP.x, finalP.y)) || initP == finalP)

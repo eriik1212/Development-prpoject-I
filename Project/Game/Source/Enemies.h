@@ -65,11 +65,13 @@ public:
 	// All spawned enemies in the scene
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
 
+
 	void UpdateLifes(unsigned short* lifes, unsigned short damage);
 
 	void HandleEnemiesMovement();
 	
 	bool birdHitted = false;
+	bool foxHitted = false;
 
 
 private:

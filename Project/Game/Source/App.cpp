@@ -228,6 +228,7 @@ void App::FinishUpdate()
 
 	float secondsSinceStartup = startupTime.ReadSec();
 
+
 	if (lastSecFrameTime.Read() > 1000) {
 		lastSecFrameTime.Start();
 		framesPerSecond = lastSecFrameCount;
