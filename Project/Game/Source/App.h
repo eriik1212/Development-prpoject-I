@@ -114,6 +114,8 @@ public:
 	ModuleFadeToBlack* fade;
 	//ModuleCollisions* collisions;
 	GameOverScreen* gameOver;
+
+	bool lowFPS = false;
 	
 private:
 

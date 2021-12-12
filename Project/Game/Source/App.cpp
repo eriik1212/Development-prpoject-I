@@ -18,7 +18,7 @@
 #include "Enemy_Fox.h"
 #include "Level2.h"
 #include "HUD.h"
-
+#include "Input.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -117,7 +117,7 @@ bool App::Awake()
 		organization.Create(configApp.child("organization").child_value());
 
 		//read the framerate from config file
-		maxFrameRate = configApp.child("frcap").attribute("value").as_int();
+		maxFrameRate = configApp.child("frcap").attribute("value").as_int(); //60fps
 	}
 
 	if (ret == true)
@@ -158,6 +158,22 @@ bool App::Start()
 // Called each loop iteration
 bool App::Update()
 {
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (lowFPS)
+		{
+			maxFrameRate = 16;
+			lowFPS = false;
+		}
+		else
+		{
+			maxFrameRate = 33;
+			lowFPS = true;
+		}
+			
+	}
+
+
 	bool ret = true;
 	PrepareUpdate();
 
