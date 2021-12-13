@@ -217,12 +217,6 @@ bool Player::Start()
 
 	chekpoint = false;
 
-	if (app->title->cont)
-	{
-		app->LoadGameRequest();
-
-	}
-
 	currentAnimation = &idleAnimR;
 
 	return true;
@@ -701,6 +695,10 @@ bool Player::LoadState(pugi::xml_node& data)
 	app->render->playerLimitL = data.child("playerLimit").attribute("Left").as_int();
 	app->render->playerLimitR = data.child("playerLimit").attribute("Right").as_int();
 
+	//Load Camera
+	app->render->camera.x = data.child("camera").attribute("x").as_int();
+	app->render->camera.y = data.child("camera").attribute("y").as_int();
+
 	return true;
 }
 
@@ -717,6 +715,12 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 	playLimit.append_attribute("Left") = app->render->playerLimitL;
 	playLimit.append_attribute("Right") = app->render->playerLimitR;
+
+	//Load Camera
+	pugi::xml_node cam = data.append_child("camera");
+
+	cam.append_attribute("x") = app->render->camera.x;
+	cam.append_attribute("y") = app->render->camera.y;
 
 	return true;
 }

@@ -101,12 +101,14 @@ bool TitleScreen::Update(float dt)
 			if (app->play->lastLevel == 1)
 			{
 				app->fade->FadeToBlack(this, app->scene, 30);
+				app->LoadGameRequest();
 
 			}
 
 			if (app->play->lastLevel == 2)
 			{
 				app->fade->FadeToBlack(this, app->level2, 30);
+				app->LoadGameRequest();
 
 			}
 

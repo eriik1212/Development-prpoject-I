@@ -101,6 +101,14 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 
 			app->enemies->birdHitted = true;
 
+			for (uint i = 0; i < MAX_ENEMIES; ++i)
+			{
+				if (app->enemies->enemies[i] != nullptr)
+				{
+					app->enemies->UpdateLifes(app->enemies->enemies[i]->lifes, 1);
+				}
+			}
+
 			LOG("INSIDE COLLISION");
 
 			return true;

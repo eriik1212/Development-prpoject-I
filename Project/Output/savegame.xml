@@ -12,8 +12,9 @@
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<player x="80" y="348" />
-		<playerLimit Left="100" Right="300" />
+		<player x="1480" y="116" />
+		<playerLimit Left="1284" Right="1484" />
+		<camera x="-1776" y="0" />
 	</player>
 	<enemies>
 		<fox x="0" y="0" />
@@ -23,6 +24,6 @@
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-1776" y="0" />
 	</renderer>
 </save_state>
