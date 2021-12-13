@@ -32,6 +32,9 @@ public:
 	// Called from ModuleEnemies' Update
 	virtual void Draw();
 
+	void UpdateLifesBird(unsigned short* lifes, unsigned short damage);
+	void UpdateLifesFox(unsigned short* lifes, unsigned short damage);
+
 	// Handle Movement
 	iPoint FlyingPath();
 	iPoint FloorPath();

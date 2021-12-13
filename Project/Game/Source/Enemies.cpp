@@ -192,7 +192,7 @@ void ModuleEnemies::HandleEnemiesSpawn()
 		if (spawnQueue[i].type != ENEMY_TYPE::NO_TYPE)
 		{
 			// Spawn a new enemy if the screen has reached a spawn position
-			if (spawnQueue[i].x * 3 < app->render->camera.x + (app->render->camera.w * 3) + SPAWN_MARGIN)
+			// if (spawnQueue[i].x * 3 < app->render->camera.x + (app->render->camera.w * 3) + SPAWN_MARGIN)
 			{
 				LOG("Spawning enemy at %d", spawnQueue[i].x * app->win->GetScale());
 

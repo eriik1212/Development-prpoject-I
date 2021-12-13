@@ -106,6 +106,7 @@ bool Level2::Start()
 
 		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
 		app->enemies->AddEnemy(ENEMY_TYPE::FOX, 826, 308);
+		app->enemies->AddEnemy(ENEMY_TYPE::FOX, 1400, 100);
 
 		app->play->playerData.isDead = false;
 		app->play->debug = false;

@@ -294,6 +294,8 @@ bool Scene::Update(float dt)
 			app->play->Disable();
 			app->map->Disable();
 			app->scene->Disable();
+			app->enemies->Disable();
+			app->hud->Disable();
 
 			app->play->restartLVL2 = true;
 			app->play->playerData.winner = false;

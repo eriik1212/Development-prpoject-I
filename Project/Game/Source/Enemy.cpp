@@ -8,6 +8,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Map.h"
+#include "Enemies.h"
 
 
 
@@ -36,6 +37,8 @@ void Enemy::Update()
 {
 	if (currentAnim != nullptr)
 		currentAnim->Update();
+
+
 	//----------------------------------------------------left collider
 
 	/*if (collider != nullptr && direcction == 0)
