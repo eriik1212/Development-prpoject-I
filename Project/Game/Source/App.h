@@ -30,6 +30,7 @@ class Enemy_Fox;
 //class ModuleCollisions;
 class ModuleFadeToBlack;
 class GameOverScreen;
+class GuiManager;
 
 class App
 {
@@ -116,6 +117,7 @@ public:
 	ModuleFadeToBlack* fade;
 	//ModuleCollisions* collisions;
 	GameOverScreen* gameOver;
+	GuiManager* guiManager;
 
 	bool lowFPS = false;
 	

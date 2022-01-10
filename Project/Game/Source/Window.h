@@ -25,11 +25,16 @@ public:
 	void SetTitle(const char* title);
 
 	// Retrive window size
-	void GetWindowSize(uint& 
-		, uint& height) const;
+	void GetWindowSize(uint& width, uint& height) const;
 
 	// Retrieve window scale
 	float GetScale() const;
+
+	// Retrieve window Width
+	int GetWidth() const;
+
+	// Retrieve window height
+	int GetHeight() const;
 
 public:
 	// The window we'll be rendering to

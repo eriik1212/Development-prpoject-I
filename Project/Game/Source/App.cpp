@@ -21,6 +21,7 @@
 #include "Input.h"
 #include "Defs.h"
 #include "Log.h"
+#include "GuiManager.h"
 
 #include <iostream>
 #include <sstream>
@@ -48,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new ModuleFadeToBlack(true);
 	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);
+	guiManager = new GuiManager(true);
 
 	render = new Render(true);
 
@@ -70,6 +72,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fade);
 	//AddModule(collisions);
 	AddModule(gameOver);
+	AddModule(guiManager);
 
 	// Render last to swap buffer
 	AddModule(render);

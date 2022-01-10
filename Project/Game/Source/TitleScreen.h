@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Scene.h"
-
+#include "GuiButton.h"
 
 
 struct SDL_Texture;
@@ -30,6 +30,11 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	bool PostUpdate() override;
 
+	// Called before quitting
+	bool CleanUp();
+
+	// Define multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
 	// Members Texture
@@ -46,6 +51,9 @@ public:
 	SDL_Rect backgroundTitle, NewGameRect, ContinueRect;
 	bool cont;
 
+private:
+	GuiButton* btn1;
+	GuiButton* btn2;
 };
 
 #endif //__MODULE_MEMBERS_H__

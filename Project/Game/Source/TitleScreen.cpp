@@ -9,6 +9,11 @@
 #include "Player.h"
 #include "FadeToBlack.h"
 #include "Level2.h"
+#include "GuiManager.h"
+#include "Window.h"
+
+#include "Defs.h"
+#include "Log.h"
 
 
 TitleScreen::TitleScreen(bool enabled) : Module(enabled)
@@ -51,8 +56,8 @@ bool TitleScreen::Start()
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
-	NewGameRect.x = 0;
-	NewGameRect.y = 0;
+	NewGameRect.x = 288;
+	NewGameRect.y = 288;
 	NewGameRect.w = 99;
 	NewGameRect.h = 16;
 
@@ -73,6 +78,9 @@ bool TitleScreen::Start()
 
 	//Fade In
 	app->fade->FadeToBlack(this, app->title, 30);
+
+	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "NewGame", NewGameRect, this);
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (app->win->GetWidth() / 4), app->win->GetWidth() / 10, 160, 40 }, this);
 
 	return true;
 }
@@ -129,8 +137,6 @@ bool TitleScreen::Update(float dt)
 		option = 1;
 	}
 
-	
-
 	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		return false;
@@ -152,11 +158,48 @@ bool TitleScreen::PostUpdate()
 	}
 	else
 	{
-		app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
+		//app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
 		app->render->DrawTexture(ContinuePressed, 405, 464, false, &ContinueRect);
 	}
-	
+
+	//Draw GUI
+	app->guiManager->Draw();
+
 	// DrawTexture TEMPLATE
 	//app->render->DrawTexture(nom textura, rectangle.x, rectangle.y, --necesita estar escalat?--, &rectangle)
+	return true;
+}
+
+bool TitleScreen::CleanUp()
+{
+	LOG("Freeing TitleScreen");
+
+	return true;
+}
+
+bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
+{
+
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		//Checks the GUI element ID
+		if (control->id == 1)
+		{
+			LOG("Click on button 1");
+		}
+
+		if (control->id == 2)
+		{
+			LOG("Click on button 2");
+		}
+
+	}
+	//Other cases here
+
+	default: break;
+	}
+
 	return true;
 }

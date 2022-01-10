@@ -37,6 +37,8 @@
     </ClCompile>
     <ClCompile Include="Source\Level2.cpp" />
     <ClCompile Include="Source\HUD.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -100,6 +102,9 @@
     <ClInclude Include="Source\Queue.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiButton.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
