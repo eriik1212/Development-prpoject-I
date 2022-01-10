@@ -57,12 +57,12 @@ bool TitleScreen::Start()
 	app->render->camera.y = 0;
 
 	NewGameRect.x = 288;
-	NewGameRect.y = 288;
+	NewGameRect.y = 280;
 	NewGameRect.w = 99;
 	NewGameRect.h = 16;
 
-	ContinueRect.x = 0;
-	ContinueRect.y = 0;
+	ContinueRect.x = 270;
+	ContinueRect.y = 300;
 	ContinueRect.w = 152;
 	ContinueRect.h = 16;
 
@@ -80,7 +80,7 @@ bool TitleScreen::Start()
 	app->fade->FadeToBlack(this, app->title, 30);
 
 	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "NewGame", NewGameRect, this);
-	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", { (app->win->GetWidth() / 4), app->win->GetWidth() / 10, 160, 40 }, this);
+	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", ContinueRect, this);
 
 	return true;
 }
@@ -88,7 +88,7 @@ bool TitleScreen::Start()
 bool TitleScreen::Update(float dt)
 {
 	// ScanCodes
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		//Fade Out
 		app->audio->PlayFx(enterFX);
@@ -135,9 +135,9 @@ bool TitleScreen::Update(float dt)
 	{
 		app->audio->PlayFx(changeFX);
 		option = 1;
-	}
+	}*/
 
-	else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		return false;
 	}
@@ -151,16 +151,16 @@ bool TitleScreen::PostUpdate()
 
 	app->render->DrawTexture(Title, 0, 0, false, NULL);
 
-	if (option == 1)
+	/*if (option == 1)
 	{
 		app->render->DrawTexture(NewGamePressed, 432, 432, false, &NewGameRect);
 		app->render->DrawTexture(ContinueUnpressed, 405, 464, false, &ContinueRect);
 	}
 	else
 	{
-		//app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
+		app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
 		app->render->DrawTexture(ContinuePressed, 405, 464, false, &ContinueRect);
-	}
+	}*/
 
 	//Draw GUI
 	app->guiManager->Draw();
@@ -187,12 +187,40 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 		//Checks the GUI element ID
 		if (control->id == 1)
 		{
-			LOG("Click on button 1");
+			cont = false;
+
+			app->audio->PlayFx(changeFX);
+
+			app->play->restartLVL1 = true;
+			//app->SaveGameRequest();
+			app->fade->FadeToBlack(this, app->scene, 30);
+
+			app->play->playerData.isDead = false;
+
+			LOG("Click on NewGame");
 		}
 
 		if (control->id == 2)
 		{
-			LOG("Click on button 2");
+			cont = true;
+
+			app->audio->PlayFx(changeFX);
+
+			if (app->play->lastLevel == 1)
+			{
+				app->fade->FadeToBlack(this, app->scene, 30);
+				app->LoadGameRequest();
+
+			}
+
+			if (app->play->lastLevel == 2)
+			{
+				app->fade->FadeToBlack(this, app->level2, 30);
+				app->LoadGameRequest();
+
+			}
+
+			LOG("Click on ContinueGame");
 		}
 
 	}

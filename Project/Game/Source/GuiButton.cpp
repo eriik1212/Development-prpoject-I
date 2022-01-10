@@ -8,7 +8,11 @@
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
-	this->bounds = bounds;
+	//this->bounds = bounds;
+	this->bounds.x = bounds.x * app->win->GetScale();
+	this->bounds.y = bounds.y * app->win->GetScale();
+	this->bounds.w = bounds.w * app->win->GetScale();
+	this->bounds.h = bounds.h * app->win->GetScale();
 	this->text = text;
 
 	canClick = true;
@@ -29,8 +33,8 @@ bool GuiButton::Update(float dt)
 
 		LOG("X: %d, Y: %d", mouseX, mouseY);
 
-		if ((mouseX > (bounds.x * app->win->GetScale()) && (mouseX < ((bounds.x + bounds.w) * app->win->GetScale())) &&
-			(mouseY > (bounds.y * app->win->GetScale())) && (mouseY < ((bounds.y + bounds.h) * app->win->GetScale()))))
+		if ((mouseX > (bounds.x) && (mouseX < ((bounds.x + bounds.w))) &&
+			(mouseY > (bounds.y)) && (mouseY < (bounds.y + bounds.h))))
 		{
 			state = GuiControlState::FOCUSED;
 
@@ -68,26 +72,53 @@ bool GuiButton::Draw(Render* render)
 		//Checks the GUI element ID
 		if (id == 1)
 		{
-			app->render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, true, &app->title->NewGameRect);
-
+			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
 		}
 
 		if (id == 2)
 		{
-			
+			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
+
 		}
 
-		render->DrawRectangle(bounds, 255, 0, 0, 255);
 
 	} break;
 
 	case GuiControlState::FOCUSED:
 	{
-		render->DrawRectangle(bounds, 255, 255, 255, 160);
+		//Checks the GUI element ID
+		// ID = 1 -> New Game Button
+		if (id == 1)
+		{
+			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
+
+		}
+
+		// ID = 2 -> Continue Button
+		if (id == 2)
+		{
+			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
+
+		}
+
+		//render->DrawRectangle(bounds, 255, 255, 255, 160);
 	} break;
 	case GuiControlState::PRESSED:
 	{
-		render->DrawRectangle(bounds, 255, 255, 255, 255);
+		//Checks the GUI element ID
+		if (id == 1)
+		{
+			render->DrawTexture(app->title->NewGamePressed, bounds.x, bounds.y, false, 0);
+
+		}
+
+		if (id == 2)
+		{
+			render->DrawTexture(app->title->ContinuePressed, bounds.x, bounds.y, false, 0);
+
+		}
+
+		//render->DrawRectangle(bounds, 255, 255, 255, 255);
 	} break;
 
 	/******/
