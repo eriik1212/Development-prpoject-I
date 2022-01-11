@@ -31,7 +31,7 @@ bool GuiButton::Update(float dt)
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
 
-		LOG("X: %d, Y: %d", mouseX, mouseY);
+		//LOG("X: %d, Y: %d", mouseX, mouseY);
 
 		if ((mouseX > (bounds.x) && (mouseX < ((bounds.x + bounds.w))) &&
 			(mouseY > (bounds.y)) && (mouseY < (bounds.y + bounds.h))))
@@ -70,17 +70,40 @@ bool GuiButton::Draw(Render* render)
 	case GuiControlState::NORMAL:
 	{
 		//Checks the GUI element ID
-		if (id == 1)
+		// ID = 1 -> New Game Button
+		// ID = 2 -> Continue Button
+		// ID = 3 -> Settings Button
+		// ID = 4 -> Credits Button
+		// ID = 5 -> ExitOptions Button
+
+		switch (id)
 		{
+		case 1:
 			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
-		}
-
-		if (id == 2)
-		{
+			selectedSound_isPlaying = false;
+			break;
+		case 2:
 			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
-
+			selectedSound_isPlaying = false;
+			break;
+		case 3:
+			render->DrawRectangle(app->title->settingsRect, 100, 100, 100, 255);
+			selectedSound_isPlaying = false;
+			break;
+		case 4:
+			render->DrawRectangle(app->title->creditsRect, 100, 0, 100, 255);
+			selectedSound_isPlaying = false;
+			break;
+		case 5:
+			if (app->title->optionsEnabled)
+			{
+				render->DrawRectangle(app->title->exitOptionsRect, 0, 0, 255, 255);
+				selectedSound_isPlaying = false;
+			}
+			break;
+		default:
+			break;
 		}
-
 
 	} break;
 
@@ -88,37 +111,111 @@ bool GuiButton::Draw(Render* render)
 	{
 		//Checks the GUI element ID
 		// ID = 1 -> New Game Button
-		if (id == 1)
-		{
-			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
-
-		}
-
 		// ID = 2 -> Continue Button
-		if (id == 2)
-		{
-			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
+		// ID = 3 -> Settings Button
+		// ID = 4 -> Credits Button
+		// ID = 5 -> ExitOptions Button
 
+		switch (id)
+		{
+		case 1:
+			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 2:
+			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 3:
+			render->DrawRectangle(app->title->settingsRect, 100, 100, 100, 255);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 4:
+			render->DrawRectangle(app->title->creditsRect, 100, 0, 100, 255);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 5:
+			if (app->title->optionsEnabled)
+			{
+				render->DrawRectangle(app->title->exitOptionsRect, 0, 0, 255, 125);
+				if (!selectedSound_isPlaying)
+				{
+					app->audio->PlayFx(app->title->changeFX);
+					selectedSound_isPlaying = true;
+				}
+			}
+			
+			break;
+		default:
+			break;
 		}
 
 		//render->DrawRectangle(bounds, 255, 255, 255, 160);
+
 	} break;
 	case GuiControlState::PRESSED:
 	{
 		//Checks the GUI element ID
-		if (id == 1)
+		// ID = 1 -> New Game Button
+		// ID = 2 -> Continue Button
+		// ID = 3 -> Settings Button
+		// ID = 4 -> Credits Button
+		// ID = 5 -> ExitOptions Button
+
+		switch (id)
 		{
+		case 1:
 			render->DrawTexture(app->title->NewGamePressed, bounds.x, bounds.y, false, 0);
 
-		}
-
-		if (id == 2)
-		{
+			break;
+		case 2:
 			render->DrawTexture(app->title->ContinuePressed, bounds.x, bounds.y, false, 0);
 
+			break;
+		case 3:
+			render->DrawRectangle(app->title->settingsRect, 255, 100, 100, 255);
+
+			break;
+		case 4:
+			render->DrawRectangle(app->title->creditsRect, 255, 100, 100, 255);
+
+			break;
+		case 5:
+			if (app->title->optionsEnabled)
+			{
+				render->DrawRectangle(app->title->exitOptionsRect, 255, 255, 255, 255);
+			}
+			break;
+		default:
+			break;
 		}
 
 		//render->DrawRectangle(bounds, 255, 255, 255, 255);
+
 	} break;
 
 	/******/

@@ -21,6 +21,8 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
+
+	bool selectedSound_isPlaying = false;
 };
 
 #endif // __GUIBUTTON_H__

@@ -36,6 +36,8 @@ public:
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+	void DrawOptionsMenu();
+
 public:
 	// Members Texture
 	SDL_Texture* Title;
@@ -43,17 +45,31 @@ public:
 	SDL_Texture* NewGameUnpressed;
 	SDL_Texture* ContinuePressed;
 	SDL_Texture* ContinueUnpressed;
+	SDL_Texture* SelectArrow;
 
 	uint changeFX;
 	uint enterFX;
+
 	int option=1;
 	uint TitleMusic;
-	SDL_Rect backgroundTitle, NewGameRect, ContinueRect;
+	SDL_Rect backgroundTitle,
+		NewGameRect,
+		ContinueRect,
+		settingsRect,
+		creditsRect,
+		exitOptionsRect;
+
 	bool cont;
 
+	bool optionsEnabled = false;
+	bool exitButtonCreated = false;
+
 private:
-	GuiButton* btn1;
-	GuiButton* btn2;
+	GuiButton* newGameButton;
+	GuiButton* continueButton;
+	GuiButton* settingsButton;
+	GuiButton* creditsButton;
+	GuiButton* exitOptionsButton;
 };
 
 #endif //__MODULE_MEMBERS_H__

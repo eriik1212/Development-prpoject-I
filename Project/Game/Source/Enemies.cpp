@@ -194,7 +194,7 @@ void ModuleEnemies::HandleEnemiesSpawn()
 			// Spawn a new enemy if the screen has reached a spawn position
 			// if (spawnQueue[i].x * 3 < app->render->camera.x + (app->render->camera.w * 3) + SPAWN_MARGIN)
 			{
-				LOG("Spawning enemy at %d", spawnQueue[i].x * app->win->GetScale());
+				//LOG("Spawning enemy at %d", spawnQueue[i].x * app->win->GetScale());
 
 				SpawnEnemy(spawnQueue[i]);
 				spawnQueue[i].type = ENEMY_TYPE::NO_TYPE; // Removing the newly spawned enemy from the queue
@@ -292,7 +292,7 @@ void ModuleEnemies::HandleEnemiesMovement()
 					enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
 					enemies[i]->moving = true;
 
-					LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
+					//LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
 				}
 				else
 				{
@@ -383,7 +383,7 @@ void ModuleEnemies::HandleEnemiesMovement()
 					enemies[i]->movingTo = app->map->MapToWorld(movement.x, movement.y);
 					enemies[i]->moving = true;
 
-					LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
+					//LOG("MOVING TO X %d, MOVING TO Y %d", enemies[i]->movingTo.x, enemies[i]->movingTo.y);
 				}
 				else
 				{
