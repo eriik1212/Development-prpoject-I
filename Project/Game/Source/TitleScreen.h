@@ -45,6 +45,15 @@ public:
 	SDL_Texture* NewGameUnpressed;
 	SDL_Texture* ContinuePressed;
 	SDL_Texture* ContinueUnpressed;
+	SDL_Texture* exitGameUnpressed;
+	SDL_Texture* exitGamePressed;
+	SDL_Texture* settingsUnpressed;
+	SDL_Texture* settingsPressed;
+	SDL_Texture* creditsUnpressed;
+	SDL_Texture* creditsPressed;
+	SDL_Texture* exitOptions;
+	SDL_Texture* exitOptionsFocused;
+	SDL_Texture* exitOptionsPressed;
 	SDL_Texture* SelectArrow;
 
 	uint changeFX;
@@ -57,6 +66,7 @@ public:
 		ContinueRect,
 		settingsRect,
 		creditsRect,
+		exitGameRect,
 		exitOptionsRect;
 
 	bool cont;
@@ -64,11 +74,14 @@ public:
 	bool optionsEnabled = false;
 	bool exitButtonCreated = false;
 
+	bool exitGameRequest = false;
+
 private:
 	GuiButton* newGameButton;
 	GuiButton* continueButton;
 	GuiButton* settingsButton;
 	GuiButton* creditsButton;
+	GuiButton* exitGameButton;
 	GuiButton* exitOptionsButton;
 };
 
