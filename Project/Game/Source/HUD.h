@@ -80,6 +80,7 @@ public:
 	uint lifeIncrease = 0;
 	int lifes = 3;
 	int soulCounter = 0;
+	int GameFont = -1;
 
 };
 

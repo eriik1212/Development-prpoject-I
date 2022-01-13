@@ -95,6 +95,7 @@
     <ClCompile Include="Source\Enemy_Bird.cpp" />
     <ClCompile Include="Source\Enemy_Fox.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
+    <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\GameOverScreen.cpp" />
     <ClCompile Include="Source\GuiButton.cpp" />
     <ClCompile Include="Source\GuiManager.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Source\Enemy_Bird.h" />
     <ClInclude Include="Source\Enemy_Fox.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
+    <ClInclude Include="Source\Font.h" />
     <ClInclude Include="Source\GameOverScreen.h" />
     <ClInclude Include="Source\GuiButton.h" />
     <ClInclude Include="Source\GuiControl.h" />

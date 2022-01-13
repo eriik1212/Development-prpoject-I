@@ -27,6 +27,7 @@ class ModuleEnemies;
 class ModuleHUD;
 class Enemy_Bird;
 class Enemy_Fox;
+class ModuleFonts;
 //class ModuleCollisions;
 class ModuleFadeToBlack;
 class GameOverScreen;
@@ -115,6 +116,7 @@ public:
 	Enemy_Bird* bird_enemy;
 	Enemy_Fox* fox_enemy;
 	ModuleFadeToBlack* fade;
+	ModuleFonts* font;
 	//ModuleCollisions* collisions;
 	GameOverScreen* gameOver;
 	GuiManager* guiManager;
