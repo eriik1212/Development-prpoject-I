@@ -48,39 +48,70 @@ bool TitleScreen::Start()
 	enterFX = app->audio->LoadFx("Assets/audio/fx/enter.wav");
 
 	Title = app->tex->Load("Assets/textures/titleW.png");
-	NewGamePressed= app->tex->Load("Assets/textures/PressedNG.png");
-	NewGameUnpressed= app->tex->Load("Assets/textures/UnpressedNG.png");
-	ContinuePressed= app->tex->Load("Assets/textures/PressedCont.png");
-	ContinueUnpressed= app->tex->Load("Assets/textures/UnpressedCont.png");
+
+	NewGamePressed= app->tex->Load("Assets/textures/buttons/PressedNG.png");
+	NewGameUnpressed= app->tex->Load("Assets/textures/buttons/UnpressedNG.png");
+	ContinuePressed= app->tex->Load("Assets/textures/buttons/PressedCont.png");
+	ContinueUnpressed= app->tex->Load("Assets/textures/buttons/UnpressedCont.png");
+	exitGameUnpressed= app->tex->Load("Assets/textures/buttons/exitGame.png");
+	exitGamePressed= app->tex->Load("Assets/textures/buttons/exitGamePressed.png");
+	settingsUnpressed= app->tex->Load("Assets/textures/buttons/settingsUnpressed.png");
+	settingsPressed= app->tex->Load("Assets/textures/buttons/settingsPressed.png");
+	creditsUnpressed= app->tex->Load("Assets/textures/buttons/creditsUnpressed.png");
+	creditsPressed= app->tex->Load("Assets/textures/buttons/creditsPressed.png");
+	exitOptions= app->tex->Load("Assets/textures/x.png");
+	exitOptionsFocused= app->tex->Load("Assets/textures/xFocused.png");
+	exitOptionsPressed= app->tex->Load("Assets/textures/xPressed.png");
+	SelectArrow = app->tex->Load("Assets/textures/buttons/SelectedArrow.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
 	NewGameRect.x = 288;
-	NewGameRect.y = 280;
-	NewGameRect.w = 99;
+	NewGameRect.y = 260;
+	NewGameRect.w = 80;
 	NewGameRect.h = 16;
 
-	ContinueRect.x = 270;
-	ContinueRect.y = 300;
-	ContinueRect.w = 152;
+	ContinueRect.x = 276;
+	ContinueRect.y = 280;
+	ContinueRect.w = 124;
 	ContinueRect.h = 16;
+
+	settingsRect.x = 288;
+	settingsRect.y = 300;
+	settingsRect.w = 80;
+	settingsRect.h = 16;
+
+	creditsRect.x = 288;
+	creditsRect.y = 320;
+	creditsRect.w = 80;
+	creditsRect.h = 16;
+
+	exitGameRect.x = 300;
+	exitGameRect.y = 340;
+	exitGameRect.w = 40;
+	exitGameRect.h = 16;
+
+	exitOptionsRect.x = 75;
+	exitOptionsRect.y = 75;
+	exitOptionsRect.w = 16;
+	exitOptionsRect.h = 16;
 
 	backgroundTitle.x = 0;
 	backgroundTitle.y = 0;
 	backgroundTitle.w = 690;
 	backgroundTitle.h = 480;
-	// Members Texture
-	//GameOverTex = app->tex->Load("Assets/textures/gameover.png");
 
-	//Aqui podem posar algun so a veure amb la pantalla d'inici
-	//app->audio->PlayMusic("Assets/Audio/02_character_selection.ogg", 1.0f);
+	exitGameRequest = false;
 
-	//Fade In
-	app->fade->FadeToBlack(this, app->title, 30);
+	newGameButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "NewGame", NewGameRect, this);
+	continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", ContinueRect, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "Settings", settingsRect, this);
+	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", creditsRect, this);
+	exitOptionsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "ExitOptions", exitOptionsRect, this);
+	exitGameButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "ExitGame", exitGameRect, this);
 
-	btn1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "NewGame", NewGameRect, this);
-	btn2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "Continue", ContinueRect, this);
+	exitOptionsButton->state = GuiControlState::DISABLED;
 
 	return true;
 }
@@ -137,7 +168,7 @@ bool TitleScreen::Update(float dt)
 		option = 1;
 	}*/
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || exitGameRequest)
 	{
 		return false;
 	}
@@ -162,6 +193,11 @@ bool TitleScreen::PostUpdate()
 		app->render->DrawTexture(ContinuePressed, 405, 464, false, &ContinueRect);
 	}*/
 
+	if (optionsEnabled)
+	{
+		DrawOptionsMenu();
+	}
+
 	//Draw GUI
 	app->guiManager->Draw();
 
@@ -185,11 +221,19 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 	case GuiControlType::BUTTON:
 	{
 		//Checks the GUI element ID
-		if (control->id == 1)
+		// ID = 1 -> New Game Button
+		// ID = 2 -> Continue Button
+		// ID = 3 -> Settings Button
+		// ID = 4 -> Credits Button
+		// ID = 5 -> ExitOptions Button
+		// ID = 6 -> ExitGame Button
+
+		switch (control->id)
 		{
+		case 1:
 			cont = false;
 
-			app->audio->PlayFx(changeFX);
+			app->audio->PlayFx(enterFX);
 
 			app->play->restartLVL1 = true;
 			//app->SaveGameRequest();
@@ -198,13 +242,11 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			app->play->playerData.isDead = false;
 
 			LOG("Click on NewGame");
-		}
-
-		if (control->id == 2)
-		{
+			break;
+		case 2:
 			cont = true;
 
-			app->audio->PlayFx(changeFX);
+			app->audio->PlayFx(enterFX);
 
 			if (app->play->lastLevel == 1)
 			{
@@ -221,6 +263,33 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			}
 
 			LOG("Click on ContinueGame");
+			break;
+		case 3:
+			app->audio->PlayFx(enterFX);
+
+			optionsEnabled = true;
+
+			exitOptionsButton->state = GuiControlState::NORMAL;
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+			app->audio->PlayFx(enterFX);
+
+			optionsEnabled = false;
+			exitButtonCreated = false;
+			exitOptionsButton->state = GuiControlState::DISABLED;
+
+			break;
+		case 6:
+			app->audio->PlayFx(enterFX);
+
+			exitGameRequest = true;
+			break;
+		default:
+			break;
 		}
 
 	}
@@ -230,4 +299,9 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 	}
 
 	return true;
+}
+
+void TitleScreen::DrawOptionsMenu()
+{
+	app->render->DrawRectangle({ 50,50,540,380 }, 0, 0, 0, 175);
 }

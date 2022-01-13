@@ -9,7 +9,10 @@
 
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module(startEnabled)
 {
-	screenRect = { 0, 0, 960,  720 };
+	screenRect.x = 0;
+	screenRect.y = 0;
+	screenRect.w = 960.0f;
+	screenRect.h = 720.0f;
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
@@ -20,6 +23,11 @@ ModuleFadeToBlack::~ModuleFadeToBlack()
 bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
+
+	screenRect.x = 0;
+	screenRect.y = 0;
+	screenRect.w = 960.0f * app->win->GetScale();
+	screenRect.h = 720.0f * app->win->GetScale();
 
 	// Enable blending mode for transparency
 	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);

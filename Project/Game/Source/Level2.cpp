@@ -259,17 +259,17 @@ bool Level2::Update(float dt)
 		app->render->DrawTexture(background_lights1, app->render->camera.w * 2, -150, false, NULL, 0.1f);
 		app->render->DrawTexture(background_lights1, app->render->camera.w * 3, -150, false, NULL, 0.1f);
 
-		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 0, -150, false, NULL, 0.15f);
-		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 1, -150, false, NULL, 0.15f);
-		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 2, -150, false, NULL, 0.15f);
-		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 3, -150, false, NULL, 0.15f);
-		app->render->DrawTexture(background_forest2, (app->render->camera.w / 6) * 4, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, 160 * 0, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, 160 * 1, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, 160 * 2, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, 160 * 3, -150, false, NULL, 0.15f);
+		app->render->DrawTexture(background_forest2, 160 * 4, -150, false, NULL, 0.15f);
 
-		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 0, -150, false, NULL, 0.2f);
-		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 1, -150, false, NULL, 0.2f);
-		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 2, -150, false, NULL, 0.2f);
-		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 3, -150, false, NULL, 0.2f);
-		app->render->DrawTexture(background_forest3, (app->render->camera.w / 6) * 4, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, 160 * 0, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, 160 * 1, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, 160 * 2, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, 160 * 3, -150, false, NULL, 0.2f);
+		app->render->DrawTexture(background_forest3, 160 * 4, -150, false, NULL, 0.2f);
 
 		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 0, -150, false, NULL, 0.25f);
 		app->render->DrawTexture(background_forest4, (app->render->camera.w / 2) * 1, -150, false, NULL, 0.25f);
