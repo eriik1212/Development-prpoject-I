@@ -26,7 +26,7 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
-	if (state != GuiControlState::DISABLED)
+	if (state != GuiControlState::DISABLED && app->title->Enabled())
 	{
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
@@ -49,17 +49,14 @@ bool GuiButton::Update(float dt)
 				NotifyObserver();
 			}
 
-			
-
 		}
 		else
 		{
 			state = GuiControlState::NORMAL;
-			LOG("ENABLED");
 
 		}
 
-		if (app->title->optionsEnabled && id != 5)
+		if ((app->title->optionsEnabled || app->title->creditsEnabled) && id != 5)
 		{
 			state = GuiControlState::DISABLED;
 		}

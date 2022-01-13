@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Scene.h"
 #include "GuiButton.h"
+#include "GuiCheckBox.h"
 
 
 struct SDL_Texture;
@@ -37,6 +38,8 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	void DrawOptionsMenu();
+
+	void DrawCreditsMenu();
 
 public:
 	// Members Texture
@@ -74,6 +77,7 @@ public:
 	bool cont;
 
 	bool optionsEnabled = false;
+	bool creditsEnabled = false;
 
 	bool exitGameRequest = false;
 
@@ -83,8 +87,8 @@ public:
 	GuiButton* settingsButton;
 	GuiButton* creditsButton;
 	GuiButton* exitGameButton;
-	/*GuiButton* fullscreenButton;
-	GuiButton* vsyncButton;*/
+	GuiCheckBox* fullscreenToggle;
+	GuiCheckBox* vsyncToggle;
 	GuiButton* exitOptionsButton;
 };
 

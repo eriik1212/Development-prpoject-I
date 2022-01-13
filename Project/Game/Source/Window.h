@@ -3,6 +3,11 @@
 
 #include "Module.h"
 
+#include "App.h"
+
+#include "Defs.h"
+#include "Log.h"
+
 struct SDL_Window;
 struct SDL_Surface;
 
@@ -17,6 +22,9 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
+
+	// Called at the middle of the application loop
+	bool Update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -46,6 +54,12 @@ public:
 	int width;
 	int height;
 	float scale;
+
+	int flags;
+	bool fullscreen = false;
+	bool borderless = false;
+	bool resizable = false;
+	bool fullscreen_window = false;
 
 private:
 	SString title;

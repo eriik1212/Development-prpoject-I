@@ -21,6 +21,7 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
+	bool isOn = false;
 
 	bool selectedSound_isPlaying = false;
 };

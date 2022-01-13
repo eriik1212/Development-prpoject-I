@@ -11,6 +11,8 @@
 #include "Level2.h"
 #include "GuiManager.h"
 #include "Window.h"
+#include "Font.h"
+#include "HUD.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -87,13 +89,13 @@ bool TitleScreen::Start()
 	creditsRect.w = 80;
 	creditsRect.h = 16;
 
-	fullscreenRect.x = 288;
-	fullscreenRect.y = 320;
+	fullscreenRect.x = 388;
+	fullscreenRect.y = 340;
 	fullscreenRect.w = 16;
 	fullscreenRect.h = 16;
 
-	vsyncRect.x = 288;
-	vsyncRect.y = 360;
+	vsyncRect.x = 388;
+	vsyncRect.y = 380;
 	vsyncRect.w = 16;
 	vsyncRect.h = 16;
 
@@ -102,8 +104,8 @@ bool TitleScreen::Start()
 	exitGameRect.w = 40;
 	exitGameRect.h = 16;
 
-	exitOptionsRect.x = 75;
-	exitOptionsRect.y = 75;
+	exitOptionsRect.x = 125;
+	exitOptionsRect.y = 185;
 	exitOptionsRect.w = 16;
 	exitOptionsRect.h = 16;
 
@@ -120,12 +122,12 @@ bool TitleScreen::Start()
 	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", creditsRect, this);
 	exitOptionsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "ExitOptions", exitOptionsRect, this);
 	exitGameButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "ExitGame", exitGameRect, this);
-	/*fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 7, "FullscreenButton", fullscreenRect, this);
-	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 8, "VsyncButton", vsyncRect, this);
-	*/
+	fullscreenToggle = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 7, "FullscreenButton", fullscreenRect, this);
+	vsyncToggle = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 8, "VsyncButton", vsyncRect, this);
+	
 	exitOptionsButton->state = GuiControlState::DISABLED;
-	/*fullscreenButton->state = GuiControlState::DISABLED;
-	vsyncButton->state = GuiControlState::DISABLED;*/
+	fullscreenToggle->state = GuiControlState::DISABLED;
+	vsyncToggle->state = GuiControlState::DISABLED;
 
 	newGameButton->state = GuiControlState::NORMAL;
 	continueButton->state = GuiControlState::NORMAL;
@@ -190,6 +192,12 @@ bool TitleScreen::Update(float dt)
 		option = 1;
 	}*/
 
+	if (app->render->vsync) vsyncToggle->isOn = true;
+	else vsyncToggle->isOn = false;
+
+	if (app->win->fullscreen) fullscreenToggle->isOn = true;
+	else fullscreenToggle->isOn = false;
+
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || exitGameRequest)
 	{
 		return false;
@@ -218,11 +226,12 @@ bool TitleScreen::PostUpdate()
 	if (optionsEnabled)
 	{
 		DrawOptionsMenu();
-		newGameButton->state = GuiControlState::DISABLED;
-		continueButton->state = GuiControlState::DISABLED;
-		settingsButton->state = GuiControlState::DISABLED;
-		creditsButton->state = GuiControlState::DISABLED;
-		exitGameButton->state = GuiControlState::DISABLED;
+		
+	}
+	if (creditsEnabled)
+	{
+		DrawCreditsMenu();
+
 	}
 
 	//Draw GUI
@@ -260,6 +269,17 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 		case 1:
 			cont = false;
 
+			app->font->UnLoad(app->hud->GameFont);
+
+			exitOptionsButton->state = GuiControlState::DISABLED;
+			fullscreenToggle->state = GuiControlState::DISABLED;
+			vsyncToggle->state = GuiControlState::DISABLED;
+			newGameButton->state = GuiControlState::DISABLED;
+			continueButton->state = GuiControlState::DISABLED;
+			settingsButton->state = GuiControlState::DISABLED;
+			creditsButton->state = GuiControlState::DISABLED;
+			exitGameButton->state = GuiControlState::DISABLED;
+
 			app->audio->PlayFx(enterFX);
 
 			app->play->restartLVL1 = true;
@@ -268,12 +288,27 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 
 			app->play->playerData.isDead = false;
 
+			app->tex->CleanUp();
+
 			LOG("Click on NewGame");
 			break;
 		case 2:
 			cont = true;
 
+			app->font->UnLoad(app->hud->GameFont);
+
+			exitOptionsButton->state = GuiControlState::DISABLED;
+			fullscreenToggle->state = GuiControlState::DISABLED;
+			vsyncToggle->state = GuiControlState::DISABLED;
+			newGameButton->state = GuiControlState::DISABLED;
+			continueButton->state = GuiControlState::DISABLED;
+			settingsButton->state = GuiControlState::DISABLED;
+			creditsButton->state = GuiControlState::DISABLED;
+			exitGameButton->state = GuiControlState::DISABLED;
+
 			app->audio->PlayFx(enterFX);
+
+			app->tex->CleanUp();
 
 			if (app->play->lastLevel == 1)
 			{
@@ -297,29 +332,29 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			optionsEnabled = true;
 
 			exitOptionsButton->state = GuiControlState::NORMAL;
-			/*fullscreenButton->state = GuiControlState::NORMAL;
-			vsyncButton->state = GuiControlState::NORMAL;*/
-
-			newGameButton->state = GuiControlState::DISABLED;
-			continueButton->state = GuiControlState::DISABLED;
-			settingsButton->state = GuiControlState::DISABLED;
-			creditsButton->state = GuiControlState::DISABLED;
-			exitGameButton->state = GuiControlState::DISABLED;
+			fullscreenToggle->state = GuiControlState::NORMAL;
+			vsyncToggle->state = GuiControlState::NORMAL;
 
 			LOG("DISABLED");
 
 			break;
 		case 4:
+			app->audio->PlayFx(enterFX);
+
+			creditsEnabled = true;
+
+			exitOptionsButton->state = GuiControlState::NORMAL;
 
 			break;
 		case 5:
 			app->audio->PlayFx(enterFX);
 
-			optionsEnabled = false;
+			if(optionsEnabled) optionsEnabled = false;
+			if(creditsEnabled) creditsEnabled = false;
 
 			exitOptionsButton->state = GuiControlState::DISABLED;
-			/*fullscreenButton->state = GuiControlState::DISABLED;
-			vsyncButton->state = GuiControlState::DISABLED;*/
+			fullscreenToggle->state = GuiControlState::DISABLED;
+			vsyncToggle->state = GuiControlState::DISABLED;
 
 			newGameButton->state = GuiControlState::NORMAL;
 			continueButton->state = GuiControlState::NORMAL;
@@ -342,9 +377,34 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 		switch (control->id)
 		{
 		case 7:
+			app->audio->PlayFx(enterFX);
+
+			if (!fullscreenToggle->isOn)
+			{
+				fullscreenToggle->isOn = true;
+				app->win->fullscreen = true;
+			}
+			else
+			{
+				fullscreenToggle->isOn = false;
+				app->win->fullscreen = false;
+			}
 
 			break;
 		case 8:
+			app->audio->PlayFx(enterFX);
+
+			if (!vsyncToggle->isOn)
+			{
+				vsyncToggle->isOn = true;
+				app->render->vsync = true;
+			}
+			else
+			{
+				vsyncToggle->isOn = false;
+				app->render->vsync = false;
+			}
+
 
 			break;
 		default:
@@ -359,5 +419,34 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 
 void TitleScreen::DrawOptionsMenu()
 {
-	app->render->DrawRectangle({ 50,50,540,380 }, 0, 0, 0, 175);
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+
+	app->font->BlitText(360, 300, app->hud->GameFont, "MUSIC VOLUME");
+
+	app->font->BlitText(380, 400, app->hud->GameFont, "FX VOLUME");
+
+	app->font->BlitText(300, fullscreenRect.y * 1.5, app->hud->GameFont, "FULLSCREEN");
+
+	app->font->BlitText(300, vsyncRect.y * 1.5, app->hud->GameFont, "VSYNC");
+}
+
+void TitleScreen::DrawCreditsMenu()
+{
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+
+	app->font->BlitText(280,280, app->hud->GameFont, "UPC-CITM GDDV 2nd YEAR");
+
+	app->font->BlitText(380,320, app->hud->GameFont, "GINUH GAMES");
+
+	app->font->BlitText(200,360, app->hud->GameFont, "MEMBERS:");
+	app->font->BlitText(200,400, app->hud->GameFont, "DAVID BOCES OBIS");
+	app->font->BlitText(200,440, app->hud->GameFont, "ERIK MARTIN GARZON");
+
+	app->font->BlitText(200,500, app->hud->GameFont, "TUTOR:");
+	app->font->BlitText(200, 540, app->hud->GameFont, "PEDRO OMEDAS MORERA");
+
+	app->font->BlitText(200, 600, app->hud->GameFont, "LICENSE:");
+	app->font->BlitText(400, 600, app->hud->GameFont, "MIT LICENSE");
+
+
 }

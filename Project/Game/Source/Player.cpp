@@ -272,6 +272,7 @@ bool Player::Update(float dt)
 		app->level2->Disable();
 		app->scene->Disable();
 		app->enemies->Disable();
+		app->hud->Disable();
 
 
 	}

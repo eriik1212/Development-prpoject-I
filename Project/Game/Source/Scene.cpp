@@ -95,8 +95,6 @@ bool Scene::Start()
 
 	}
 
-	
-
 	app->play->playerData.isDead = false;
 	app->play->debug = false;
 	app->play->collidersOn = false;
@@ -131,9 +129,6 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	
-	//app->font->BlitText(17, 16, lifeFont, lifeText);
-
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		//Disable Player & map

@@ -13,6 +13,7 @@
 #include "Window.h"
 #include "Level2.h"
 #include "Scene.h"
+#include "Font.h"
 //#include "ModuleFonts.h"
 
 
@@ -105,6 +106,7 @@ bool ModuleHUD::Start()
 	InventoryTex = app->tex->Load("Assets/textures/inventory.png");
 	DarkSoul= app->tex->Load("Assets/textures/dark_fire.png");
 	GameFont = app->font->Load("Assets/Fonts/font1.png",lookupTableNumb, 6);
+
 	Reset();
 
 	// ----------------------------------------------------------------- FONTS
@@ -249,8 +251,8 @@ bool ModuleHUD::CleanUp()
 {
 	bool ret;
 
-	//app->fonts->UnLoad(scoreFont);
-	//app->fonts->UnLoad(lifeFont);
+	app->tex->CleanUp();
+	app->font->UnLoad(GameFont);
 
 	return true;
 }

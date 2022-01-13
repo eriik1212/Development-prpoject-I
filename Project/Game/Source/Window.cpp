@@ -33,11 +33,11 @@ bool Window::Awake(pugi::xml_node& config)
 	else
 	{
 		// Create window
-		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
-		bool borderless = config.child("borderless").attribute("value").as_bool(false);
-		bool resizable = config.child("resizable").attribute("value").as_bool(false);
-		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
+		flags = SDL_WINDOW_SHOWN;
+		fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		borderless = config.child("borderless").attribute("value").as_bool(false);
+		resizable = config.child("resizable").attribute("value").as_bool(false);
+		fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
 
 		width = config.child("resolution").attribute("width").as_int();
 		height = config.child("resolution").attribute("height").as_int();
@@ -63,6 +63,23 @@ bool Window::Awake(pugi::xml_node& config)
 	}
 
 	return ret;
+}
+
+bool Window::Update(float dt)
+{
+	if (fullscreen == true)
+	{
+		flags |= SDL_WINDOW_FULLSCREEN;
+
+		SDL_SetWindowFullscreen(window, flags);
+		
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(window, 0);
+	}
+
+	return true;
 }
 
 // Called before quitting
