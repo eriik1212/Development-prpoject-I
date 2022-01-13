@@ -16,6 +16,7 @@
 #include "Enemies.h"
 #include "Enemy_Bird.h"
 #include "HUD.h"
+#include "Font.h"
 
 Scene::Scene(bool enabled) : Module(enabled)
 {
@@ -106,6 +107,7 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	
 	if (app->play->restartLVL1)
 	{
 		app->play->playerData.playerBody.x = 196;
@@ -129,6 +131,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	
+	//app->font->BlitText(17, 16, lifeFont, lifeText);
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -309,6 +313,11 @@ bool Scene::Update(float dt)
 
 
 	app->map->ComputePath(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y);
+	sprintf_s(app->textTimer, 10, "%4d", app->timer);
+	app->font->BlitText(17, 90, app->hud->GameFont, app->textTimer);
+	
+
+	
 	
 	return true;
 }

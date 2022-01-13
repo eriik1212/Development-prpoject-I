@@ -55,12 +55,13 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 
 	strcpy_s(fonts[id].table, MAX_FONT_CHARS, characters);
 	font.totalLength = strlen(characters);
-	font.columns = fonts[id].totalLength / rows;
+	font.columns = (fonts[id].totalLength / rows);
 
 	uint tex_w, tex_h;
 	app->tex->GetSize(tex, tex_w, tex_h);
-	font.char_w = tex_w / font.columns;
-	font.char_h = tex_h / font.rows;
+	font.char_w = 20;
+	font.char_h = 20;
+	LOG("Mesura del text: %d x %d les columnes son %d i les files %d", font.char_h, font.char_w, font.columns, font.rows);
 
 	LOG("Successfully loaded BMP font from %s", texture_path);
 

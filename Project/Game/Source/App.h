@@ -122,7 +122,8 @@ public:
 	GuiManager* guiManager;
 
 	bool lowFPS = false;
-	
+	int timer = 0;
+	char textTimer[10] = { "\0" };
 private:
 
 	int argc;
@@ -140,6 +141,7 @@ private:
 	mutable bool saveInitialGameRequested;
 	bool loadGameRequested;
 	bool loadInitialGameRequested;
+	
 
 	float averageFps = 0.0f;
 	float dt = 0.0f;

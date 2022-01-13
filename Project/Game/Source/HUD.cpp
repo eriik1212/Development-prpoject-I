@@ -99,12 +99,12 @@ bool ModuleHUD::Start()
 {
 	bool ret = true;
 
-	char lookupTableNumb[] = { " ! #$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPRSTUVWXYZ[/]^_ abcdefghijklmnopqrstuvwxyz" };
+	char lookupTableNumb[] = { "z!{#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_ abcdefghijklmnopqrstuvwxy" };
 	FullHeartTex = app->tex->Load("Assets/textures/full_heart.png");
 	EmptyHeartTex = app->tex->Load("Assets/textures/empty_heart.png");
 	InventoryTex = app->tex->Load("Assets/textures/inventory.png");
 	DarkSoul= app->tex->Load("Assets/textures/dark_fire.png");
-	GameFont = app->font->Load("Assets/Fonts/font.png",lookupTableNumb, 8);
+	GameFont = app->font->Load("Assets/Fonts/font1.png",lookupTableNumb, 6);
 	Reset();
 
 	// ----------------------------------------------------------------- FONTS

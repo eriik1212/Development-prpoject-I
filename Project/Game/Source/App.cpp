@@ -180,7 +180,11 @@ bool App::Update()
 		}
 			
 	}
-
+	if (frameCount % 60 == 0)
+	{
+		timer++;
+	}
+	
 
 	bool ret = true;
 	PrepareUpdate();
