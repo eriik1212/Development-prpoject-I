@@ -39,7 +39,7 @@
     <ClCompile Include="Source\HUD.cpp" />
     <ClCompile Include="Source\GuiManager.cpp" />
     <ClCompile Include="Source\GuiButton.cpp" />
-    <ClCompile Include="Source\GuiCheckBox.cpp" />
+    <ClCompile Include="Source\Font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -106,7 +106,7 @@
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\GuiControl.h" />
     <ClInclude Include="Source\GuiButton.h" />
-    <ClInclude Include="Source\GuiCheckBox.h" />
+    <ClInclude Include="Source\Font.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

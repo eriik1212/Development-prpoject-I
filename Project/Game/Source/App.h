@@ -27,6 +27,7 @@ class ModuleEnemies;
 class ModuleHUD;
 class Enemy_Bird;
 class Enemy_Fox;
+class ModuleFonts;
 //class ModuleCollisions;
 class ModuleFadeToBlack;
 class GameOverScreen;
@@ -115,12 +116,14 @@ public:
 	Enemy_Bird* bird_enemy;
 	Enemy_Fox* fox_enemy;
 	ModuleFadeToBlack* fade;
+	ModuleFonts* font;
 	//ModuleCollisions* collisions;
 	GameOverScreen* gameOver;
 	GuiManager* guiManager;
 
 	bool lowFPS = false;
-	
+	int timer = 0;
+	char textTimer[10] = { "\0" };
 private:
 
 	int argc;
@@ -138,6 +141,7 @@ private:
 	mutable bool saveInitialGameRequested;
 	bool loadGameRequested;
 	bool loadInitialGameRequested;
+	
 
 	float averageFps = 0.0f;
 	float dt = 0.0f;

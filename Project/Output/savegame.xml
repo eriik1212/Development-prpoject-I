@@ -23,6 +23,7 @@
 	<:anonymous />
 	<:anonymous />
 	<:anonymous />
+	<:anonymous />
 	<guiManager />
 	<renderer>
 		<camera x="0" y="0" />

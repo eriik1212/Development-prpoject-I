@@ -22,6 +22,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "GuiManager.h"
+#include "Font.h"
 
 #include <iostream>
 #include <sstream>
@@ -47,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	enemies = new ModuleEnemies(false);
 	hud = new ModuleHUD(false);
 	fade = new ModuleFadeToBlack(true);
+	font = new ModuleFonts(true);
 	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);
 	guiManager = new GuiManager(true);
@@ -67,6 +69,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(play);
 	AddModule(enemies);
 	AddModule(hud);
+	AddModule(font);
 	//AddModule(bird_enemy); //CRASH
 	//AddModule(fox_enemy); //CRASH
 	AddModule(fade);
@@ -177,7 +180,11 @@ bool App::Update()
 		}
 			
 	}
-
+	if (frameCount % 60 == 0)
+	{
+		timer++;
+	}
+	
 
 	bool ret = true;
 	PrepareUpdate();
