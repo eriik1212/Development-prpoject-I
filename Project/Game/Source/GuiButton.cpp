@@ -43,35 +43,28 @@ bool GuiButton::Update(float dt)
 				state = GuiControlState::PRESSED;
 			}
 
-			if (app->title->optionsEnabled && id != 5)
-			{
-				state = GuiControlState::DISABLED;
-
-			}
-
 			// If mouse button pressed -> Generate event!
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				NotifyObserver();
 			}
 
-		}
-		else if (app->title->optionsEnabled && id != 5)
-		{
-			state = GuiControlState::DISABLED;
+			
 
 		}
-		else state = GuiControlState::NORMAL;
-	}
-	else
-	{
-		if (!app->title->optionsEnabled && id != 5 && state == GuiControlState::DISABLED)
+		else
 		{
 			state = GuiControlState::NORMAL;
+			LOG("ENABLED");
 
 		}
-	}
 
+		if (app->title->optionsEnabled && id != 5)
+		{
+			state = GuiControlState::DISABLED;
+		}
+		
+	}
 	return false;
 }
 

@@ -87,6 +87,16 @@ bool TitleScreen::Start()
 	creditsRect.w = 80;
 	creditsRect.h = 16;
 
+	fullscreenRect.x = 288;
+	fullscreenRect.y = 320;
+	fullscreenRect.w = 16;
+	fullscreenRect.h = 16;
+
+	vsyncRect.x = 288;
+	vsyncRect.y = 360;
+	vsyncRect.w = 16;
+	vsyncRect.h = 16;
+
 	exitGameRect.x = 300;
 	exitGameRect.y = 340;
 	exitGameRect.w = 40;
@@ -110,8 +120,20 @@ bool TitleScreen::Start()
 	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "Credits", creditsRect, this);
 	exitOptionsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "ExitOptions", exitOptionsRect, this);
 	exitGameButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 6, "ExitGame", exitGameRect, this);
-
+	/*fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 7, "FullscreenButton", fullscreenRect, this);
+	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 8, "VsyncButton", vsyncRect, this);
+	*/
 	exitOptionsButton->state = GuiControlState::DISABLED;
+	/*fullscreenButton->state = GuiControlState::DISABLED;
+	vsyncButton->state = GuiControlState::DISABLED;*/
+
+	newGameButton->state = GuiControlState::NORMAL;
+	continueButton->state = GuiControlState::NORMAL;
+	settingsButton->state = GuiControlState::NORMAL;
+	creditsButton->state = GuiControlState::NORMAL;
+	exitGameButton->state = GuiControlState::NORMAL;
+
+	LOG("ENABLED");
 
 	return true;
 }
@@ -196,6 +218,11 @@ bool TitleScreen::PostUpdate()
 	if (optionsEnabled)
 	{
 		DrawOptionsMenu();
+		newGameButton->state = GuiControlState::DISABLED;
+		continueButton->state = GuiControlState::DISABLED;
+		settingsButton->state = GuiControlState::DISABLED;
+		creditsButton->state = GuiControlState::DISABLED;
+		exitGameButton->state = GuiControlState::DISABLED;
 	}
 
 	//Draw GUI
@@ -270,6 +297,16 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			optionsEnabled = true;
 
 			exitOptionsButton->state = GuiControlState::NORMAL;
+			/*fullscreenButton->state = GuiControlState::NORMAL;
+			vsyncButton->state = GuiControlState::NORMAL;*/
+
+			newGameButton->state = GuiControlState::DISABLED;
+			continueButton->state = GuiControlState::DISABLED;
+			settingsButton->state = GuiControlState::DISABLED;
+			creditsButton->state = GuiControlState::DISABLED;
+			exitGameButton->state = GuiControlState::DISABLED;
+
+			LOG("DISABLED");
 
 			break;
 		case 4:
@@ -279,8 +316,16 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			app->audio->PlayFx(enterFX);
 
 			optionsEnabled = false;
-			exitButtonCreated = false;
+
 			exitOptionsButton->state = GuiControlState::DISABLED;
+			/*fullscreenButton->state = GuiControlState::DISABLED;
+			vsyncButton->state = GuiControlState::DISABLED;*/
+
+			newGameButton->state = GuiControlState::NORMAL;
+			continueButton->state = GuiControlState::NORMAL;
+			settingsButton->state = GuiControlState::NORMAL;
+			creditsButton->state = GuiControlState::NORMAL;
+			exitGameButton->state = GuiControlState::NORMAL;
 
 			break;
 		case 6:
@@ -293,7 +338,18 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 		}
 
 	}
-	//Other cases here
+	case GuiControlType::TOGGLE:
+		switch (control->id)
+		{
+		case 7:
+
+			break;
+		case 8:
+
+			break;
+		default:
+			break;
+		}
 
 	default: break;
 	}

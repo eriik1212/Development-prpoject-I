@@ -67,21 +67,24 @@ public:
 		settingsRect,
 		creditsRect,
 		exitGameRect,
+		fullscreenRect,
+		vsyncRect,
 		exitOptionsRect;
 
 	bool cont;
 
 	bool optionsEnabled = false;
-	bool exitButtonCreated = false;
 
 	bool exitGameRequest = false;
 
-private:
+public:
 	GuiButton* newGameButton;
 	GuiButton* continueButton;
 	GuiButton* settingsButton;
 	GuiButton* creditsButton;
 	GuiButton* exitGameButton;
+	/*GuiButton* fullscreenButton;
+	GuiButton* vsyncButton;*/
 	GuiButton* exitOptionsButton;
 };
 
