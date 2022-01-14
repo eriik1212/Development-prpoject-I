@@ -118,6 +118,6 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 		// Advance the position where we blit the next character
 		x += spriteRect.w;
 
-		LOG("Successfully rendered text with bmp font id %d", font_id);
+		//LOG("Successfully rendered text with bmp font id %d", font_id);
 	}
 }

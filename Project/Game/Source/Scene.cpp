@@ -44,6 +44,9 @@ bool Scene::Start()
 
 	if (this->Enabled() && !this->Disabled()) 
 	{
+		minutes = 0;
+		app->timer = 0;
+
 		//Load Map
 		app->map->Load("MapLVL1.tmx");
 
@@ -310,7 +313,6 @@ bool Scene::Update(float dt)
 	app->map->ComputePath(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y);
 
 	
-	int minutes = 0;
 	char textMinutes[10] = { "\0" };
 	if (app->timer > 59)
 	{

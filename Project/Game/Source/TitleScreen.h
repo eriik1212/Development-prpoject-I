@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "GuiButton.h"
 #include "GuiCheckBox.h"
+#include "GuiSlider.h"
 
 
 struct SDL_Texture;
@@ -70,9 +71,13 @@ public:
 		settingsRect,
 		creditsRect,
 		exitGameRect,
+		exitOptionsRect,
 		fullscreenRect,
 		vsyncRect,
-		exitOptionsRect;
+		volumeRect,
+		fxRect,
+		sliderVolRect,
+		sliderFXRect;
 
 	bool cont;
 
@@ -87,9 +92,13 @@ public:
 	GuiButton* settingsButton;
 	GuiButton* creditsButton;
 	GuiButton* exitGameButton;
+	GuiButton* exitOptionsButton;
+
 	GuiCheckBox* fullscreenToggle;
 	GuiCheckBox* vsyncToggle;
-	GuiButton* exitOptionsButton;
+
+	GuiSlider* volumeSlider;
+	GuiSlider* fxSlider;
 };
 
 #endif //__MODULE_MEMBERS_H__

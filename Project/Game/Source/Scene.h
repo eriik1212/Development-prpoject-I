@@ -40,6 +40,9 @@ public:
 
 	// scrollingOffset for Parallax Effect
 	int scrollingOffset = 0;
+
+	int minutes = 0;
+
 private:
 	
 	SDL_Texture* background_sky;
