@@ -308,8 +308,31 @@ bool Scene::Update(float dt)
 
 
 	app->map->ComputePath(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y);
+
+	
+	int minutes = 0;
+	char textMinutes[10] = { "\0" };
+	if (app->timer > 59)
+	{
+		minutes += 1;
+		app->timer = 0;
+		
+
+	}
 	sprintf_s(app->textTimer, 10, "%4d", app->timer);
-	app->font->BlitText(17, 90, app->hud->GameFont, app->textTimer);
+	sprintf_s(textMinutes, 10, "%4d", minutes);
+	app->font->BlitText(445-60, 10, app->hud->GameFont, textMinutes);
+	app->font->BlitText(517- 60, 10, app->hud->GameFont, ":");
+	if (app->timer < 10)
+	{
+		app->font->BlitText(530 - 60, 10, app->hud->GameFont, "0");
+		app->font->BlitText(490 - 60, 10, app->hud->GameFont, app->textTimer);
+	}
+	else
+	{
+		app->font->BlitText(490 - 60, 10, app->hud->GameFont, app->textTimer);
+	}
+	
 	
 
 	
