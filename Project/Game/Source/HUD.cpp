@@ -119,8 +119,6 @@ bool ModuleHUD::Start()
 
 bool ModuleHUD::Update(float dt)
 {
-	
-	
 
 	return true;
 }
@@ -135,108 +133,129 @@ bool ModuleHUD::PostUpdate()
 	// Draw UI (NumLifes) --------------------------------------
 	//sprintf_s(lifeText, 10, "%3d", lifes);
 
-	if (lifes >= 6) lifes = 5;
-
-	if (lifes == 5)
+	if (app->scene->Enabled() || app->level2->Enabled())
 	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
-		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
-		app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
-		app->render->DrawTexture(FullHeartTex, 186, 16, false, &heart3, NULL);
-		app->render->DrawTexture(FullHeartTex, 239, 16, false, &heart3, NULL);
+
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && !pauseEnabled)
+		{
+			
+			pauseEnabled = true;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pauseEnabled)
+		{
+			pauseEnabled = false;
+		}
+
+		if (pauseEnabled)
+		{
+			DrawPauseMenu();
+
+		}
+
+		if (lifes >= 6) lifes = 5;
+
+		if (lifes == 5)
+		{
+			app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+			app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+			app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
+			app->render->DrawTexture(FullHeartTex, 186, 16, false, &heart3, NULL);
+			app->render->DrawTexture(FullHeartTex, 239, 16, false, &heart3, NULL);
+		}
+
+		else if (lifes == 4)
+		{
+			app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+			app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+			app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
+			app->render->DrawTexture(FullHeartTex, 186, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+		}
+
+		else if (lifes == 3)
+		{
+			app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+			app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+			app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+
+		}
+
+		else if (lifes == 2)
+		{
+			app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+			app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+		}
+
+		else if (lifes == 1)
+		{
+			app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+		}
+
+		else if (lifes == 0)
+		{
+			app->render->DrawTexture(EmptyHeartTex, 27, 16, false, &heart1, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
+			app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
+
+			app->play->playerData.isDead = true;
+		}
+
+		app->render->DrawTexture(InventoryTex, 677, 8, false, &inventory, NULL);
+
+		switch (soulCounter)
+		{
+		case 0:
+			break;
+		case 1:
+			app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+			break;
+
+		case 2:
+			app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+			app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+			break;
+		case 3:
+			app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+			app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+			app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+			break;
+		case 4:
+			app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+			app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+			app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+			app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
+			break;
+		case 5:
+			app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+			app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+			app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+			app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
+			app->render->DrawTexture(DarkSoul, 841, 34, false, &soul5, NULL);
+			break;
+		case 6:
+			app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
+			app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
+			app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
+			app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
+			app->render->DrawTexture(DarkSoul, 841, 34, false, &soul5, NULL);
+			app->render->DrawTexture(DarkSoul, 868, 34, false, &soul6, NULL);
+			break;
+		default:
+			break;
+		}
 	}
-
-	else if (lifes == 4)
-	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
-		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
-		app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
-		app->render->DrawTexture(FullHeartTex, 186, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
-	}
-
-	else if (lifes == 3)
-	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
-		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
-		app->render->DrawTexture(FullHeartTex, 133, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
-
-	}
-
-	else if (lifes == 2)
-	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
-		app->render->DrawTexture(FullHeartTex, 80, 16, false, &heart2, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
-	}
-
-	else if (lifes == 1)
-	{
-		app->render->DrawTexture(FullHeartTex, 27, 16, false, &heart1, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
-	}
-
-	else if (lifes == 0)
-	{
-		app->render->DrawTexture(EmptyHeartTex, 27, 16, false, &heart1, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 80, 16, false, &heart2, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 133, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 186, 16, false, &heart3, NULL);
-		app->render->DrawTexture(EmptyHeartTex, 239, 16, false, &heart3, NULL);
-
-		app->play->playerData.isDead = true;
-	}
-
-	app->render->DrawTexture(InventoryTex, 677, 8, false, &inventory, NULL);
 	
-	switch (soulCounter)
-	{
-	case 0:
-		break;
-	case 1:
-		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
-		break;
-		
-	case 2:
-		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
-		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
-		break;
-	case 3:
-		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
-		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
-		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
-		break;
-	case 4:
-		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
-		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
-		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
-		app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
-		break;
-	case 5:
-		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
-		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
-		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
-		app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
-		app->render->DrawTexture(DarkSoul, 841, 34, false, &soul5, NULL);
-		break;
-	case 6:
-		app->render->DrawTexture(DarkSoul, 733, 34, false, &soul1, NULL);
-		app->render->DrawTexture(DarkSoul, 760, 34, false, &soul2, NULL);
-		app->render->DrawTexture(DarkSoul, 787, 34, false, &soul3, NULL);
-		app->render->DrawTexture(DarkSoul, 814, 34, false, &soul4, NULL);
-		app->render->DrawTexture(DarkSoul, 841, 34, false, &soul5, NULL);
-		app->render->DrawTexture(DarkSoul, 868, 34, false, &soul6, NULL);
-		break;
-	default:
-		break;
-	}
 
 	return true;
 }
@@ -255,4 +274,10 @@ bool ModuleHUD::CleanUp()
 	app->font->UnLoad(GameFont);
 
 	return true;
+}
+
+void ModuleHUD::DrawPauseMenu()
+{
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+
 }

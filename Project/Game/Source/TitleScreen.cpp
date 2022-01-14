@@ -41,6 +41,7 @@ bool TitleScreen::Start()
 		//Disable Player & map
 		app->play->Disable();
 		app->map->Disable();
+		app->hud->Enable();
 
 		app->LoadGameRequest();
 		//app->LoadInitialGameRequest();
@@ -104,6 +105,11 @@ bool TitleScreen::Start()
 	sliderVolRect.w = 128;
 	sliderVolRect.h = 6;
 
+	sliderFXRect.x = 240;
+	sliderFXRect.y = 300;
+	sliderFXRect.w = 128;
+	sliderFXRect.h = 6;
+
 	volumeRect.w = 16;
 	volumeRect.h = 16;
 	volumeRect.x = sliderVolRect.x + 128 - volumeRect.w/2;
@@ -111,7 +117,8 @@ bool TitleScreen::Start()
 
 	fxRect.w = 16;
 	fxRect.h = 16;
-
+	fxRect.x = sliderFXRect.x + 128 - fxRect.w / 2;
+	fxRect.y = sliderFXRect.y - fxRect.w / 2;
 
 	exitGameRect.x = 300;
 	exitGameRect.y = 340;
@@ -141,12 +148,14 @@ bool TitleScreen::Start()
 	vsyncToggle = (GuiCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::TOGGLE, 8, "VsyncButton", vsyncRect, this);
 
 	volumeSlider = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 9, "SliderVolume", volumeRect, this, sliderVolRect);
+	fxSlider = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 10, "SliderFX", fxRect, this, sliderFXRect);
 	
 	exitOptionsButton->state = GuiControlState::DISABLED;
 	fullscreenToggle->state = GuiControlState::DISABLED;
 	vsyncToggle->state = GuiControlState::DISABLED;
 
 	volumeSlider->state = GuiControlState::DISABLED;
+	fxSlider->state = GuiControlState::DISABLED;
 
 	newGameButton->state = GuiControlState::NORMAL;
 	continueButton->state = GuiControlState::NORMAL;
@@ -289,6 +298,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			cont = false;
 
 			app->font->UnLoad(app->hud->GameFont);
+			app->hud->Disable();
 
 			exitOptionsButton->state = GuiControlState::DISABLED;
 			fullscreenToggle->state = GuiControlState::DISABLED;
@@ -299,6 +309,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			creditsButton->state = GuiControlState::DISABLED;
 			exitGameButton->state = GuiControlState::DISABLED;
 			volumeSlider->state = GuiControlState::DISABLED;
+			fxSlider->state = GuiControlState::DISABLED;
 
 			app->audio->PlayFx(enterFX);
 
@@ -316,6 +327,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			cont = true;
 
 			app->font->UnLoad(app->hud->GameFont);
+			app->hud->Disable();
 
 			exitOptionsButton->state = GuiControlState::DISABLED;
 			fullscreenToggle->state = GuiControlState::DISABLED;
@@ -326,6 +338,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			creditsButton->state = GuiControlState::DISABLED;
 			exitGameButton->state = GuiControlState::DISABLED;
 			volumeSlider->state = GuiControlState::DISABLED;
+			fxSlider->state = GuiControlState::DISABLED;
 
 			app->audio->PlayFx(enterFX);
 
@@ -356,6 +369,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			fullscreenToggle->state = GuiControlState::NORMAL;
 			vsyncToggle->state = GuiControlState::NORMAL;
 			volumeSlider->state = GuiControlState::NORMAL;
+			fxSlider->state = GuiControlState::NORMAL;
 
 			LOG("DISABLED");
 
@@ -378,6 +392,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			fullscreenToggle->state = GuiControlState::DISABLED;
 			vsyncToggle->state = GuiControlState::DISABLED;
 			volumeSlider->state = GuiControlState::DISABLED;
+			fxSlider->state = GuiControlState::DISABLED;
 
 			newGameButton->state = GuiControlState::NORMAL;
 			continueButton->state = GuiControlState::NORMAL;
@@ -437,35 +452,38 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 		}
 
 	case GuiControlType::SLIDER:
+		int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
+
+		mouseX /= app->win->GetScale();
+
 		switch (control->id)
 		{
 		case 9:
-			int mouseX, mouseY;
-			app->input->GetMousePosition(mouseX, mouseY);
+			//LOG("sliderRectX: %d, sliderRectW+X: %d", sliderVolRect.x, sliderVolRect.x + sliderVolRect.w);
+			//LOG("mouseX: %d, mouseY: %d", mouseX, mouseY);
+			int volume;
 
-			LOG("volumeRectX: %d, mouseX: %d, LeftLimit: %d, RightLimit: %.1f", volumeRect.x, mouseX, sliderVolRect.x, (sliderVolRect.x + sliderVolRect.w)* app->win->GetScale());
+			volumeRect.x = mouseX;
 
-			if ((mouseX > (volumeRect.x) && (mouseX < ((volumeRect.x + volumeRect.w))) &&
-				(mouseY > (volumeRect.y) && (mouseY < (volumeRect.y + volumeRect.h)))))
-			{
-				LOG("CLICK");
+			volume = volumeRect.x - 240;
 
-				/*if ((mouseX > (sliderVolRect.x * app->win->GetScale()) && (mouseX < ((sliderVolRect.x + sliderVolRect.w) * app->win->GetScale()))))
-				{*/
-					int volume;
+			app->audio->SetVolume(volume);
 
-					volumeRect.x = mouseX / app->win->GetScale();
-
-					
-
-					/*volume = (volumeRect.x + volumeRect.w / 2) / app->win->GetScale();
-
-					app->audio->SetVolume(volume - 240);*/
-				/*}*/
-			}
 			break;
 		case 10:
+			//LOG("sliderRectX: %d, sliderRectW+X: %d", sliderVolRect.x, sliderVolRect.x + sliderVolRect.w);
+			//LOG("mouseX: %d, mouseY: %d", mouseX, mouseY);
+
+			int volumeFX;
+
+			fxRect.x = mouseX;
+
+			volumeFX = fxRect.x - 240;
 			
+			app->audio->SetVolumeFX(changeFX, volumeFX);
+			app->audio->SetVolumeFX(enterFX, volumeFX);
+
 			break;
 		}
 

@@ -189,3 +189,9 @@ void Audio::SetVolume(int volume)
 {
 	Mix_VolumeMusic(volume);
 }
+
+void Audio::SetVolumeFX(int channel, int volumeFX)
+{
+	Mix_Volume(-1, volumeFX);
+}
+

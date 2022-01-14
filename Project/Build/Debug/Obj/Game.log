@@ -1,4 +1,4 @@
-﻿  TitleScreen.cpp
+﻿  HUD.cpp
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(54,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Animation.h(56,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(24,1): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
@@ -7,8 +7,5 @@ C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(34,1): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Player.h(11,16): warning C4099: 'Collider': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
 C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\Collider.h(23): message : vea la declaración de 'Collider'
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\TitleScreen.cpp(457,28): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\TitleScreen.cpp(455,10): warning C4101: 'volume': variable local sin referencia
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\TitleScreen.cpp(486,44): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
-C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\TitleScreen.cpp(488,39): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Game\Source\HUD.cpp(270,7): warning C4101: 'ret': variable local sin referencia
   Game.vcxproj -> C:\Users\david\OneDrive\Escritorio\UNI\A2\S3\DesenvolupamentVideojocs\GinuhGames\GinuhGamesDevelopment-ProjectI\Project\Build\Debug\Game.exe
