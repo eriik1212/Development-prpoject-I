@@ -5,14 +5,14 @@
 	<textures />
 	<audio />
 	<map>
-		<level num="1" />
+		<level num="2" />
 	</map>
 	<scene />
 	<level2 />
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<player x="196" y="308" />
+		<player x="80" y="348" />
 		<playerLimit Left="100" Right="300" />
 		<camera x="0" y="0" />
 	</player>
@@ -22,6 +22,7 @@
 	</enemies>
 	<:anonymous />
 	<:anonymous />
+	<entitymanager />
 	<:anonymous />
 	<:anonymous />
 	<guiManager />

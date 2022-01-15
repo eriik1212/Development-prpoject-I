@@ -23,6 +23,8 @@
 #include "Log.h"
 #include "GuiManager.h"
 #include "Font.h"
+#include "Item.h"
+#include "EntityManager.h"
 
 #include <iostream>
 #include <sstream>
@@ -49,6 +51,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	hud = new ModuleHUD(false);
 	fade = new ModuleFadeToBlack(true);
 	font = new ModuleFonts(true);
+	entityManager = new EntityManager();
 	//collisions = new ModuleCollisions(true);
 	gameOver = new GameOverScreen(false);
 	guiManager = new GuiManager(true);
@@ -70,6 +73,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(enemies);
 	AddModule(hud);
 	AddModule(font);
+	AddModule(entityManager);
 	//AddModule(bird_enemy); //CRASH
 	//AddModule(fox_enemy); //CRASH
 	AddModule(fade);
@@ -180,9 +184,20 @@ bool App::Update()
 		}
 			
 	}
-	if (frameCount % 60 == 0)
+	if (lowFPS)
 	{
-		timer++;
+		if (frameCount % 30 == 0)
+		{
+			timer++;
+		}
+	}
+	else
+	{
+		if (frameCount % 60 == 0)
+		{
+			timer++;
+		}
+
 	}
 	
 

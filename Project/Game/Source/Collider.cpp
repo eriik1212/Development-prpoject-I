@@ -105,7 +105,8 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 			{
 				if (app->enemies->enemies[i] != nullptr)
 				{
-					app->enemies->UpdateLifes(app->enemies->enemies[i]->lifes, 1);
+					app->enemies->UpdateLifes(app->enemies->enemies[i],app->enemies->enemies[i]->lifes, 1);
+					
 				}
 			}
 

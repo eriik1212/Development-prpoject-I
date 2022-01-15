@@ -160,6 +160,7 @@ void Enemy_Bird::Update()
 			{
 				if (app->enemies->enemies[i]->lifes[0] == 0)
 				{
+					app->enemies->points += 2;
 					delete app->enemies->enemies[i];
 					app->enemies->enemies[i] = nullptr;
 				}

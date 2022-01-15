@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Render.h"
+#include "Item.h"
 
 struct SDL_Texture;
 
@@ -43,6 +44,8 @@ public:
 
 	int minutes = 0;
 
+	char textMinutes[10] = { "\0" };
+	char textPoints[10] = { "\0" };
 private:
 	
 	SDL_Texture* background_sky;
@@ -54,5 +57,8 @@ private:
 	SDL_Texture* background_backmountain;
 	SDL_Texture* background_backcloud;
 
+	Item* item1;
+	Item* item2;
+	Item* item3;
 };
 #endif // __SCENE_H__

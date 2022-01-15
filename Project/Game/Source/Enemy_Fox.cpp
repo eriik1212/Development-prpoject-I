@@ -137,6 +137,7 @@ void Enemy_Fox::Update()
 			{
 				if (app->enemies->enemies[i]->lifes[0] == 0)
 				{
+					app->enemies->points++;
 					delete app->enemies->enemies[i];
 					app->enemies->enemies[i] = nullptr;
 				}
