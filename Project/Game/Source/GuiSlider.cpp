@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Window.h"
 #include "TitleScreen.h"
+#include "HUD.h"
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, SDL_Rect sliderbarBounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
@@ -68,6 +69,12 @@ bool GuiSlider::Draw(Render* render)
 		case 10:
 			render->DrawRectangle(bounds, 0, 0, 0, 0);
 			break;
+		case 18:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
+		case 19:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
 		default:
 			break;
 		}
@@ -79,6 +86,9 @@ bool GuiSlider::Draw(Render* render)
 		// ID = 9 -> Volume Slider
 		// ID = 10 -> FX Slider
 
+		// ID = 18 -> Volume Slider
+		// ID = 19 -> FX Slider
+
 		switch (id)
 		{
 		case 9:
@@ -88,6 +98,14 @@ bool GuiSlider::Draw(Render* render)
 		case 10:
 			render->DrawRectangle(app->title->sliderFXRect, 255, 255, 255, 50);
 			render->DrawRectangle(app->title->fxRect, 255, 255, 255, 255);
+			break;
+		case 18:
+			render->DrawRectangle(app->hud->sliderVolRect, 255, 255, 255, 50, true, false);
+			render->DrawRectangle(app->hud->volumeRect, 255, 255, 255, 255, true, false);
+			break;
+		case 19:
+			render->DrawRectangle(app->hud->sliderFXRect, 255, 255, 255, 50, true, false);
+			render->DrawRectangle(app->hud->fxRect, 255, 255, 255, 255, true, false);
 			break;
 		default:
 			break;

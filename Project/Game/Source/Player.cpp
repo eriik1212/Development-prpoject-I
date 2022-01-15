@@ -262,21 +262,6 @@ bool Player::Update(float dt)
 			debug = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-	{
-		app->fade->FadeToBlack(this, app->title, 30);
-
-		//Disable Player & map
-		app->play->Disable();
-		app->map->Disable();
-		app->level2->Disable();
-		app->scene->Disable();
-		app->enemies->Disable();
-		app->hud->Disable();
-
-
-	}
-
 	//Atack Collider
 	if (playerData.direction == 1)
 	{

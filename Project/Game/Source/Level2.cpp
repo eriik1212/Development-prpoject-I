@@ -131,6 +131,7 @@ bool Level2::Start()
 		redSoulTex = app->tex->Load("Assets/textures/souls.png");
 		blueSoulTex = app->tex->Load("Assets/textures/souls.png");
 
+		app->hud->pauseEnabled = false;
 	}
 
 
@@ -155,6 +156,8 @@ bool Level2::PreUpdate()
 
 		app->play->restartLVL2 = false;
 
+		app->hud->pauseEnabled = false;
+
 		app->SaveGameRequest();
 	}
 
@@ -170,7 +173,7 @@ bool Level2::Update(float dt)
 	if (soulCollider != nullptr) 
 		soulCollider->GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		//Disable Player & map
 		app->play->Disable();
@@ -183,9 +186,11 @@ bool Level2::Update(float dt)
 		
 		app->play->restartLVL1 = true;
 
+		app->hud->pauseEnabled = false;
+
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		//Disable Player & map
 		app->play->Disable();
@@ -198,10 +203,11 @@ bool Level2::Update(float dt)
 
 		app->play->restartLVL2 = true;
 
+		app->hud->pauseEnabled = false;
 
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		app->fade->FadeToBlack(this, this, 30);
 
@@ -213,6 +219,8 @@ bool Level2::Update(float dt)
 
 		app->play->restartLVL2 = true;
 
+		app->hud->pauseEnabled = false;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
@@ -221,6 +229,9 @@ bool Level2::Update(float dt)
 		app->hud->Disable();
 
 		app->fade->FadeToBlack(this, app->gameOver, 30);
+
+		app->hud->pauseEnabled = false;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)

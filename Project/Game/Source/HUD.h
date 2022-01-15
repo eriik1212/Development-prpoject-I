@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include "GuiButton.h"
+#include "GuiCheckBox.h"
+#include "GuiSlider.h"
 
 
 struct SDL_Texture;
@@ -32,6 +35,9 @@ public:
 
 	bool CleanUp();
 
+	// Define multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	void DrawPauseMenu();
 
 public:
@@ -56,29 +62,50 @@ public:
 
 	SDL_Texture* DarkSoul = nullptr;
 
+	SDL_Texture* exitOptions;
+	SDL_Texture* exitOptionsFocused;
+	SDL_Texture* exitOptionsPressed;
 
-	// HUD & Foreground Animations
-	/*Animation
-		HUDP1,
-		HUDP1InsertCoins,
-		HUDP234,
-		insertCoinP1,
-		insertCoinP2,
-		insertCoinP3,
-		insertCoinP4,
-		lifeP1,
-		smallTurtle,
-		pressStart;*/
+	SDL_Texture* settingsUnpressed;
+	SDL_Texture* settingsPressed;
 
-	// Font score index
-	/*uint scoreP1 = 000;
-	uint scoreP234 = 000;
-	uint lifes = 000;
-	int scoreFont = -1;
-	int lifeFont = -1;
-	char scoreTextP1[10] = { "\0" };
-	char scoreTextP234[10] = { "\0" };
-	char lifeText[10] = { "\0" };*/
+	SDL_Texture* SelectArrow;
+
+	SDL_Texture* exitGameUnpressed;
+	SDL_Texture* exitGamePressed;
+
+	SDL_Texture* titleUnpressed;
+	SDL_Texture* titlePressed;
+
+	SDL_Texture* resumeUnpressed;
+	SDL_Texture* resumePressed;
+
+	SDL_Rect resumeRect,
+		titleRect,
+		exitRect,
+		settingsRect,
+		exitOptionsRect,
+		fullscreenRect,
+		vsyncRect,
+		volumeRect,
+		fxRect,
+		sliderVolRect,
+		sliderFXRect;
+
+	GuiButton* resumeButton;
+	GuiButton* titleButton;
+	GuiButton* exitButton;
+	GuiButton* settingsButton;
+	GuiButton* exitOptionsButton;
+
+	GuiCheckBox* fullscreenToggle;
+	GuiCheckBox* vsyncToggle;
+
+	GuiSlider* volumeSlider;
+	GuiSlider* fxSlider;
+	
+	bool exitGameRequest = false;
+	bool optionsEnabled = false;
 
 	// Sound effects indices
 	uint lifeIncrease = 0;

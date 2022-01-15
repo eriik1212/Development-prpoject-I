@@ -170,55 +170,6 @@ bool TitleScreen::Start()
 
 bool TitleScreen::Update(float dt)
 {
-	// ScanCodes
-	/*if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		//Fade Out
-		app->audio->PlayFx(enterFX);
-		if (option == 1)//New game option
-		{
-			cont = false;
-			app->play->restartLVL1 = true;
-			//app->SaveGameRequest();
-			app->fade->FadeToBlack(this, app->scene, 30);
-			
-			app->play->playerData.isDead = false;
-			
-
-		}
-		else //continue option
-		{
-			cont = true;
-			if (app->play->lastLevel == 1)
-			{
-				app->fade->FadeToBlack(this, app->scene, 30);
-				app->LoadGameRequest();
-
-			}
-
-			if (app->play->lastLevel == 2)
-			{
-				app->fade->FadeToBlack(this, app->level2, 30);
-				app->LoadGameRequest();
-
-			}
-
-		}
-		
-		
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		app->audio->PlayFx(changeFX);
-		option = 0;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		app->audio->PlayFx(changeFX);
-		option = 1;
-	}*/
 
 	if (app->render->vsync) vsyncToggle->isOn = true;
 	else vsyncToggle->isOn = false;
@@ -239,17 +190,6 @@ bool TitleScreen::PostUpdate()
 {
 
 	app->render->DrawTexture(Title, 0, 0, false, NULL);
-
-	/*if (option == 1)
-	{
-		app->render->DrawTexture(NewGamePressed, 432, 432, false, &NewGameRect);
-		app->render->DrawTexture(ContinueUnpressed, 405, 464, false, &ContinueRect);
-	}
-	else
-	{
-		app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
-		app->render->DrawTexture(ContinuePressed, 405, 464, false, &ContinueRect);
-	}*/
 
 	if (optionsEnabled)
 	{
@@ -495,7 +435,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 
 void TitleScreen::DrawOptionsMenu()
 {
-	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175, true, false);
 
 	app->font->BlitText(360, 300, app->hud->GameFont, "MUSIC VOLUME");
 
@@ -508,7 +448,7 @@ void TitleScreen::DrawOptionsMenu()
 
 void TitleScreen::DrawCreditsMenu()
 {
-	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175, true, false);
 
 	app->font->BlitText(280,280, app->hud->GameFont, "UPC-CITM GDDV 2nd YEAR");
 

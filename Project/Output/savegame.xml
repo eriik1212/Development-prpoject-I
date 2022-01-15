@@ -5,16 +5,16 @@
 	<textures />
 	<audio />
 	<map>
-		<level num="1" />
+		<level num="2" />
 	</map>
 	<scene />
 	<level2 />
 	<:anonymous />
 	<:anonymous />
 	<player>
-		<player x="196" y="308" />
-		<playerLimit Left="100" Right="300" />
-		<camera x="0" y="0" />
+		<player x="1482" y="116" />
+		<playerLimit Left="1284" Right="1484" />
+		<camera x="-1776" y="0" />
 	</player>
 	<enemies>
 		<fox x="0" y="0" />
@@ -26,6 +26,6 @@
 	<:anonymous />
 	<guiManager />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-1776" y="0" />
 	</renderer>
 </save_state>
