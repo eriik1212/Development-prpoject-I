@@ -633,9 +633,6 @@ bool Player::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
 	// After Hits Animations, go back to Idle Anim
 	// HIT 
 	// RIGHT

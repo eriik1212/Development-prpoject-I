@@ -36,6 +36,7 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 	void SetVolume(int volume);
+	void SetVolumeFX(int channel, int volumeFX);
 
 private:
 

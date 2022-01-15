@@ -32,7 +32,11 @@ public:
 
 	bool CleanUp();
 
+	void DrawPauseMenu();
+
 public:
+	bool pauseEnabled = false;
+
 	SDL_Rect heart1,
 		heart2,
 		heart3,

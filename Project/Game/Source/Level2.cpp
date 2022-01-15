@@ -376,9 +376,6 @@ bool Level2::PostUpdate()
 
 	if(app->play->collidersOn && soulCollider != nullptr) soulCollider->GetCollider().DebugDraw(soulBody, SOUL);
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
 	return ret;
 }
 

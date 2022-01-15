@@ -37,19 +37,15 @@ bool GuiSlider::Update(float dt)
 
 		//LOG("X: %d, Y: %d", mouseX, mouseY);
 
-		if ((mouseX > (bounds.x) && (mouseX < ((bounds.x + bounds.w))) &&
-			(mouseY > (bounds.y)) && (mouseY < (bounds.y + bounds.h))))
+		if ((mouseX > (sliderbarBounds.x) && (mouseX < ((sliderbarBounds.x + sliderbarBounds.w)))) &&
+			(mouseY < (bounds.y + bounds.h) && mouseY > (bounds.y)))
 		{
-			if ((mouseX > (sliderbarBounds.x) && (mouseX < ((sliderbarBounds.x + sliderbarBounds.w)))))
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
-				if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
-				{
-					state = GuiControlState::NORMAL;
-					NotifyObserver();
-				}
+				state = GuiControlState::NORMAL;
+				NotifyObserver();
 			}
 		}
-		else state = GuiControlState::NORMAL;
 	}
 
 	return false;
