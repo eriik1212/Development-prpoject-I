@@ -16,7 +16,8 @@
 #include "Enemy_Bird.h"
 #include "Enemy_Fox.h"
 #include "Log.h"
-#include"HUD.h"
+#include "HUD.h"
+#include "Font.h"
 
 Level2::Level2(bool enabled) : Module(enabled)
 {
@@ -65,6 +66,9 @@ bool Level2::Start()
 
 	if (this->Enabled() && !this->Disabled())
 	{
+		//Restart timer
+		app->scene->minutes = 0;
+		app->timer = 0;
 		//Load Map
 		app->map->Load("MapLVL2.tmx");
 
@@ -104,7 +108,7 @@ bool Level2::Start()
 		redCurrentAnimation = &redSoul;
 		blueCurrentAnimation = &blueSoul;
 
-		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
+		//app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
 		app->enemies->AddEnemy(ENEMY_TYPE::FOX, 826, 308);
 		app->enemies->AddEnemy(ENEMY_TYPE::FOX, 1400, 100);
 
@@ -325,6 +329,35 @@ bool Level2::Update(float dt)
 		SDL_Rect soulRect = redCurrentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(redSoulTex, soulBody.x, soulBody.y, true, &soulRect);
 	}
+
+	if (app->timer > 59)
+	{
+		app->scene->minutes += 1;
+		app->timer = 0;
+
+
+	}
+
+	sprintf_s(app->textTimer, 10, "%4d", app->timer);
+	sprintf_s(app->scene->textMinutes, 10, "%4d", app->scene->minutes);
+	sprintf_s(app->scene->textPoints, 10, "%4d", app->enemies->points);
+	app->font->BlitText(445 - 60, 10, app->hud->GameFont, app->scene->textMinutes);
+	app->font->BlitText(517 - 60, 10, app->hud->GameFont, ":");
+
+	if (app->timer < 10)
+	{
+		app->font->BlitText(530 - 60, 10, app->hud->GameFont, "0");
+		app->font->BlitText(490 - 60, 10, app->hud->GameFont, app->textTimer);
+	}
+	else
+	{
+		app->font->BlitText(490 - 60, 10, app->hud->GameFont, app->textTimer);
+	}
+	app->font->BlitText(20, 70, app->hud->GameFont, "P");
+	app->font->BlitText(35, 70, app->hud->GameFont, "T");
+	app->font->BlitText(50, 70, app->hud->GameFont, "S");
+	app->font->BlitText(65, 70, app->hud->GameFont, ":");
+	app->font->BlitText(80, 70, app->hud->GameFont, "0");
 
 	LOG("%d", soulBody.x);
 

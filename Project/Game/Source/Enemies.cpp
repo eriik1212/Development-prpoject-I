@@ -237,6 +237,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
 				enemies[i]->isBird = true;
+				enemies[i]->isFox = false;
 
 				for (int a = 0; a < MAX_LIFE; ++a) {
 					enemies[i]->lifes[a] = 1;
@@ -249,6 +250,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				enemies[i]->destroyedFx = enemyDestroyedFx;
 				enemies[i]->damageFX = enemyDamageFX;
 				enemies[i]->isFox = true;
+				enemies[i]->isBird = false;
 
 				for (int a = 0; a < MAX_LIFE; ++a) {
 					enemies[i]->lifes[a] = 1;
@@ -262,7 +264,7 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 		}
 	}
 }
-void ModuleEnemies::UpdateLifes(unsigned short* lifes, unsigned short damage)
+void ModuleEnemies::UpdateLifes(Enemy* enemy, unsigned short* lifes, unsigned short damage)
 {
 
 	for (int i = (MAX_LIFE - 1); i >= 0; --i) {
@@ -273,6 +275,7 @@ void ModuleEnemies::UpdateLifes(unsigned short* lifes, unsigned short damage)
 		else if (*(lifes + i) == 1 && i >= (MAX_LIFE - damage)) {
 			*(lifes + i) = 0;
 		}
+		
 	}
 }
 

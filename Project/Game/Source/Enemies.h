@@ -71,13 +71,15 @@ public:
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
 
 
-	void UpdateLifes(unsigned short* lifes, unsigned short damage);
+	void UpdateLifes(Enemy* enemy, unsigned short* lifes, unsigned short damage);
 
 	void HandleEnemiesMovement();
 	
 	bool birdHitted = false;
 	bool foxHitted = false;
 
+	int points=0;
+	char textPoints;
 
 private:
 	// Spawns a new enemy using the data from the queue

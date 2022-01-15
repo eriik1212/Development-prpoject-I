@@ -42,6 +42,8 @@
     <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -111,6 +113,9 @@
     <ClInclude Include="Source\Font.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
     <ClInclude Include="Source\GuiSlider.h" />
+    <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\Entity.h" />
+    <ClInclude Include="Source\Item.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

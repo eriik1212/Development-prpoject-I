@@ -24,6 +24,13 @@
 	<level num="1" />
   </map>
   
+  <entitymanager>
+	<entity id="1" type="item" x="100" y="100"/>
+	<entity id="2" type="item" x="100" y="100"/>
+	<entity id="3" type="item" x="100" y="100"/>
+	<entity id="4" type="item" x="100" y="100"/>
+	</entitymanager>
+	
   <enemies
   xBird="446" yBird="100"
   xFox="826" yFox="308"/>

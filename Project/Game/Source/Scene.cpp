@@ -17,6 +17,8 @@
 #include "Enemy_Bird.h"
 #include "HUD.h"
 #include "Font.h"
+#include "Item.h"
+#include "EntityManager.h"
 
 Scene::Scene(bool enabled) : Module(enabled)
 {
@@ -101,6 +103,12 @@ bool Scene::Start()
 		app->hud->pauseEnabled = false;
 
 	}
+
+	item1 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 1, { 100,100,0,0 });
+	item2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 2, { 100,100,0,0 });
+	item3 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 3, { 100,100,0,0 });
+
+	
 
 	app->play->playerData.isDead = false;
 	app->play->debug = false;
@@ -326,7 +334,7 @@ bool Scene::Update(float dt)
 	app->map->ComputePath(app->play->playerData.playerBody.x, app->play->playerData.playerBody.y);
 
 	
-	char textMinutes[10] = { "\0" };
+	
 	if (app->timer > 59)
 	{
 		minutes += 1;
@@ -334,10 +342,13 @@ bool Scene::Update(float dt)
 		
 
 	}
+	
 	sprintf_s(app->textTimer, 10, "%4d", app->timer);
 	sprintf_s(textMinutes, 10, "%4d", minutes);
+	sprintf_s(textPoints, 10, "%4d", app->enemies->points);
 	app->font->BlitText(445-60, 10, app->hud->GameFont, textMinutes);
 	app->font->BlitText(517- 60, 10, app->hud->GameFont, ":");
+	
 	if (app->timer < 10)
 	{
 		app->font->BlitText(530 - 60, 10, app->hud->GameFont, "0");
@@ -347,6 +358,11 @@ bool Scene::Update(float dt)
 	{
 		app->font->BlitText(490 - 60, 10, app->hud->GameFont, app->textTimer);
 	}
+	app->font->BlitText(20, 70, app->hud->GameFont, "P");
+	app->font->BlitText(35, 70, app->hud->GameFont, "T");
+	app->font->BlitText(50, 70, app->hud->GameFont, "S");
+	app->font->BlitText(65, 70, app->hud->GameFont, ":");
+	app->font->BlitText(80, 70, app->hud->GameFont, "0");
 	
 	
 

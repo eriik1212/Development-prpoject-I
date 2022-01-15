@@ -94,6 +94,7 @@
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Enemy_Bird.cpp" />
     <ClCompile Include="Source\Enemy_Fox.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\GameOverScreen.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Source\GuiManager.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\HUD.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Level2.cpp" />
     <ClCompile Include="Source\LogoScreen.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -124,6 +126,8 @@
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Enemy_Bird.h" />
     <ClInclude Include="Source\Enemy_Fox.h" />
+    <ClInclude Include="Source\Entity.h" />
+    <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Font.h" />
     <ClInclude Include="Source\GameOverScreen.h" />
@@ -133,6 +137,7 @@
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\HUD.h" />
+    <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\Level2.h" />
     <ClInclude Include="Source\LogoScreen.h" />
     <ClInclude Include="Source\Map.h" />
