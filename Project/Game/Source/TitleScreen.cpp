@@ -43,9 +43,11 @@ bool TitleScreen::Start()
 		app->map->Disable();
 		app->hud->Enable();
 
-		app->LoadGameRequest();
+		//app->LoadGameRequest();
 		//app->LoadInitialGameRequest();
 
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
 	}
 	changeFX = app->audio->LoadFx("Assets/audio/fx/switching.wav");
 	enterFX = app->audio->LoadFx("Assets/audio/fx/enter.wav");
@@ -56,6 +58,7 @@ bool TitleScreen::Start()
 	NewGameUnpressed= app->tex->Load("Assets/textures/buttons/UnpressedNG.png");
 	ContinuePressed= app->tex->Load("Assets/textures/buttons/PressedCont.png");
 	ContinueUnpressed= app->tex->Load("Assets/textures/buttons/UnpressedCont.png");
+	ContinueBlocked= app->tex->Load("Assets/textures/buttons/BloquedCont.png");
 	exitGameUnpressed= app->tex->Load("Assets/textures/buttons/exitGame.png");
 	exitGamePressed= app->tex->Load("Assets/textures/buttons/exitGamePressed.png");
 	settingsUnpressed= app->tex->Load("Assets/textures/buttons/settingsUnpressed.png");
@@ -158,7 +161,14 @@ bool TitleScreen::Start()
 	fxSlider->state = GuiControlState::DISABLED;
 
 	newGameButton->state = GuiControlState::NORMAL;
-	continueButton->state = GuiControlState::NORMAL;
+	if (!continueEnabled)
+	{
+		continueButton->state = GuiControlState::BLOCKED;
+	}
+	else
+	{
+		continueButton->state = GuiControlState::NORMAL;
+	}
 	settingsButton->state = GuiControlState::NORMAL;
 	creditsButton->state = GuiControlState::NORMAL;
 	exitGameButton->state = GuiControlState::NORMAL;
@@ -335,7 +345,14 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			fxSlider->state = GuiControlState::DISABLED;
 
 			newGameButton->state = GuiControlState::NORMAL;
-			continueButton->state = GuiControlState::NORMAL;
+			if (!continueEnabled)
+			{
+				continueButton->state = GuiControlState::BLOCKED;
+			}
+			else
+			{
+				continueButton->state = GuiControlState::NORMAL;
+			}
 			settingsButton->state = GuiControlState::NORMAL;
 			creditsButton->state = GuiControlState::NORMAL;
 			exitGameButton->state = GuiControlState::NORMAL;

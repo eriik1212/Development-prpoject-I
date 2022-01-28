@@ -108,6 +108,7 @@ bool GuiCheckBox::Draw(Render* render)
 			{
 				render->DrawRectangle({ app->title->vsyncRect.x + 2, app->title->vsyncRect.y + 2, app->title->vsyncRect.w - 4, app->title->vsyncRect.h - 4 }, 255, 255, 255, 255);
 			}
+			break;
 		case 16:
 			render->DrawRectangle(app->hud->fullscreenRect, 255, 255, 255, 100, true, false);
 			selectedSound_isPlaying = false;

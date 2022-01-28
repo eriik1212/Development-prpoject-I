@@ -27,7 +27,7 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
-	if (state != GuiControlState::DISABLED && (app->title->Enabled() || app->hud->Enabled()))
+	if (state != GuiControlState::DISABLED && state != GuiControlState::BLOCKED && (app->title->Enabled() || app->hud->Enabled()))
 	{
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
@@ -395,7 +395,8 @@ bool GuiButton::Draw(Render* render)
 		switch (id)
 		{
 		case 2:
-			render->DrawRectangle(bounds, 0, 255, 0, 255);
+			render->DrawTexture(app->title->ContinueBlocked, bounds.x, bounds.y, false, 0);
+
 			break;
 		default:
 			break;

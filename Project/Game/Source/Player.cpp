@@ -231,362 +231,371 @@ bool Player::PreUpdate()
 // Called each loop iteration
 bool Player::Update(float dt)
 {
+	if (app->hud->pauseEnabled || app->hud->optionsEnabled)
+	{
+		// DO NOTHING
+	}
+	else
+	{
+		LOG("%d", playerData.playerBody.x);
+		LOG("%d", playerData.playerBody.y);
+		//CAMERA
+		float speed = 1 * dt;
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
+		{
+			app->render->camera.x -= app->play->playerData.xVel * dt;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && debug)
+		{
+			app->render->camera.x += app->play->playerData.xVel * dt;
+		}
+		/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
+		{
+			app->render->camera.y -= app->play->playerData.xVel;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
+		{
+			app->render->camera.y += app->play->playerData.xVel;
+		}*/
 
-	LOG("%d", playerData.playerBody.x);
-	LOG("%d", playerData.playerBody.y);
-	//CAMERA
-	float speed = 1 * dt;
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && debug)
-	{
-		app->render->camera.x -= app->play->playerData.xVel * dt;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && debug)
-	{
-		app->render->camera.x += app->play->playerData.xVel * dt;
-	}
-	/*if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && debug)
-	{
-		app->render->camera.y -= app->play->playerData.xVel;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && debug)
-	{
-		app->render->camera.y += app->play->playerData.xVel;
-	}*/
+		//DEBUG
+		if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+		{
+			if (debug)
+				debug = false;
+			else if (!debug)
+				debug = true;
+		}
 
-	//DEBUG
-	if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-	{
-		if (debug)
-			debug = false;
-		else if (!debug)
-			debug = true;
-	}
+		//Atack Collider
+		if (playerData.direction == 1)
+		{
+			attackColliderRect.w = playerData.playerBody.w / 2;
+			attackColliderRect.h = playerData.playerBody.h;
+			attackColliderRect.x = playerData.playerBody.x + playerData.playerBody.w;
+			attackColliderRect.y = playerData.playerBody.y;
+		}
+		else if (playerData.direction == 0)
+		{
+			attackColliderRect.w = playerData.playerBody.w / 2;
+			attackColliderRect.h = playerData.playerBody.h;
+			attackColliderRect.x = playerData.playerBody.x - attackColliderRect.w;
+			attackColliderRect.y = playerData.playerBody.y;
+		}
+		attackCollider.AddCollider(attackColliderRect.x, attackColliderRect.y, attackColliderRect.w, attackColliderRect.h);
 
-	//Atack Collider
-	if (playerData.direction == 1)
-	{
-		attackColliderRect.w = playerData.playerBody.w / 2;
-		attackColliderRect.h = playerData.playerBody.h;
-		attackColliderRect.x = playerData.playerBody.x + playerData.playerBody.w;
-		attackColliderRect.y = playerData.playerBody.y;
-	}
-	else if (playerData.direction == 0)
-	{
-		attackColliderRect.w = playerData.playerBody.w / 2;
-		attackColliderRect.h = playerData.playerBody.h;
-		attackColliderRect.x = playerData.playerBody.x - attackColliderRect.w;
-		attackColliderRect.y = playerData.playerBody.y;
-	}
-	attackCollider.AddCollider(attackColliderRect.x, attackColliderRect.y, attackColliderRect.w, attackColliderRect.h);
+		if (playerData.yVel <= -playerData.maxVel)
+		{
+			playerData.yVel = -playerData.maxVel;
+		}
 
-	if (playerData.yVel <= -playerData.maxVel)
-	{
-		playerData.yVel = -playerData.maxVel;
-	}
+		// GOD MODE (FLY)
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		{
 
-	// GOD MODE (FLY)
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
+			if (godMode)
+				godMode = false;
+			else if (!godMode)
+				godMode = true;
+		}
 
 		if (godMode)
-			godMode = false;
-		else if (!godMode)
-			godMode = true;
-	}
-
-	if (godMode)
-	{
-		playerData.yVel = 0;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode)
-	{
-		playerData.playerBody.y -= 8;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode)
-	{
-		playerData.playerBody.y -= -8;
-
-	}
-
-	//IN LEADER
-	if (inLeader)
-	{
-		playerData.yVel = 0;
-		if (playerData.direction == 1)
 		{
-			currentAnimation = &upStairsR;
+			playerData.yVel = 0;
 		}
-		else if (playerData.direction == 0)
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode)
 		{
-			currentAnimation = &upStairsL;
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inLeader)
-	{
-		playerData.playerBody.y -= 2;
-
-		if (playerData.direction == 1)
-		{
-			currentAnimation = &upStairsR;
-		}
-		else if (playerData.direction == 0)
-		{
-			currentAnimation = &upStairsL;
-		}
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inLeader)
-	{
-		playerData.playerBody.y -= -2;
-
-		if (playerData.direction == 1)
-		{
-			currentAnimation = &upStairsR;
-		}
-		else if (playerData.direction == 0)
-		{
-			currentAnimation = &upStairsL;
-		}
-	}
-
-	//COLLIDERS ON
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-	{
-
-		if (collidersOn)
-			collidersOn = false;
-		else if (!collidersOn)
-			collidersOn = true;
-	}
-
-	//Floor
-	if (playerData.isCollidingUp == true && !godMode)
-	{
-		playerData.yVel = 0;
-		playerData.jumping = false;
-	}
-
-	// HANDLE GRAVITY & PLAYER.Y LIMITS
-	if (playerData.playerBody.y >= 400 ) {
-		playerData.playerBody.y = 399;
-	}
-	else if (playerData.playerBody.y <= 0 && godMode) {
-		playerData.playerBody.y = 1;
-	}
-	else if (!godMode && !inLeader)
-	{
-		app->play->playerData.isCollidingUp = false;
-		playerData.yVel += playerData.gravity;
-		playerData.playerBody.y -= playerData.yVel;
-	}
-
-	// Handle the player jump.
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN &&
-		!playerData.jumping &&
-		!godMode &&
-		currentAnimation != &hit1R &&
-		currentAnimation != &hit1L) 
-	{
-		playerData.yVel = 10;
-		playerData.playerBody.y -= playerData.yVel;
-		playerData.jumping = true;
-		playerData.canJumpAgain = true;
-		jumpR.Reset();
-		jumpL.Reset();
-
-		if (playerData.direction == 1)
-		{
-			currentAnimation = &jumpR;
+			playerData.playerBody.y -= 8;
 		}
 
-		else if (playerData.direction == 0)
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode)
 		{
-			currentAnimation = &jumpL;
+			playerData.playerBody.y -= -8;
+
 		}
 
-	}
-
-	// Handle the player DOUBLE jump.
-	else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN &&
-		playerData.jumping &&
-		playerData.canJumpAgain &&
-		!godMode &&
-		currentAnimation != &hit1R &&
-		currentAnimation != &hit1L)
-	{
-		playerData.yVel = 8;
-		playerData.jumping = true;
-		playerData.canJumpAgain = false;
-
-		jumpR.Reset();
-		jumpL.Reset();
-
-		if (playerData.direction == 1)
+		//IN LEADER
+		if (inLeader)
 		{
-			currentAnimation = &jumpR;
+			playerData.yVel = 0;
+			if (playerData.direction == 1)
+			{
+				currentAnimation = &upStairsR;
+			}
+			else if (playerData.direction == 0)
+			{
+				currentAnimation = &upStairsL;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inLeader)
+		{
+			playerData.playerBody.y -= 2;
+
+			if (playerData.direction == 1)
+			{
+				currentAnimation = &upStairsR;
+			}
+			else if (playerData.direction == 0)
+			{
+				currentAnimation = &upStairsL;
+			}
 		}
 
-		else if (playerData.direction == 0)
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inLeader)
 		{
-			currentAnimation = &jumpL;
+			playerData.playerBody.y -= -2;
+
+			if (playerData.direction == 1)
+			{
+				currentAnimation = &upStairsR;
+			}
+			else if (playerData.direction == 0)
+			{
+				currentAnimation = &upStairsL;
+			}
 		}
-	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT &&
-		currentAnimation != &hit1R &&
-		currentAnimation != &hit1L)
-
-	{
-		playerData.playerBody.x += playerData.xVel;
-		currentAnimation = &walkR;
-		playerData.direction = 1;
-
-	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP &&
-		currentAnimation != &hit1R &&
-		currentAnimation != &hit1L)
-	{
-		currentAnimation = &idleAnimR;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT &&
-		currentAnimation != &hit1R &&
-		currentAnimation != &hit1L)
-	{
-		playerData.playerBody.x -= playerData.xVel;
-		currentAnimation = &walkL;
-		playerData.direction = 0;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP &&
-		currentAnimation != &hit1R &&
-		currentAnimation != &hit1L)
-	{
-		currentAnimation = &idleAnimL;
-	}
-
-	// ------------------------------------------------------------------------------------------------------ ATTACK!
-	//RIGTH
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
-		!playerData.attacking &&
-		playerData.direction == 1 &&
-		currentAnimation != &hit1R)
-	{
-		playerData.attacking = true;
-
-		hit1R.Reset();
-		currentAnimation = &hit1R;	
-		
-		LOG("ATTACK!");
-	}
-	//LEFT
-	else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
-		!playerData.attacking && 
-		playerData.direction == 0 &&
-		currentAnimation != &hit1L)
-	{
-		playerData.attacking = true;
-
-		hit1L.Reset();
-		currentAnimation = &hit1L;
-
-		LOG("ATTACK!");
-	}
-	else if (playerData.attacking)
-	{
-		playerData.attacking = false;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_P) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE
-		&& app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
-		&& !playerData.jumping)
-	{
-		if (currentAnimation != &idleAnimR
-			&& currentAnimation != &idleAnimL
-			&& currentAnimation != &walkR
-			&& currentAnimation != &walkL
-			&& currentAnimation != &jumpR
-			&& currentAnimation != &jumpL
-			&& currentAnimation != &hit1L
-			&& currentAnimation != &hit1R
-			&& currentAnimation != &upStairsL
-			&& currentAnimation != &upStairsR)
+		//COLLIDERS ON
+		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		{
-			switch (playerData.direction) {
 
-			case 1:
-				idleAnimR.Reset();
-				currentAnimation = &idleAnimR;
-				break;
+			if (collidersOn)
+				collidersOn = false;
+			else if (!collidersOn)
+				collidersOn = true;
+		}
 
-			case 0:
-				idleAnimL.Reset();
-				currentAnimation = &idleAnimL;
-				break;
+		//Floor
+		if (playerData.isCollidingUp == true && !godMode)
+		{
+			playerData.yVel = 0;
+			playerData.jumping = false;
+		}
+
+		// HANDLE GRAVITY & PLAYER.Y LIMITS
+		if (playerData.playerBody.y >= 400) {
+			playerData.playerBody.y = 399;
+		}
+		else if (playerData.playerBody.y <= 0 && godMode) {
+			playerData.playerBody.y = 1;
+		}
+		else if (!godMode && !inLeader)
+		{
+			app->play->playerData.isCollidingUp = false;
+			playerData.yVel += playerData.gravity;
+			playerData.playerBody.y -= playerData.yVel;
+		}
+
+		// Handle the player jump.
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN &&
+			!playerData.jumping &&
+			!godMode &&
+			currentAnimation != &hit1R &&
+			currentAnimation != &hit1L)
+		{
+			playerData.yVel = 10;
+			playerData.playerBody.y -= playerData.yVel;
+			playerData.jumping = true;
+			playerData.canJumpAgain = true;
+			jumpR.Reset();
+			jumpL.Reset();
+
+			if (playerData.direction == 1)
+			{
+				currentAnimation = &jumpR;
+			}
+
+			else if (playerData.direction == 0)
+			{
+				currentAnimation = &jumpL;
 			}
 
 		}
-	}
 
-	if (playerData.playerBody.x > 100)
-	{
-		//Player POSITION LIMITS
-		if (playerData.playerBody.x <= app->render->playerLimitL)
+		// Handle the player DOUBLE jump.
+		else if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN &&
+			playerData.jumping &&
+			playerData.canJumpAgain &&
+			!godMode &&
+			currentAnimation != &hit1R &&
+			currentAnimation != &hit1L)
 		{
-			playerData.playerBody.x = app->render->playerLimitL;
+			playerData.yVel = 8;
+			playerData.jumping = true;
+			playerData.canJumpAgain = false;
+
+			jumpR.Reset();
+			jumpL.Reset();
+
+			if (playerData.direction == 1)
+			{
+				currentAnimation = &jumpR;
+			}
+
+			else if (playerData.direction == 0)
+			{
+				currentAnimation = &jumpL;
+			}
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT &&
+			currentAnimation != &hit1R &&
+			currentAnimation != &hit1L)
+
+		{
+			playerData.playerBody.x += playerData.xVel;
+			currentAnimation = &walkR;
+			playerData.direction = 1;
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP &&
+			currentAnimation != &hit1R &&
+			currentAnimation != &hit1L)
+		{
+			currentAnimation = &idleAnimR;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT &&
+			currentAnimation != &hit1R &&
+			currentAnimation != &hit1L)
+		{
+			playerData.playerBody.x -= playerData.xVel;
+			currentAnimation = &walkL;
+			playerData.direction = 0;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP &&
+			currentAnimation != &hit1R &&
+			currentAnimation != &hit1L)
+		{
+			currentAnimation = &idleAnimL;
+		}
+
+		// ------------------------------------------------------------------------------------------------------ ATTACK!
+		//RIGTH
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
+			!playerData.attacking &&
+			playerData.direction == 1 &&
+			currentAnimation != &hit1R)
+		{
+			playerData.attacking = true;
+
+			hit1R.Reset();
+			currentAnimation = &hit1R;
+
+			LOG("ATTACK!");
+		}
+		//LEFT
+		else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
+			!playerData.attacking &&
+			playerData.direction == 0 &&
+			currentAnimation != &hit1L)
+		{
+			playerData.attacking = true;
+
+			hit1L.Reset();
+			currentAnimation = &hit1L;
+
+			LOG("ATTACK!");
+		}
+		else if (playerData.attacking)
+		{
+			playerData.attacking = false;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_P) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE
+			&& app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
+			&& !playerData.jumping)
+		{
+			if (currentAnimation != &idleAnimR
+				&& currentAnimation != &idleAnimL
+				&& currentAnimation != &walkR
+				&& currentAnimation != &walkL
+				&& currentAnimation != &jumpR
+				&& currentAnimation != &jumpL
+				&& currentAnimation != &hit1L
+				&& currentAnimation != &hit1R
+				&& currentAnimation != &upStairsL
+				&& currentAnimation != &upStairsR)
+			{
+				switch (playerData.direction) {
+
+				case 1:
+					idleAnimR.Reset();
+					currentAnimation = &idleAnimR;
+					break;
+
+				case 0:
+					idleAnimL.Reset();
+					currentAnimation = &idleAnimL;
+					break;
+				}
+
+			}
+		}
+
+		if (playerData.playerBody.x > 100)
+		{
+			//Player POSITION LIMITS
+			if (playerData.playerBody.x <= app->render->playerLimitL)
+			{
+				playerData.playerBody.x = app->render->playerLimitL;
+
+			}
+
+			//Camera LIMITS & MOVEMENT
+			if (playerData.playerBody.x >= app->render->playerLimitR)
+			{
+				app->render->camera.x -= playerData.xVel * 1.5;
+				app->render->playerLimitR += playerData.xVel;
+				app->render->playerLimitL += playerData.xVel;
+
+			}
+
+			if (playerData.playerBody.x <= app->render->playerLimitL)
+			{
+				app->render->camera.x += playerData.xVel * 1.5;
+				app->render->playerLimitL -= playerData.xVel;
+				app->render->playerLimitR -= playerData.xVel;
+			}
+
+			if (playerData.playerBody.x >= PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2) && lastLevel == 1)
+				playerData.playerBody.x = PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2);
+
+			if (playerData.playerBody.x >= PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2) && lastLevel == 2)
+				playerData.playerBody.x = PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2);
+		}
+		if (playerData.playerBody.x <= 100)
+		{
+			if (playerData.playerBody.x <= -10)
+				playerData.playerBody.x = -10;
+		}
+
+		if (app->render->camera.x >= 0)
+			app->render->camera.x = 0;
+
+		if (app->render->camera.x <= -CAMERA_LIMIT_LVL1 && lastLevel == 1)
+			app->render->camera.x = -CAMERA_LIMIT_LVL1;
+
+		if (app->render->camera.x <= -CAMERA_LIMIT_LVL2 && lastLevel == 2)
+			app->render->camera.x = -CAMERA_LIMIT_LVL2;
+
+		// CHECKPOINT!
+		if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
+		{
+			chekpoint = true;
+			app->audio->PlayFx(CheckPointFX);
+			app->SaveGameRequest();
 
 		}
 
-		//Camera LIMITS & MOVEMENT
-		if (playerData.playerBody.x >= app->render->playerLimitR)
-		{
-			app->render->camera.x -= playerData.xVel*1.5;
-			app->render->playerLimitR += playerData.xVel;
-			app->render->playerLimitL += playerData.xVel;
-
-		}
-
-		if (playerData.playerBody.x <= app->render->playerLimitL)
-		{
-			app->render->camera.x += playerData.xVel*1.5;
-			app->render->playerLimitL -= playerData.xVel;
-			app->render->playerLimitR -= playerData.xVel;
-		}
-
-		if (playerData.playerBody.x >= PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2) && lastLevel == 1)
-			playerData.playerBody.x = PLAYER_LIMIT_LVL1 + (app->render->camera.w / 2);
-
-		if (playerData.playerBody.x >= PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2) && lastLevel == 2)
-			playerData.playerBody.x = PLAYER_LIMIT_LVL2 + (app->render->camera.w / 2);
+		currentAnimation->Update();
 	}
-	if (playerData.playerBody.x <= 100)
-	{
-		if (playerData.playerBody.x <= -10)
-			playerData.playerBody.x = -10;
-	}
-
-	if (app->render->camera.x >= 0)
-		app->render->camera.x = 0;
-
-	if (app->render->camera.x <= -CAMERA_LIMIT_LVL1 && lastLevel == 1)
-		app->render->camera.x = -CAMERA_LIMIT_LVL1;
-
-	if (app->render->camera.x <= -CAMERA_LIMIT_LVL2 && lastLevel == 2)
-		app->render->camera.x = -CAMERA_LIMIT_LVL2;
-
-	// CHECKPOINT!
-	if (playerData.playerBody.x >= 1480 && playerData.playerBody.x <= 1484 && !chekpoint)
-	{
-		chekpoint = true;
-		app->audio->PlayFx(CheckPointFX);
-		app->SaveGameRequest();
-
-	}
+	
 
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -596,7 +605,6 @@ bool Player::Update(float dt)
 
 	//app->win->SetTitle(title.GetString());
 
-	currentAnimation->Update();
 
 	//LOG("playerX=%d", playerData.playerBody.x);
 	//LOG("playerY=%d", playerData.playerBody.y);

@@ -276,7 +276,7 @@ bool ModuleHUD::PostUpdate()
 		if (pauseEnabled)
 		{
 			DrawPauseMenu();
-
+			
 		}
 
 		if (optionsEnabled)

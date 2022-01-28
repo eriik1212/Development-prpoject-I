@@ -49,6 +49,7 @@ public:
 	SDL_Texture* NewGameUnpressed;
 	SDL_Texture* ContinuePressed;
 	SDL_Texture* ContinueUnpressed;
+	SDL_Texture* ContinueBlocked;
 	SDL_Texture* exitGameUnpressed;
 	SDL_Texture* exitGamePressed;
 	SDL_Texture* settingsUnpressed;
@@ -85,6 +86,8 @@ public:
 	bool creditsEnabled = false;
 
 	bool exitGameRequest = false;
+
+	bool continueEnabled = false;
 
 public:
 	GuiButton* newGameButton;

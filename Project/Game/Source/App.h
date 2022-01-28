@@ -126,6 +126,7 @@ public:
 	bool lowFPS = false;
 	int timer = 0;
 	char textTimer[10] = { "\0" };
+
 private:
 
 	int argc;
