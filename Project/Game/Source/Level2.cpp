@@ -136,6 +136,9 @@ bool Level2::Start()
 		redSoulTex = app->tex->Load("Assets/textures/souls.png");
 		blueSoulTex = app->tex->Load("Assets/textures/souls.png");
 
+		greenFlagLVL2 = app->tex->Load("Assets/textures/greenFlag.png");
+		redFlagLVL2 = app->tex->Load("Assets/textures/redFlag.png");
+
 		app->hud->pauseEnabled = false;
 	}
 
@@ -391,6 +394,9 @@ bool Level2::PostUpdate()
 	bool ret = true;
 
 	if(app->play->collidersOn && soulCollider != nullptr) soulCollider->GetCollider().DebugDraw(soulBody, SOUL);
+
+	if (!app->play->chekpoint) app->render->DrawTexture(redFlagLVL2, 1480, 90, true, NULL, 1);
+	else app->render->DrawTexture(greenFlagLVL2, 1480, 90, true, NULL, 1);
 
 	return ret;
 }

@@ -75,11 +75,12 @@ public:
 
 	bool inBirdView = false;
 	bool inFoxView = false;
+	
+	bool chekpoint = false;
 
 private:
 	SDL_Texture* img;
 
-	bool chekpoint = false;
 	uint CheckPointFX;
 
 	// Load player general properties

@@ -100,6 +100,9 @@ bool Scene::Start()
 
 		background_sky = app->tex->Load("Assets/textures/background_sky.png");
 
+		greenFlagLVL1 = app->tex->Load("Assets/textures/greenFlag.png");
+		redFlagLVL1 = app->tex->Load("Assets/textures/redFlag.png");
+
 		app->hud->pauseEnabled = false;
 
 	}
@@ -378,6 +381,9 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
+	if(!app->play->chekpoint) app->render->DrawTexture(redFlagLVL1, 1480, 280, true, NULL, 1);
+	else app->render->DrawTexture(greenFlagLVL1, 1480, 280, true, NULL, 1);
 
 	return ret;
 }

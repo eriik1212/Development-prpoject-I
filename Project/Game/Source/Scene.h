@@ -56,6 +56,8 @@ private:
 	SDL_Texture* background_frontcloud;
 	SDL_Texture* background_backmountain;
 	SDL_Texture* background_backcloud;
+	SDL_Texture* greenFlagLVL1;
+	SDL_Texture* redFlagLVL1;
 
 	Item* item1;
 	Item* item2;
