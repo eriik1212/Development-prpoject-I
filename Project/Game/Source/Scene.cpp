@@ -46,8 +46,6 @@ bool Scene::Start()
 
 	if (this->Enabled() && !this->Disabled()) 
 	{
-		minutes = 0;
-		app->timer = 0;
 
 		//Load Map
 		app->map->Load("MapLVL1.tmx");
@@ -85,6 +83,8 @@ bool Scene::Start()
 
 			app->hud->resumeButton->state = GuiControlState::DISABLED;
 
+			minutes = 0;
+			app->timer = 0;
 		}
 
 
@@ -136,6 +136,9 @@ bool Scene::PreUpdate()
 		app->play->restartLVL1 = false;
 
 		app->hud->pauseEnabled = false;
+
+		minutes = 0;
+		app->timer = 0;
 
 		app->SaveGameRequest();
 	}

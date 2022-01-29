@@ -690,6 +690,10 @@ bool Player::LoadState(pugi::xml_node& data)
 	app->render->camera.x = data.child("camera").attribute("x").as_int();
 	app->render->camera.y = data.child("camera").attribute("y").as_int();
 
+	//Load Timer
+	app->timer = data.child("timer").attribute("sec").as_int();
+	app->scene->minutes = data.child("timer").attribute("min").as_int();
+
 	return true;
 }
 
@@ -707,11 +711,17 @@ bool Player::SaveState(pugi::xml_node& data) const
 	playLimit.append_attribute("Left") = app->render->playerLimitL;
 	playLimit.append_attribute("Right") = app->render->playerLimitR;
 
-	//Load Camera
+	//Save Camera
 	pugi::xml_node cam = data.append_child("camera");
 
 	cam.append_attribute("x") = app->render->camera.x;
 	cam.append_attribute("y") = app->render->camera.y;
+
+	//Save Timer
+	pugi::xml_node tim = data.append_child("timer");
+
+	tim.append_attribute("sec") = app->timer;
+	tim.append_attribute("min") = app->scene->minutes;
 
 	return true;
 }

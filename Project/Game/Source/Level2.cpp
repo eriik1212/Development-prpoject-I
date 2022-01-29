@@ -66,9 +66,6 @@ bool Level2::Start()
 
 	if (this->Enabled() && !this->Disabled())
 	{
-		//Restart timer
-		app->scene->minutes = 0;
-		app->timer = 0;
 		//Load Map
 		app->map->Load("MapLVL2.tmx");
 
@@ -85,6 +82,10 @@ bool Level2::Start()
 			app->render->camera.y = 0;
 			app->render->playerLimitL = 100;
 			app->render->playerLimitR = 300;
+
+			//Restart timer
+			app->scene->minutes = 0;
+			app->timer = 0;
 		}
 
 		app->SaveGameRequest();
@@ -161,6 +162,10 @@ bool Level2::PreUpdate()
 		app->play->restartLVL2 = false;
 
 		app->hud->pauseEnabled = false;
+
+		//Restart timer
+		app->scene->minutes = 0;
+		app->timer = 0;
 
 		app->SaveGameRequest();
 	}
