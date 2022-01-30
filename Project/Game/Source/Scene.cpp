@@ -46,8 +46,6 @@ bool Scene::Start()
 
 	if (this->Enabled() && !this->Disabled()) 
 	{
-		minutes = 0;
-		app->timer = 0;
 
 		//Load Map
 		app->map->Load("MapLVL1.tmx");
@@ -82,6 +80,11 @@ bool Scene::Start()
 			app->render->camera.y = 0;
 			app->render->playerLimitL = 100;
 			app->render->playerLimitR = 300;
+
+			app->hud->resumeButton->state = GuiControlState::DISABLED;
+
+			minutes = 0;
+			app->timer = 0;
 		}
 
 
@@ -97,6 +100,10 @@ bool Scene::Start()
 
 		background_sky = app->tex->Load("Assets/textures/background_sky.png");
 
+		greenFlagLVL1 = app->tex->Load("Assets/textures/greenFlag.png");
+		redFlagLVL1 = app->tex->Load("Assets/textures/redFlag.png");
+
+		app->hud->pauseEnabled = false;
 
 	}
 
@@ -129,6 +136,11 @@ bool Scene::PreUpdate()
 
 		app->play->restartLVL1 = false;
 
+		app->hud->pauseEnabled = false;
+
+		minutes = 0;
+		app->timer = 0;
+
 		app->SaveGameRequest();
 	}
 
@@ -138,7 +150,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		//Disable Player & map
 		app->play->Disable();
@@ -151,9 +163,11 @@ bool Scene::Update(float dt)
 		
 		app->play->restartLVL1 = true;
 
+		app->hud->pauseEnabled = false;
+
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		//Disable Player & map
 		app->play->Disable();
@@ -166,9 +180,11 @@ bool Scene::Update(float dt)
 
 		app->play->restartLVL2 = true;
 
+		app->hud->pauseEnabled = false;
+
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		app->fade->FadeToBlack(this, this, 30);
 
@@ -179,6 +195,9 @@ bool Scene::Update(float dt)
 		app->hud->Disable();
 
 		app->play->restartLVL1 = true;
+
+		app->hud->pauseEnabled = false;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
@@ -360,6 +379,9 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
+	if(!app->play->chekpoint) app->render->DrawTexture(redFlagLVL1, 1480, 280, true, NULL, 1);
+	else app->render->DrawTexture(greenFlagLVL1, 1480, 280, true, NULL, 1);
 
 	return ret;
 }

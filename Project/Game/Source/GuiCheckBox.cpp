@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Window.h"
 #include "TitleScreen.h"
+#include "HUD.h"
 
 GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::TOGGLE, id)
 {
@@ -67,6 +68,12 @@ bool GuiCheckBox::Draw(Render* render)
 		case 8:
 			render->DrawRectangle(bounds, 0, 0, 0, 0);
 			break;
+		case 16:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
+		case 17:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
 		default:
 			break;
 		}
@@ -77,6 +84,9 @@ bool GuiCheckBox::Draw(Render* render)
 		//Checks the GUI element ID
 		// ID = 7 -> Fullscreen Toggle
 		// ID = 8 -> Vsync Toggle
+
+		// ID = 16 -> Fullscreen Toggle
+		// ID = 17 -> Vsync Toggle
 
 		switch (id)
 		{
@@ -97,6 +107,25 @@ bool GuiCheckBox::Draw(Render* render)
 			if (isOn)
 			{
 				render->DrawRectangle({ app->title->vsyncRect.x + 2, app->title->vsyncRect.y + 2, app->title->vsyncRect.w - 4, app->title->vsyncRect.h - 4 }, 255, 255, 255, 255);
+			}
+			break;
+		case 16:
+			render->DrawRectangle(app->hud->fullscreenRect, 255, 255, 255, 100, true, false);
+			selectedSound_isPlaying = false;
+
+			if (isOn)
+			{
+				render->DrawRectangle({ app->hud->fullscreenRect.x + 2, app->hud->fullscreenRect.y + 2, app->hud->fullscreenRect.w - 4, app->hud->fullscreenRect.h - 4 }, 255, 255, 255, 255, true, false);
+			}
+
+			break;
+		case 17:
+			render->DrawRectangle(app->hud->vsyncRect, 255, 255, 255, 100, true, false);
+			selectedSound_isPlaying = false;
+
+			if (isOn)
+			{
+				render->DrawRectangle({ app->hud->vsyncRect.x + 2, app->hud->vsyncRect.y + 2, app->hud->vsyncRect.w - 4, app->hud->vsyncRect.h - 4 }, 255, 255, 255, 255, true, false);
 			}
 
 			break;

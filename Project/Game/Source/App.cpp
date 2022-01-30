@@ -186,14 +186,20 @@ bool App::Update()
 	}
 	if (lowFPS)
 	{
-		if (frameCount % 30 == 0)
+		if (app->hud->pauseEnabled || app->hud->optionsEnabled)
+		{
+		}
+		else if (frameCount % 30 == 0)
 		{
 			timer++;
 		}
 	}
 	else
 	{
-		if (frameCount % 60 == 0)
+		if (app->hud->pauseEnabled || app->hud->optionsEnabled)
+		{
+		}
+		else if (frameCount % 60 == 0)
 		{
 			timer++;
 		}
@@ -276,9 +282,6 @@ void App::FinishUpdate()
 	}
 
 	
-	
-
-
 	//Code for getting the desired framerate
 	float delay = float(maxFrameRate) - frameDuration->ReadMs();
 
@@ -414,6 +417,7 @@ void App::LoadInitialGameRequest()
 void App::SaveGameRequest() const
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
+	app->title->continueEnabled = true;
 	saveGameRequested = true;
 }
 

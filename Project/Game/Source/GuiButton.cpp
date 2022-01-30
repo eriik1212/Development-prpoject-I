@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Window.h"
 #include "TitleScreen.h"
+#include "HUD.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -26,7 +27,7 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(float dt)
 {
-	if (state != GuiControlState::DISABLED && app->title->Enabled())
+	if (state != GuiControlState::DISABLED && state != GuiControlState::BLOCKED && (app->title->Enabled() || app->hud->Enabled()))
 	{
 		int mouseX, mouseY;
 		app->input->GetMousePosition(mouseX, mouseY);
@@ -60,8 +61,22 @@ bool GuiButton::Update(float dt)
 		{
 			state = GuiControlState::DISABLED;
 		}
-		
 	}
+
+	if (app->title->Disabled())
+	{
+		app->title->exitOptionsButton->state = GuiControlState::DISABLED;
+		app->title->fullscreenToggle->state = GuiControlState::DISABLED;
+		app->title->vsyncToggle->state = GuiControlState::DISABLED;
+		app->title->newGameButton->state = GuiControlState::DISABLED;
+		app->title->continueButton->state = GuiControlState::DISABLED;
+		app->title->settingsButton->state = GuiControlState::DISABLED;
+		app->title->creditsButton->state = GuiControlState::DISABLED;
+		app->title->exitGameButton->state = GuiControlState::DISABLED;
+		app->title->volumeSlider->state = GuiControlState::DISABLED;
+		app->title->fxSlider->state = GuiControlState::DISABLED;
+	}
+
 	return false;
 }
 
@@ -97,6 +112,21 @@ bool GuiButton::Draw(Render* render)
 		case 6:
 			render->DrawRectangle(bounds, 0, 0, 0, 0);
 			break;
+		case 11:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
+		case 12:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
+		case 13:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
+		case 14:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
+		case 15:
+			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			break;
 		default:
 			break;
 		}
@@ -111,6 +141,12 @@ bool GuiButton::Draw(Render* render)
 		// ID = 4 -> Credits Button
 		// ID = 5 -> ExitOptions Button
 		// ID = 6 -> ExitGAME Button
+
+		// ID = 11 -> ResumePause Button
+		// ID = 12 -> TitlePause Button
+		// ID = 13 -> ExitGame Button
+		// ID = 14 -> SettingsGame Button
+		// ID = 15 -> ExitOptionsGame Button
 
 		switch (id)
 		{
@@ -138,6 +174,27 @@ bool GuiButton::Draw(Render* render)
 			render->DrawTexture(app->title->exitGameUnpressed, bounds.x, bounds.y, false, 0);
 			selectedSound_isPlaying = false;
 			break;
+		case 11:
+			render->DrawTexture(app->hud->resumeUnpressed, bounds.x, bounds.y, false, 0, 0);
+			selectedSound_isPlaying = false;
+			break;
+		case 12:
+			render->DrawTexture(app->hud->titleUnpressed, bounds.x, bounds.y, false, 0, 0);
+			selectedSound_isPlaying = false;
+			break;
+		case 13:
+			render->DrawTexture(app->hud->exitGameUnpressed, bounds.x, bounds.y, false, 0, 0);
+			selectedSound_isPlaying = false;
+			break;
+		case 14:
+			render->DrawTexture(app->hud->settingsUnpressed, bounds.x, bounds.y, false, 0, 0);
+			selectedSound_isPlaying = false;
+			break;
+		case 15:
+			render->DrawTexture(app->hud->exitOptions, bounds.x, bounds.y, false, 0, 0);
+
+			selectedSound_isPlaying = false;
+			break;
 		default:
 			break;
 		}
@@ -153,6 +210,11 @@ bool GuiButton::Draw(Render* render)
 		// ID = 4 -> Credits Button
 		// ID = 5 -> ExitOptions Button
 		// ID = 6 -> ExitGame Button
+
+		// ID = 11 -> ResumePause Button
+		// ID = 12 -> TitlePause Button
+		// ID = 13 -> ExitGame Button
+		// ID = 14 -> SettingsGame Button
 
 		switch (id)
 		{
@@ -215,6 +277,51 @@ bool GuiButton::Draw(Render* render)
 				selectedSound_isPlaying = true;
 			}
 			break;
+		case 11:
+			render->DrawTexture(app->hud->resumeUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 12:
+			render->DrawTexture(app->hud->titleUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 13:
+			render->DrawTexture(app->hud->exitGameUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 14:
+			render->DrawTexture(app->hud->settingsUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
+		case 15:
+			render->DrawTexture(app->hud->exitOptionsFocused, bounds.x, bounds.y, false, 0, 0);
+
+			if (!selectedSound_isPlaying)
+			{
+				app->audio->PlayFx(app->title->changeFX);
+				selectedSound_isPlaying = true;
+			}
+			break;
 		default:
 			break;
 		}
@@ -231,6 +338,11 @@ bool GuiButton::Draw(Render* render)
 		// ID = 4 -> Credits Button
 		// ID = 5 -> ExitOptions Button
 		// ID = 6 -> ExitGame Button
+
+		// ID = 11 -> ResumeGame Button
+		// ID = 12 -> TitleGame Button
+		// ID = 13 -> ExitGame Button
+		// ID = 14 -> SettingsGame Button
 
 		switch (id)
 		{
@@ -255,7 +367,21 @@ bool GuiButton::Draw(Render* render)
 			break;
 		case 6:
 			render->DrawTexture(app->title->exitGamePressed, bounds.x, bounds.y, false, 0);
-
+			break;
+		case 11:
+			render->DrawTexture(app->hud->resumePressed, bounds.x, bounds.y, false, 0,0);
+			break;
+		case 12:
+			render->DrawTexture(app->hud->titlePressed, bounds.x, bounds.y, false, 0, 0);
+			break;
+		case 13:
+			render->DrawTexture(app->hud->exitGamePressed, bounds.x, bounds.y, false, 0, 0);
+			break;
+		case 14:
+			render->DrawTexture(app->hud->settingsPressed, bounds.x, bounds.y, false, 0, 0);
+			break;
+		case 15:
+			render->DrawTexture(app->hud->exitOptionsPressed, bounds.x, bounds.y, false, 0, 0);
 			break;
 		default:
 			break;
@@ -269,7 +395,8 @@ bool GuiButton::Draw(Render* render)
 		switch (id)
 		{
 		case 2:
-			render->DrawRectangle(bounds, 0, 255, 0, 255);
+			render->DrawTexture(app->title->ContinueBlocked, bounds.x, bounds.y, false, 0);
+
 			break;
 		default:
 			break;

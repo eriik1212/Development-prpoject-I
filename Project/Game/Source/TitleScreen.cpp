@@ -20,7 +20,7 @@
 
 TitleScreen::TitleScreen(bool enabled) : Module(enabled)
 {
-
+	name.Create("title");
 }
 
 TitleScreen::~TitleScreen()
@@ -32,6 +32,7 @@ TitleScreen::~TitleScreen()
 bool TitleScreen::Start()
 {
 	//TitleMusic = app->play->("Assets/audio/fx/game_over.wav");
+	app->LoadGameRequest();
 
 	if (this->Enabled())
 	{
@@ -43,9 +44,10 @@ bool TitleScreen::Start()
 		app->map->Disable();
 		app->hud->Enable();
 
-		app->LoadGameRequest();
 		//app->LoadInitialGameRequest();
 
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
 	}
 	changeFX = app->audio->LoadFx("Assets/audio/fx/switching.wav");
 	enterFX = app->audio->LoadFx("Assets/audio/fx/enter.wav");
@@ -56,6 +58,7 @@ bool TitleScreen::Start()
 	NewGameUnpressed= app->tex->Load("Assets/textures/buttons/UnpressedNG.png");
 	ContinuePressed= app->tex->Load("Assets/textures/buttons/PressedCont.png");
 	ContinueUnpressed= app->tex->Load("Assets/textures/buttons/UnpressedCont.png");
+	ContinueBlocked= app->tex->Load("Assets/textures/buttons/BloquedCont.png");
 	exitGameUnpressed= app->tex->Load("Assets/textures/buttons/exitGame.png");
 	exitGamePressed= app->tex->Load("Assets/textures/buttons/exitGamePressed.png");
 	settingsUnpressed= app->tex->Load("Assets/textures/buttons/settingsUnpressed.png");
@@ -158,7 +161,14 @@ bool TitleScreen::Start()
 	fxSlider->state = GuiControlState::DISABLED;
 
 	newGameButton->state = GuiControlState::NORMAL;
-	continueButton->state = GuiControlState::NORMAL;
+	if (!continueEnabled)
+	{
+		continueButton->state = GuiControlState::BLOCKED;
+	}
+	else
+	{
+		continueButton->state = GuiControlState::NORMAL;
+	}
 	settingsButton->state = GuiControlState::NORMAL;
 	creditsButton->state = GuiControlState::NORMAL;
 	exitGameButton->state = GuiControlState::NORMAL;
@@ -170,55 +180,6 @@ bool TitleScreen::Start()
 
 bool TitleScreen::Update(float dt)
 {
-	// ScanCodes
-	/*if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		//Fade Out
-		app->audio->PlayFx(enterFX);
-		if (option == 1)//New game option
-		{
-			cont = false;
-			app->play->restartLVL1 = true;
-			//app->SaveGameRequest();
-			app->fade->FadeToBlack(this, app->scene, 30);
-			
-			app->play->playerData.isDead = false;
-			
-
-		}
-		else //continue option
-		{
-			cont = true;
-			if (app->play->lastLevel == 1)
-			{
-				app->fade->FadeToBlack(this, app->scene, 30);
-				app->LoadGameRequest();
-
-			}
-
-			if (app->play->lastLevel == 2)
-			{
-				app->fade->FadeToBlack(this, app->level2, 30);
-				app->LoadGameRequest();
-
-			}
-
-		}
-		
-		
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		app->audio->PlayFx(changeFX);
-		option = 0;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		app->audio->PlayFx(changeFX);
-		option = 1;
-	}*/
 
 	if (app->render->vsync) vsyncToggle->isOn = true;
 	else vsyncToggle->isOn = false;
@@ -239,17 +200,6 @@ bool TitleScreen::PostUpdate()
 {
 
 	app->render->DrawTexture(Title, 0, 0, false, NULL);
-
-	/*if (option == 1)
-	{
-		app->render->DrawTexture(NewGamePressed, 432, 432, false, &NewGameRect);
-		app->render->DrawTexture(ContinueUnpressed, 405, 464, false, &ContinueRect);
-	}
-	else
-	{
-		app->render->DrawTexture(NewGameUnpressed, 432, 432, false, &NewGameRect);
-		app->render->DrawTexture(ContinuePressed, 405, 464, false, &ContinueRect);
-	}*/
 
 	if (optionsEnabled)
 	{
@@ -395,7 +345,14 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 			fxSlider->state = GuiControlState::DISABLED;
 
 			newGameButton->state = GuiControlState::NORMAL;
-			continueButton->state = GuiControlState::NORMAL;
+			if (!continueEnabled)
+			{
+				continueButton->state = GuiControlState::BLOCKED;
+			}
+			else
+			{
+				continueButton->state = GuiControlState::NORMAL;
+			}
 			settingsButton->state = GuiControlState::NORMAL;
 			creditsButton->state = GuiControlState::NORMAL;
 			exitGameButton->state = GuiControlState::NORMAL;
@@ -495,7 +452,7 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 
 void TitleScreen::DrawOptionsMenu()
 {
-	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175, true, false);
 
 	app->font->BlitText(360, 300, app->hud->GameFont, "MUSIC VOLUME");
 
@@ -508,7 +465,7 @@ void TitleScreen::DrawOptionsMenu()
 
 void TitleScreen::DrawCreditsMenu()
 {
-	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175);
+	app->render->DrawRectangle({ 100,160,440,270 }, 0, 0, 0, 175, true, false);
 
 	app->font->BlitText(280,280, app->hud->GameFont, "UPC-CITM GDDV 2nd YEAR");
 
@@ -525,4 +482,22 @@ void TitleScreen::DrawCreditsMenu()
 	app->font->BlitText(400, 600, app->hud->GameFont, "MIT LICENSE");
 
 
+}
+
+bool TitleScreen::LoadState(pugi::xml_node& data)
+{
+	//ContinueEnabled?¿
+	continueEnabled = data.child("continue").attribute("enabled").as_bool();
+
+	return true;
+}
+
+bool TitleScreen::SaveState(pugi::xml_node& data) const
+{
+	//Save Player Pos
+	pugi::xml_node title = data.append_child("continue");
+
+	title.append_attribute("enabled") = continueEnabled;
+
+	return true;
 }

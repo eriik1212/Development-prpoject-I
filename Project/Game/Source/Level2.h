@@ -62,6 +62,8 @@ private:
 	SDL_Texture* background_forest5;
 	SDL_Texture* background_grass1;
 	SDL_Texture* background_grass2;
+	SDL_Texture* greenFlagLVL2;
+	SDL_Texture* redFlagLVL2;
 
 	
 	

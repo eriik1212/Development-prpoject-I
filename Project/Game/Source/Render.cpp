@@ -190,7 +190,13 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 		rec.w *= scale;
 		rec.h *= scale;
 	}
-
+	else
+	{
+		rec.x = (int)(rect.x * scale);
+		rec.y = (int)(rect.y * scale);
+		rec.w *= scale;
+		rec.h *= scale;
+	}
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
 	if(result != 0)

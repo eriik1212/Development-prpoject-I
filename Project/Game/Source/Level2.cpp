@@ -26,7 +26,7 @@ Level2::Level2(bool enabled) : Module(enabled)
 
 	name.Create("level2");
 
-	
+
 
 }
 
@@ -50,9 +50,6 @@ bool Level2::Start()
 
 	if (this->Enabled() && !this->Disabled())
 	{
-		//Restart timer
-		app->scene->minutes = 0;
-		app->timer = 0;
 		//Load Map
 		app->map->Load("MapLVL2.tmx");
 
@@ -69,6 +66,10 @@ bool Level2::Start()
 			app->render->camera.y = 0;
 			app->render->playerLimitL = 100;
 			app->render->playerLimitR = 300;
+
+			//Restart timer
+			app->scene->minutes = 0;
+			app->timer = 0;
 		}
 
 		app->SaveGameRequest();
@@ -79,9 +80,9 @@ bool Level2::Start()
 		app->enemies->Enable();
 		app->hud->Enable();
 
-		
 
-		
+
+
 
 		//app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
 		//app->enemies->AddEnemy(ENEMY_TYPE::FOX, 826, 308);
@@ -113,10 +114,14 @@ bool Level2::Start()
 		item[2] = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 3, { 2822,220,16,16 });
 		item[3] = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 4, { 3472,212,16,16 });
 		item[4] = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 5, { 5392,220,16,16 });
-	
-	
-		
 
+
+
+
+		greenFlagLVL2 = app->tex->Load("Assets/textures/greenFlag.png");
+		redFlagLVL2 = app->tex->Load("Assets/textures/redFlag.png");
+
+		app->hud->pauseEnabled = false;
 	}
 
 
@@ -141,6 +146,12 @@ bool Level2::PreUpdate()
 
 		app->play->restartLVL2 = false;
 
+		app->hud->pauseEnabled = false;
+
+		//Restart timer
+		app->scene->minutes = 0;
+		app->timer = 0;
+
 		app->SaveGameRequest();
 	}
 
@@ -150,11 +161,11 @@ bool Level2::PreUpdate()
 // Called each loop iteration
 bool Level2::Update(float dt)
 {
-	
 
-	
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		//Disable Player & map
 		app->play->Disable();
@@ -164,12 +175,14 @@ bool Level2::Update(float dt)
 		app->hud->Disable();
 
 		app->scene->Enable();
-		
+
 		app->play->restartLVL1 = true;
+
+		app->hud->pauseEnabled = false;
 
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		//Disable Player & map
 		app->play->Disable();
@@ -182,10 +195,11 @@ bool Level2::Update(float dt)
 
 		app->play->restartLVL2 = true;
 
+		app->hud->pauseEnabled = false;
 
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && !app->hud->pauseEnabled && !app->hud->optionsEnabled)
 	{
 		app->fade->FadeToBlack(this, this, 30);
 
@@ -197,6 +211,8 @@ bool Level2::Update(float dt)
 
 		app->play->restartLVL2 = true;
 
+		app->hud->pauseEnabled = false;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN || app->play->playerData.isDead)
@@ -205,6 +221,9 @@ bool Level2::Update(float dt)
 		app->hud->Disable();
 
 		app->fade->FadeToBlack(this, app->gameOver, 30);
+
+		app->hud->pauseEnabled = false;
+
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -292,8 +311,8 @@ bool Level2::Update(float dt)
 
 	}
 
-	
-	
+
+
 
 	if (app->timer > 59)
 	{
@@ -349,6 +368,11 @@ bool Level2::Update(float dt)
 bool Level2::PostUpdate()
 {
 	bool ret = true;
+
+	
+
+	if (!app->play->chekpoint) app->render->DrawTexture(redFlagLVL2, 1480, 90, true, NULL, 1);
+	else app->render->DrawTexture(greenFlagLVL2, 1480, 90, true, NULL, 1);
 
 	return ret;
 }
