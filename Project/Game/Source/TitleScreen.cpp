@@ -20,7 +20,7 @@
 
 TitleScreen::TitleScreen(bool enabled) : Module(enabled)
 {
-
+	name.Create("title");
 }
 
 TitleScreen::~TitleScreen()
@@ -32,6 +32,7 @@ TitleScreen::~TitleScreen()
 bool TitleScreen::Start()
 {
 	//TitleMusic = app->play->("Assets/audio/fx/game_over.wav");
+	app->LoadGameRequest();
 
 	if (this->Enabled())
 	{
@@ -43,7 +44,6 @@ bool TitleScreen::Start()
 		app->map->Disable();
 		app->hud->Enable();
 
-		//app->LoadGameRequest();
 		//app->LoadInitialGameRequest();
 
 		app->render->camera.x = 0;
@@ -482,4 +482,22 @@ void TitleScreen::DrawCreditsMenu()
 	app->font->BlitText(400, 600, app->hud->GameFont, "MIT LICENSE");
 
 
+}
+
+bool TitleScreen::LoadState(pugi::xml_node& data)
+{
+	//ContinueEnabled?¿
+	continueEnabled = data.child("continue").attribute("enabled").as_bool();
+
+	return true;
+}
+
+bool TitleScreen::SaveState(pugi::xml_node& data) const
+{
+	//Save Player Pos
+	pugi::xml_node title = data.append_child("continue");
+
+	title.append_attribute("enabled") = continueEnabled;
+
+	return true;
 }

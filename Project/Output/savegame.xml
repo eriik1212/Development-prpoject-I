@@ -10,7 +10,9 @@
 	<scene />
 	<level2 />
 	<:anonymous />
-	<:anonymous />
+	<title>
+		<continue enabled="true" />
+	</title>
 	<player>
 		<player x="80" y="348" />
 		<playerLimit Left="100" Right="300" />
@@ -18,7 +20,7 @@
 		<timer sec="0" min="0" />
 	</player>
 	<enemies>
-		<fox x="826" y="308" />
+		<fox x="0" y="0" />
 		<bird x="446" y="100" />
 	</enemies>
 	<:anonymous />

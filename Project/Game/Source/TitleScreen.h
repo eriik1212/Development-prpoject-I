@@ -89,6 +89,10 @@ public:
 
 	bool continueEnabled = false;
 
+	// Load / Save
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 public:
 	GuiButton* newGameButton;
 	GuiButton* continueButton;

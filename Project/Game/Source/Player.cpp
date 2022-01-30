@@ -694,6 +694,7 @@ bool Player::LoadState(pugi::xml_node& data)
 	app->timer = data.child("timer").attribute("sec").as_int();
 	app->scene->minutes = data.child("timer").attribute("min").as_int();
 
+
 	return true;
 }
 
@@ -702,7 +703,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 	//Save Player Pos
 	pugi::xml_node play = data.append_child("player");
 
-	play.append_attribute("x") =playerData.playerBody.x;
+	play.append_attribute("x") = playerData.playerBody.x;
 	play.append_attribute("y") = playerData.playerBody.y;
 
 	//Save Player/Camera Limits
