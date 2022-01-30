@@ -5,7 +5,9 @@
 #include "Animation.h"
 #include "Render.h"
 #include "ModuleCollisions.h"
+#include "Item.h"
 
+#define MAX_ITEMS 5
 struct SDL_Texture;
 
 
@@ -41,12 +43,10 @@ public:
 
 	// scrollingOffset for Parallax Effect
 	int scrollingOffset = 0;
+	Item* item[MAX_ITEMS];
 
-	SDL_Rect soulBody;
-	ModuleCollisions* soulCollider;
+	
 
-	Animation* redCurrentAnimation = nullptr;
-	Animation* blueCurrentAnimation = nullptr;
 
 private:
 
@@ -63,12 +63,11 @@ private:
 	SDL_Texture* background_grass1;
 	SDL_Texture* background_grass2;
 
-	SDL_Texture* redSoulTex = nullptr;
-	SDL_Texture* blueSoulTex = nullptr;
+	
+	
 
 
-	Animation redSoul,
-		blueSoul;
+	
 
 };
 #endif // __LEVEL2_H__

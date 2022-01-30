@@ -142,11 +142,26 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 	{
 		if (intersectX < 0.0f && intersectY < 0.0f)
 		{
-			app->hud->lifes++;
+			for (int i = 0; i < MAX_ITEMS; i++)
+			{
+				if (app->play->playerData.playerBody.x - app->level2->item[i]->bounds.x > -app->play->playerData.playerBody.w && app->level2->item[i]->bounds.x - app->play->playerData.playerBody.x < app->play->playerData.playerBody.w)
+				{
+					app->level2->item[i]->isPicked = true;
+				}
+			}
+			
+			
+			
 
-			delete app->level2->soulCollider;
-			app->level2->soulCollider = nullptr;
+			//app->level2->item3->isPicked = true;
+			if (app->hud->lifes<6)
+				app->hud->lifes++;
+			
 			app->hud->soulCounter += 1;
+			app->enemies->points += 10;
+
+			
+			
 			LOG("SOUL PICKED UP!");
 
 			return true;

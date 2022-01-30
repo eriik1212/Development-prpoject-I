@@ -100,9 +100,7 @@ bool Scene::Start()
 
 	}
 
-	item1 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 1, { 100,100,0,0 });
-	item2 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 2, { 100,100,0,0 });
-	item3 = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 3, { 100,100,0,0 });
+	
 
 	
 
@@ -349,7 +347,7 @@ bool Scene::Update(float dt)
 	app->font->BlitText(35, 70, app->hud->GameFont, "T");
 	app->font->BlitText(50, 70, app->hud->GameFont, "S");
 	app->font->BlitText(65, 70, app->hud->GameFont, ":");
-	app->font->BlitText(80, 70, app->hud->GameFont, "0");
+	app->font->BlitText(80, 70, app->hud->GameFont, textPoints);
 	
 	
 

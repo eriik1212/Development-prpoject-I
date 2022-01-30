@@ -25,6 +25,7 @@
 #include "Font.h"
 #include "Item.h"
 #include "EntityManager.h"
+#include "Item.h"
 
 #include <iostream>
 #include <sstream>
@@ -34,7 +35,6 @@
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
-
 	win = new Window(true);
 	input = new Input(true);
 	tex = new Textures(true);

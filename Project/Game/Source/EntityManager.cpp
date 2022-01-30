@@ -62,6 +62,8 @@ Entity* EntityManager::CreateEntity(EntityType type, int id, SDL_Rect bounds)
 	case EntityType::ITEM:
 		entity = new Item(id, bounds);
 		break;
+	//case EntityType::FLYINGENEMY
+		//entity= new Enemy_Bird
 		//resto de casos aqui
 	default: break;
 	}
