@@ -11,13 +11,13 @@
 	<level2 />
 	<:anonymous />
 	<title>
-		<continue enabled="true" />
+		<continue enabled="false" />
 	</title>
 	<player>
-		<player x="80" y="348" />
-		<playerLimit Left="100" Right="300" />
-		<camera x="0" y="0" />
-		<timer sec="0" min="0" />
+		<player x="1482" y="116" score="16" pickedSouls="1" />
+		<playerLimit Left="1284" Right="1484" />
+		<camera x="-1776" y="0" />
+		<timer sec="15" min="0" />
 	</player>
 	<enemies>
 		<fox x="0" y="0" />

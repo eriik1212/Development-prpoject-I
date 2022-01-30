@@ -85,6 +85,9 @@ bool Scene::Start()
 
 			minutes = 0;
 			app->timer = 0;
+
+			app->enemies->points = 0;
+			app->hud->soulCounter = 0;
 		}
 
 
@@ -315,6 +318,7 @@ bool Scene::Update(float dt)
 
 	if (app->play->playerData.winner == true)
 	{
+		app->play->currentAnimation = &app->play->idleAnimR;
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
@@ -346,13 +350,24 @@ bool Scene::Update(float dt)
 		
 
 	}
-	
+	return true;
+}
+
+// Called each loop iteration
+bool Scene::PostUpdate()
+{
+	bool ret = true;
+
+	if(!app->play->chekpoint) app->render->DrawTexture(redFlagLVL1, 1480, 280, true, NULL, 1);
+	else app->render->DrawTexture(greenFlagLVL1, 1480, 280, true, NULL, 1);
+
+
 	sprintf_s(app->textTimer, 10, "%4d", app->timer);
 	sprintf_s(textMinutes, 10, "%4d", minutes);
 	sprintf_s(textPoints, 10, "%4d", app->enemies->points);
-	app->font->BlitText(445-60, 10, app->hud->GameFont, textMinutes);
-	app->font->BlitText(517- 60, 10, app->hud->GameFont, ":");
-	
+	app->font->BlitText(445 - 60, 10, app->hud->GameFont, textMinutes);
+	app->font->BlitText(517 - 60, 10, app->hud->GameFont, ":");
+
 	if (app->timer < 10)
 	{
 		app->font->BlitText(530 - 60, 10, app->hud->GameFont, "0");
@@ -367,21 +382,8 @@ bool Scene::Update(float dt)
 	app->font->BlitText(50, 70, app->hud->GameFont, "S");
 	app->font->BlitText(65, 70, app->hud->GameFont, ":");
 	app->font->BlitText(80, 70, app->hud->GameFont, textPoints);
-	
-	
 
-	
-	
-	return true;
-}
 
-// Called each loop iteration
-bool Scene::PostUpdate()
-{
-	bool ret = true;
-
-	if(!app->play->chekpoint) app->render->DrawTexture(redFlagLVL1, 1480, 280, true, NULL, 1);
-	else app->render->DrawTexture(greenFlagLVL1, 1480, 280, true, NULL, 1);
 
 	return ret;
 }

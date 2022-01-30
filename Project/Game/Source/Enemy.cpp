@@ -20,12 +20,6 @@ Enemy::Enemy(int x, int y) :
 
 Enemy::~Enemy()
 {
-	/*if (collider != nullptr)
-		collider->pendingToDelete = true;
-	if (HIT != nullptr)
-		HIT->pendingToDelete = true;
-	if (SEE != nullptr)
-		SEE->pendingToDelete = true;*/
 }
 
 const Collider* Enemy::GetCollider() const
@@ -37,24 +31,6 @@ void Enemy::Update()
 {
 	if (currentAnim != nullptr)
 		currentAnim->Update();
-
-
-	//----------------------------------------------------left collider
-
-	/*if (collider != nullptr && direcction == 0)
-		collider->SetPos(position.x + 28, position.y + 75);
-
-	if (HIT != nullptr && direcction == 0)
-		HIT->SetPos(position.x + 10, position.y + 75);*/
-
-	//----------------------------------------------------right collider
-
-	/*if (collider != nullptr && direcction == 1)
-		collider->SetPos(position.x + 20, position.y + 75);
-
-
-	if (HIT != nullptr && direcction == 1)
-		HIT->SetPos(position.x + 58, position.y + 75);*/
 
 
 }

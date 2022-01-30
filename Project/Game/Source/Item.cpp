@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "Point.h"
 #include "HUD.h"
+#include "Level2.h"
+#include "Enemies.h"
 
 Item::Item(uint32 id, SDL_Rect bounds) : Entity(EntityType::ITEM)
 {
@@ -55,39 +57,42 @@ Item::~Item() {}
 
 bool Item::Update(float dt)
 {
-	if (isPicked == true)
+	if (isPicked == true && soulCollider != nullptr)
 	{
+		if (app->hud->lifes < 6)
+			app->hud->lifes++;
+
+		if (app->hud->soulCounter < 6)
+			app->hud->soulCounter += 1;
+
+		app->enemies->points += 10;
+
 		delete soulCollider;
 		soulCollider = nullptr;
-		
 	}
 	else
 	{
 		redCurrentAnimation->Update();
-		blueCurrentAnimation->Update();
+		//blueCurrentAnimation->Update();
 		
 	}
+	return true;
+}
+
+bool Item::Draw(Render* render)
+{
+	if (soulCollider != nullptr)
+			soulCollider->GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
+
+	if (app->play->collidersOn && soulCollider != nullptr) soulCollider->GetCollider().DebugDraw(bounds, SOUL);
+
 	// DRAW RED SOUL
 	if (soulCollider != nullptr)
 	{
 		SDL_Rect soulRect = redCurrentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(redSoulTex, bounds.x, bounds.y, true, &soulRect);
 	}
-
-	if (soulCollider != nullptr)
-		soulCollider->GetCollider().CheckCollision(app->play->playerData.GetCollider(), 0, SOUL);
-
-
-
-	if (app->play->collidersOn && soulCollider != nullptr) soulCollider->GetCollider().DebugDraw(bounds, SOUL);
 	
-	return true;
-}
-
-bool Item::Draw(Render* render)
-{
-	//L13: TODO 3: Draw the item
-	//render->DrawRectangle({ pos.x,pos.y,20,20 }, 0, 0, 255);
 
 	return true;
 }

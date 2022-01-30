@@ -391,7 +391,8 @@ bool Player::Update(float dt)
 			!playerData.jumping &&
 			!godMode &&
 			currentAnimation != &hit1R &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 		{
 			playerData.yVel = 10;
 			playerData.playerBody.y -= playerData.yVel;
@@ -418,7 +419,8 @@ bool Player::Update(float dt)
 			playerData.canJumpAgain &&
 			!godMode &&
 			currentAnimation != &hit1R &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 		{
 			playerData.yVel = 8;
 			playerData.jumping = true;
@@ -440,7 +442,8 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT &&
 			currentAnimation != &hit1R &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 
 		{
 			playerData.playerBody.x += playerData.xVel;
@@ -450,14 +453,16 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP &&
 			currentAnimation != &hit1R &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 		{
 			currentAnimation = &idleAnimR;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT &&
 			currentAnimation != &hit1R &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 		{
 			playerData.playerBody.x -= playerData.xVel;
 			currentAnimation = &walkL;
@@ -466,7 +471,8 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_UP &&
 			currentAnimation != &hit1R &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 		{
 			currentAnimation = &idleAnimL;
 		}
@@ -476,7 +482,8 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
 			!playerData.attacking &&
 			playerData.direction == 1 &&
-			currentAnimation != &hit1R)
+			currentAnimation != &hit1R &&
+			!playerData.winner)
 		{
 			playerData.attacking = true;
 
@@ -489,7 +496,8 @@ bool Player::Update(float dt)
 		else if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN &&
 			!playerData.attacking &&
 			playerData.direction == 0 &&
-			currentAnimation != &hit1L)
+			currentAnimation != &hit1L &&
+			!playerData.winner)
 		{
 			playerData.attacking = true;
 
@@ -682,6 +690,12 @@ bool Player::LoadState(pugi::xml_node& data)
 	playerData.playerBody.x = data.child("player").attribute("x").as_int();
 	playerData.playerBody.y = data.child("player").attribute("y").as_int();
 
+	//Load Score
+	app->enemies->points = data.child("player").attribute("score").as_int();
+
+	//Load PickedItems
+	app->hud->soulCounter = data.child("player").attribute("pickedSouls").as_int();
+
 	//Load Player/Camera Limits
 	app->render->playerLimitL = data.child("playerLimit").attribute("Left").as_int();
 	app->render->playerLimitR = data.child("playerLimit").attribute("Right").as_int();
@@ -705,6 +719,12 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 	play.append_attribute("x") = playerData.playerBody.x;
 	play.append_attribute("y") = playerData.playerBody.y;
+
+	//Save Score
+	play.append_attribute("score") = app->enemies->points;
+
+	//Save PickedItems
+	play.append_attribute("pickedSouls") = app->hud->soulCounter;
 
 	//Save Player/Camera Limits
 	pugi::xml_node playLimit = data.append_child("playerLimit");

@@ -70,6 +70,9 @@ bool Level2::Start()
 			//Restart timer
 			app->scene->minutes = 0;
 			app->timer = 0;
+
+			app->enemies->points = 0;
+			app->hud->soulCounter = 0;
 		}
 
 		app->SaveGameRequest();
@@ -80,12 +83,6 @@ bool Level2::Start()
 		app->enemies->Enable();
 		app->hud->Enable();
 
-
-
-
-
-		//app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
-		//app->enemies->AddEnemy(ENEMY_TYPE::FOX, 826, 308);
 		//app->enemies->AddEnemy(ENEMY_TYPE::FOX, 1400, 100);
 
 		app->play->playerData.isDead = false;
@@ -115,16 +112,14 @@ bool Level2::Start()
 		item[3] = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 4, { 3472,212,16,16 });
 		item[4] = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, 5, { 5392,220,16,16 });
 
-
-
+		app->enemies->AddEnemy(ENEMY_TYPE::BIRD, 446, 100);
+		app->enemies->AddEnemy(ENEMY_TYPE::FOX, 826, 308);
 
 		greenFlagLVL2 = app->tex->Load("Assets/textures/greenFlag.png");
 		redFlagLVL2 = app->tex->Load("Assets/textures/redFlag.png");
 
 		app->hud->pauseEnabled = false;
 	}
-
-
 
 	return true;
 }
@@ -322,6 +317,37 @@ bool Level2::Update(float dt)
 
 	}
 
+	//LOG("%d", app->item->soulBody.x);
+
+	if (app->play->playerData.winner == true)
+	{
+		app->play->currentAnimation = &app->play->idleAnimR;
+
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			app->fade->FadeToBlack(this, app->title, 30);
+
+			//Disable Player & map
+			app->play->Disable();
+			app->map->Disable();
+			app->level2->Disable();
+			app->enemies->Disable();
+
+		}
+	}
+
+	app->entityManager->Draw();
+	return true;
+}
+
+// Called each loop iteration
+bool Level2::PostUpdate()
+{
+	bool ret = true;
+
+	if (!app->play->chekpoint) app->render->DrawTexture(redFlagLVL2, 1480, 90, true, NULL, 1);
+	else app->render->DrawTexture(greenFlagLVL2, 1480, 90, true, NULL, 1);
+
 	sprintf_s(app->textTimer, 10, "%4d", app->timer);
 	sprintf_s(app->scene->textMinutes, 10, "%4d", app->scene->minutes);
 	sprintf_s(app->scene->textPoints, 10, "%4d", app->enemies->points);
@@ -342,37 +368,6 @@ bool Level2::Update(float dt)
 	app->font->BlitText(50, 70, app->hud->GameFont, "S");
 	app->font->BlitText(65, 70, app->hud->GameFont, ":");
 	app->font->BlitText(80, 70, app->hud->GameFont, app->scene->textPoints);
-
-	//LOG("%d", app->item->soulBody.x);
-
-	/*if (app->play->playerData.winner == true)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->fade->FadeToBlack(this, app->title, 30);
-
-			//Disable Player & map
-			app->play->Disable();
-			app->map->Disable();
-			app->level2->Disable();
-			app->enemies->Disable();
-
-		}
-	}*/
-
-	app->entityManager->Draw();
-	return true;
-}
-
-// Called each loop iteration
-bool Level2::PostUpdate()
-{
-	bool ret = true;
-
-	
-
-	if (!app->play->chekpoint) app->render->DrawTexture(redFlagLVL2, 1480, 90, true, NULL, 1);
-	else app->render->DrawTexture(greenFlagLVL2, 1480, 90, true, NULL, 1);
 
 	return ret;
 }

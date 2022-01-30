@@ -91,22 +91,22 @@ bool GuiCheckBox::Draw(Render* render)
 		switch (id)
 		{
 		case 7:
-			render->DrawRectangle(app->title->fullscreenRect, 255, 255, 255, 100);
+			render->DrawRectangle(app->title->fullscreenRect, 255, 255, 255, 100, true, false);
 			selectedSound_isPlaying = false;
 
 			if (isOn)
 			{
-				render->DrawRectangle({ app->title->fullscreenRect.x + 2, app->title->fullscreenRect.y + 2, app->title->fullscreenRect.w - 4, app->title->fullscreenRect.h - 4 }, 255, 255, 255, 255);
+				render->DrawRectangle({ app->title->fullscreenRect.x + 2, app->title->fullscreenRect.y + 2, app->title->fullscreenRect.w - 4, app->title->fullscreenRect.h - 4 }, 255, 255, 255, 255, true, false);
 			}
 
 			break;
 		case 8:
-			render->DrawRectangle(app->title->vsyncRect, 255, 255, 255, 100);
+			render->DrawRectangle(app->title->vsyncRect, 255, 255, 255, 100, true, false);
 			selectedSound_isPlaying = false;
 
 			if (isOn)
 			{
-				render->DrawRectangle({ app->title->vsyncRect.x + 2, app->title->vsyncRect.y + 2, app->title->vsyncRect.w - 4, app->title->vsyncRect.h - 4 }, 255, 255, 255, 255);
+				render->DrawRectangle({ app->title->vsyncRect.x + 2, app->title->vsyncRect.y + 2, app->title->vsyncRect.w - 4, app->title->vsyncRect.h - 4 }, 255, 255, 255, 255, true, false);
 			}
 			break;
 		case 16:

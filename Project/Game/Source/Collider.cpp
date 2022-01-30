@@ -150,18 +150,6 @@ bool Collider::CheckCollision(Collider& other, float push, CollidersType type)
 				}
 			}
 			
-			
-			
-
-			//app->level2->item3->isPicked = true;
-			if (app->hud->lifes<6)
-				app->hud->lifes++;
-			
-			app->hud->soulCounter += 1;
-			app->enemies->points += 10;
-
-			
-			
 			LOG("SOUL PICKED UP!");
 
 			return true;

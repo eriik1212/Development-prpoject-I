@@ -159,6 +159,7 @@ bool ModuleEnemies::CleanUp()
 		{
 			delete enemies[i];
 			enemies[i] = nullptr;
+
 		}
 	}
 

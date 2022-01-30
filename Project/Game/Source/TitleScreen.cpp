@@ -31,6 +31,7 @@ TitleScreen::~TitleScreen()
 // Load assets
 bool TitleScreen::Start()
 {
+
 	//TitleMusic = app->play->("Assets/audio/fx/game_over.wav");
 	app->LoadGameRequest();
 
@@ -198,8 +199,7 @@ bool TitleScreen::Update(float dt)
 // Update: draw background
 bool TitleScreen::PostUpdate()
 {
-
-	app->render->DrawTexture(Title, 0, 0, false, NULL);
+	app->render->DrawTexture(Title, 0, 0, false, NULL, 0);
 
 	if (optionsEnabled)
 	{

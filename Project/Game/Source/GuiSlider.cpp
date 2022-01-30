@@ -92,12 +92,12 @@ bool GuiSlider::Draw(Render* render)
 		switch (id)
 		{
 		case 9:
-			render->DrawRectangle(app->title->sliderVolRect, 255, 255, 255, 50);
-			render->DrawRectangle(app->title->volumeRect, 255, 255, 255, 255);
+			render->DrawRectangle(app->title->sliderVolRect, 255, 255, 255, 50, true, false);
+			render->DrawRectangle(app->title->volumeRect, 255, 255, 255, 255, true, false);
 			break;
 		case 10:
-			render->DrawRectangle(app->title->sliderFXRect, 255, 255, 255, 50);
-			render->DrawRectangle(app->title->fxRect, 255, 255, 255, 255);
+			render->DrawRectangle(app->title->sliderFXRect, 255, 255, 255, 50, true, false);
+			render->DrawRectangle(app->title->fxRect, 255, 255, 255, 255, true, false);
 			break;
 		case 18:
 			render->DrawRectangle(app->hud->sliderVolRect, 255, 255, 255, 50, true, false);

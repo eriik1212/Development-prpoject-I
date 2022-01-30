@@ -151,47 +151,47 @@ bool GuiButton::Draw(Render* render)
 		switch (id)
 		{
 		case 1:
-			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 2:
-			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 3:
-			render->DrawTexture(app->title->settingsUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->settingsUnpressed, bounds.x, bounds.y, false, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 4:
-			render->DrawTexture(app->title->creditsUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->creditsUnpressed, bounds.x, bounds.y, false, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 5:
-			render->DrawTexture(app->title->exitOptions, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->exitOptions, bounds.x, bounds.y, false, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 6:
-			render->DrawTexture(app->title->exitGameUnpressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->exitGameUnpressed, bounds.x, bounds.y, false, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 11:
-			render->DrawTexture(app->hud->resumeUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->resumeUnpressed, bounds.x, bounds.y, false, 0, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 12:
-			render->DrawTexture(app->hud->titleUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->titleUnpressed, bounds.x, bounds.y, false, 0, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 13:
-			render->DrawTexture(app->hud->exitGameUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->exitGameUnpressed, bounds.x, bounds.y, false, 0, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 14:
-			render->DrawTexture(app->hud->settingsUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->settingsUnpressed, bounds.x, bounds.y, false, 0, 0, 0);
 			selectedSound_isPlaying = false;
 			break;
 		case 15:
-			render->DrawTexture(app->hud->exitOptions, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->hud->exitOptions, bounds.x, bounds.y, false, 0, 0, 0);
 
 			selectedSound_isPlaying = false;
 			break;
@@ -219,8 +219,8 @@ bool GuiButton::Draw(Render* render)
 		switch (id)
 		{
 		case 1:
-			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0);
-			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+			render->DrawTexture(app->title->NewGameUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
 
 			if (!selectedSound_isPlaying)
 			{
@@ -229,8 +229,8 @@ bool GuiButton::Draw(Render* render)
 			}
 			break;
 		case 2:
-			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0);
-			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+			render->DrawTexture(app->title->ContinueUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
 
 			if (!selectedSound_isPlaying)
 			{
@@ -239,8 +239,8 @@ bool GuiButton::Draw(Render* render)
 			}
 			break;
 		case 3:
-			render->DrawTexture(app->title->settingsUnpressed, bounds.x, bounds.y, false, 0);
-			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+			render->DrawTexture(app->title->settingsUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
 
 			if (!selectedSound_isPlaying)
 			{
@@ -249,8 +249,8 @@ bool GuiButton::Draw(Render* render)
 			}
 			break;
 		case 4:
-			render->DrawTexture(app->title->creditsUnpressed, bounds.x, bounds.y, false, 0);
-			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+			render->DrawTexture(app->title->creditsUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
 
 			if (!selectedSound_isPlaying)
 			{
@@ -259,7 +259,7 @@ bool GuiButton::Draw(Render* render)
 			}
 			break;
 		case 5:
-			render->DrawTexture(app->title->exitOptionsFocused, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->exitOptionsFocused, bounds.x, bounds.y, false, 0, 0);
 			if (!selectedSound_isPlaying)
 			{
 				app->audio->PlayFx(app->title->changeFX);
@@ -268,8 +268,8 @@ bool GuiButton::Draw(Render* render)
 			
 			break;
 		case 6:
-			render->DrawTexture(app->title->exitGameUnpressed, bounds.x, bounds.y, false, 0);
-			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0);
+			render->DrawTexture(app->title->exitGameUnpressed, bounds.x, bounds.y, false, 0, 0);
+			render->DrawTexture(app->title->SelectArrow, bounds.x - 40, bounds.y, false, 0, 0);
 
 			if(!selectedSound_isPlaying)
 			{
@@ -347,26 +347,26 @@ bool GuiButton::Draw(Render* render)
 		switch (id)
 		{
 		case 1:
-			render->DrawTexture(app->title->NewGamePressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->NewGamePressed, bounds.x, bounds.y, false, 0, 0);
 
 			break;
 		case 2:
-			render->DrawTexture(app->title->ContinuePressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->ContinuePressed, bounds.x, bounds.y, false, 0, 0);
 
 			break;
 		case 3:
-			render->DrawTexture(app->title->settingsPressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->settingsPressed, bounds.x, bounds.y, false, 0, 0);
 
 			break;
 		case 4:
-			render->DrawTexture(app->title->creditsPressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->creditsPressed, bounds.x, bounds.y, false, 0, 0);
 
 			break;
 		case 5:
-			render->DrawTexture(app->title->exitOptionsPressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->exitOptionsPressed, bounds.x, bounds.y, false, 0, 0);
 			break;
 		case 6:
-			render->DrawTexture(app->title->exitGamePressed, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->exitGamePressed, bounds.x, bounds.y, false, 0, 0);
 			break;
 		case 11:
 			render->DrawTexture(app->hud->resumePressed, bounds.x, bounds.y, false, 0,0);
@@ -395,7 +395,7 @@ bool GuiButton::Draw(Render* render)
 		switch (id)
 		{
 		case 2:
-			render->DrawTexture(app->title->ContinueBlocked, bounds.x, bounds.y, false, 0);
+			render->DrawTexture(app->title->ContinueBlocked, bounds.x, bounds.y, false, 0, 0);
 
 			break;
 		default:
