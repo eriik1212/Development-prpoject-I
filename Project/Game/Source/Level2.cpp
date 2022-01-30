@@ -73,6 +73,7 @@ bool Level2::Start()
 
 			app->enemies->points = 0;
 			app->hud->soulCounter = 0;
+
 		}
 
 		app->SaveGameRequest();
@@ -332,6 +333,8 @@ bool Level2::Update(float dt)
 			app->map->Disable();
 			app->level2->Disable();
 			app->enemies->Disable();
+
+			app->play->playerData.winner = false;
 
 		}
 	}
